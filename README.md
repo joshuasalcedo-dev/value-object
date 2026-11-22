@@ -20,14 +20,24 @@ email address, to the tables in a page of OCR, to a whole bill, invoice or recei
 | `contact` | `Email`, `PhoneNumber`, `Link`, `Address`, `FullName` (parses printed names: titles, suffixes, *dela Cruz*), `Party` |
 | `financial` | `Money`, `Currency` (`FiatCurrency` ISO 4217, `CryptoCoin`), `Percentage`, `PaymentTerms` (Net 30, EOM, 2/10 Net 30, MFI, COD), `CardNumber` (Luhn, masked), `MaskedCard`, `Iban` (mod-97), `Bic`, `Bill`, `Invoice`, `Receipt`, `LineItem` |
 | `measurement` | `UnitOfMeasure` (UN/ECE Rec 20 codes), `Quantity`, `Weight`, `Distance`, `FileSize` |
-| `temporal` | `CalendarDate` (every printed form), `DateRange`, `Timestamp`, `DateTimeWithZone`, `Time`, `TimeZone`, `DurationNano` |
-| `geo` | `Country`, `Continent`, `Language`, `Demonym`, `PostalCode`, `Coordinates` |
+| `temporal` | `CalendarDate` (every printed form), `DateRange`, `Timestamp`, `DateTimeWithZone`, `Time`, `TimeZone`, `DurationNano`, `RecurrenceInterval` |
+| `geo` | `Country` (all 249 ISO 3166-1), `Continent`, `Language` (ISO 639-1), `Demonym`, `PostalCode`, `Coordinates` |
 | `identifier` | `UniqueId`, `Slug`, `Username`, `DisplayName`, `JwtToken`, `TaxId` (PH TIN, EU VAT, US EIN), `Gtin` (EAN/UPC) |
-| `network` | `IpAddress` (v4, v6), `MacAddress`, `Port`, `DomainName`, `OperatingSystem` |
+| `network` | `IpAddress` (v4, v6; literals only, never a DNS lookup), `MacAddress`, `Port`, `DomainName`, `OperatingSystem` |
 | `file`, `table`, `visual`, … | `FileType`, `Table`, `Color`, `SemanticVersion`, `Gender`, … |
 
 Every one implements `ValueObject`, validates itself when made (`ValueObjectException` when it is wrong), and is equal
 by value. Optional parts are `Optional`, never `null`; lists are empty, never `null`.
+
+Every type reads text the same way:
+
+```java
+Email.parse("jane@example.com");     // the value, or ValueObjectException
+Email.tryParse(input);               // Optional<Email>; never throws, null is empty
+Email.isValid(input);                // boolean; never throws
+Country.parse("PH");  Country.parse("Philippines");   // enums: by code or by name
+Country.UNKNOWN.isUnknown();         // enums keep UNKNOWN for "printed but not recognised"
+```
 
 ## One way in: `ValueObject`
 
@@ -80,17 +90,39 @@ if (doc instanceof Invoice inv) inv.dueDate();   // printed, or worked out from 
 Columns are found where cells line up; the value objects in them name their types, join split columns
 (`149.99` + `USD`) and tell the header row from the data.
 
-## Images: OCR in the JVM
+Reading documents is guesswork, so nothing read throws its input away. When a part comes out wrong, the raw data is
+there to read again, by hand, with your own rules, or with an LLM:
+
+| Result | Keeps |
+|---|---|
+| `BillingDocument` | `text()`: the whole input; `sources()`: each field's label, line and printed value; `found()`, `metadata()` |
+| `LineItem` | `printed()`: every cell of its row as printed, by column name |
+| `Table` | `text()`: the lines it was read from; `firstLine()`, `lastLine()`, `page()` |
+| `Party` | the lines its name, address and contacts were read from |
+| `Found` | `text()`, `start()`, `end()`: the match and where it is; `shape()`: the regex |
+| `Ocr`, `Pdf` | `rawText`, `tsv` (words with their boxes), `Pdf.words`: the input before any layout |
+
+Labels are read in English and Filipino (*Resibo Blg.*, *Petsa*, *Kabuuan*, *Ibinayad*, *Sukli*, *Mamimili*, …). A
+bare `$` is the dollar of the country the document is from (AUD in Australia, CAD in Canada) and USD anywhere else.
+
+## Images and PDFs
 
 ```java
-try (Ocr ocr = Ocr.english()) {
-    Receipt r = Receipt.parse(ocr.text(Path.of("receipt.png")));
+try (Ocr ocr = Ocr.english()) {                     // or Ocr.of("eng", "fil")
+    Receipt r = (Receipt) BillingDocument.parse(ocr.text(Path.of("receipt.png")));
+    String invoice = Pdf.text(Path.of("invoice.pdf"), ocr);   // the text layer; scanned pages through OCR
 }
+Pdf.text(Path.of("invoice.pdf"));                   // a PDF with a text layer needs no OCR
 ```
 
-`Ocr` runs Tesseract inside the JVM: no install, no Docker. Its native libraries come with
-`org.bytedeco:tesseract-platform:5.5.0-1.5.11`, an **optional** dependency of this library: add it to use OCR. It needs
-the English language data (`eng.traineddata`), found through `TESSDATA_PREFIX` or the usual install folders.
+`Ocr` runs Tesseract inside the JVM: no install, no Docker. `Pdf` lays a PDF's text out as it is on the page, the
+same way `Ocr.text` lays out an image, so tables and labels read the same from both. Both are **optional**: add the
+dependency for what you use.
+
+| To use | Add |
+|---|---|
+| `Ocr` | `org.bytedeco:tesseract-platform:5.5.0-1.5.11`, and the language data (`eng.traineddata`, `fil.traineddata`, …) found through `TESSDATA_PREFIX` or the usual install folders |
+| `Pdf` | `org.apache.pdfbox:pdfbox:3.0.8` |
 
 ## CSV and JSON
 
@@ -101,13 +133,38 @@ Csv.of(ValueObject.scan(text));
 table.toCsv();
 ```
 
+Both read back what they write, with no library:
+
+```java
+Json.read(json, Invoice.class);        Json.readList(json, Found.class);
+Csv.read(csv, LineItem.class);         Csv.readTable(csv);   // a Table, its columns typed again
+```
+
 Card numbers are always written masked.
+
+## Connectors
+
+All optional: add the library you use.
+
+```java
+// Jackson 2 (com.fasterxml.jackson) or Jackson 3 (tools.jackson)
+new ObjectMapper().registerModule(new io.joshuasalcedo.valueobject.jackson.ValueObjectModule());
+JsonMapper.builder().addModule(new io.joshuasalcedo.valueobject.jackson3.ValueObjectModule()).build();
+
+// Jakarta Persistence: Converters.* are @Converter(autoApply = true); a value object is one readable column
+@Entity class Customer { Email email; Money balance; Country country; }   // "jane@example.com", "149.99 USD", "PH"
+
+// Jakarta Validation, for strings at the edge of an application
+record SignUp(@ValidEmail String email, @ValidIban String iban, @ValidValue(ValueObject.Type.COUNTRY) String country) {}
+```
+
+The jar's module name is `io.joshuasalcedo.valueobject`.
 
 ## The demo: Value Object Studio
 
 A desktop app (JavaFX, [AtlantaFX](https://github.com/mkpaz/atlantafx) themes,
 [ControlsFX](https://controlsfx.github.io/) spreadsheets, [Ikonli](https://kordamp.org/ikonli/) icons) that reads a
-folder (images through OCR, `.txt`/`.tsv` as they are) and shows what the library found:
+folder (PDFs, images through OCR, `.txt`/`.tsv` as they are) and shows what the library found:
 
 | | |
 |---|---|
@@ -121,6 +178,7 @@ mvn install                        # the library, into ~/.m2
 mvn -f demo/pom.xml javafx:run     # open the app, then open a folder (or drop one on it)
 mvn -f demo/pom.xml javafx:run "-Djavafx.args=--folder samples --theme Dracula"   # open with a folder read
 demo/screenshots.sh                # run it on the samples and save the screenshots above into image/
+demo\screenshots.ps1               # the same, in PowerShell
 ```
 
 Every sample document is made up (fictional brands, people, addresses and numbers): the library's test documents in
@@ -129,7 +187,7 @@ Every sample document is made up (fictional brands, people, addresses and number
 ## Build
 
 ```sh
-mvn verify      # compile, test, sources and Javadoc jars
+mvn verify      # compile, test, sources and Javadoc jars; a missing Javadoc comment fails the build
 mvn install     # into ~/.m2
 ```
 
@@ -145,6 +203,8 @@ Repository secrets it needs:
 | `MAVEN_CENTRAL_USERNAME` / `MAVEN_CENTRAL_PASSWORD` | a Central Portal user token |
 | `SIGNING_KEY` | an ASCII-armoured private PGP key |
 | `SIGNING_KEY_PASSWORD` | its passphrase |
+
+Changes are in [CHANGELOG.md](CHANGELOG.md).
 
 ## License
 

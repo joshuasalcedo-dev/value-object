@@ -35,6 +35,12 @@
             <version>5.5.0-1.5.11</version>
         </dependency>
 
+        <!-- PDFs: optional in the library, so the demo adds it -->
+        <dependency>
+            <groupId>org.apache.pdfbox</groupId>
+            <artifactId>pdfbox</artifactId>
+            <version>3.0.8</version>
+        </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>

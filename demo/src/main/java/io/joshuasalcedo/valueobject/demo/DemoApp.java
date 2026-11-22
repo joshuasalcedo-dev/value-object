@@ -229,8 +229,8 @@ public class DemoApp extends Application {
 
     private void showEmpty() {
         Message hint = new Message("Nothing open yet",
-                "Open a folder (or drop one on the window). Images (png, jpg, tiff) are read with OCR in the JVM; "
-                        + ".txt and .tsv files as they are. Each file becomes a row: a bill, invoice or receipt with its parties, "
+                "Open a folder (or drop one on the window). PDFs are read from their text (scanned pages with OCR), "
+                        + "images (png, jpg, tiff) with OCR in the JVM, and .txt and .tsv files as they are. Each file becomes a row: a bill, invoice or receipt with its parties, "
                         + "totals and line items, its tables, and every value object in it.",
                 new FontIcon(Feather.INFO));
         hint.getStyleClass().add(Styles.ACCENT);
@@ -401,7 +401,11 @@ public class DemoApp extends Application {
                     return;
                 }
                 setText(r.name() + "  —  " + r.kind() + " · " + r.source() + " · " + r.took().toMillis() + " ms");
-                setGraphic(new FontIcon(r.error().isEmpty() ? (r.source().equals("OCR") ? Feather.IMAGE : Feather.FILE_TEXT) : Feather.ALERT_TRIANGLE));
+                setGraphic(new FontIcon(!r.error().isEmpty() ? Feather.ALERT_TRIANGLE : switch (r.source()) {
+                    case "OCR" -> Feather.IMAGE;
+                    case "PDF" -> Feather.FILE;
+                    default -> Feather.FILE_TEXT;
+                }));
             }
         });
         TextArea text = new TextArea();

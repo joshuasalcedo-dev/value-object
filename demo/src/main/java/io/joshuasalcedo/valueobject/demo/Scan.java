@@ -7,6 +7,7 @@ import io.joshuasalcedo.valueobject.financial.BillingDocument;
 import io.joshuasalcedo.valueobject.financial.Invoice;
 import io.joshuasalcedo.valueobject.financial.Receipt;
 import io.joshuasalcedo.valueobject.ocr.Ocr;
+import io.joshuasalcedo.valueobject.pdf.Pdf;
 import io.joshuasalcedo.valueobject.table.Layout;
 import io.joshuasalcedo.valueobject.table.Table;
 
@@ -34,6 +35,7 @@ final class Scan {
 
     static final Set<String> IMAGES = Set.of("png", "jpg", "jpeg", "tif", "tiff", "bmp");
     static final Set<String> TEXTS = Set.of("txt", "tsv", "text");
+    static final Set<String> PDFS = Set.of("pdf");
 
     /**
      * What one file held.
@@ -91,7 +93,8 @@ final class Scan {
         List<Path> files = new ArrayList<>();
         for (Path folder : folders) {
             try (Stream<Path> s = deep ? Files.walk(folder) : Files.list(folder)) {
-                s.filter(Files::isRegularFile).filter(p -> IMAGES.contains(ext(p)) || TEXTS.contains(ext(p))).sorted().forEach(files::add);
+                s.filter(Files::isRegularFile).filter(p -> IMAGES.contains(ext(p)) || TEXTS.contains(ext(p)) || PDFS.contains(ext(p)))
+                        .sorted().forEach(files::add);
             }
         }
         // prefer the text of a document over reading its image again
@@ -99,7 +102,7 @@ final class Scan {
         for (Path f : files) {
             Path stem = f.resolveSibling(stem(f));
             Path seen = byStem.get(stem);
-            if (seen == null || (TEXTS.contains(ext(f)) && IMAGES.contains(ext(seen)))) byStem.put(stem, f);
+            if (seen == null || rank(f) < rank(seen)) byStem.put(stem, f);
         }
         List<Path> chosen = new ArrayList<>(byStem.values());
 
@@ -116,6 +119,11 @@ final class Scan {
                         if (ocr == null) ocr = Ocr.english();
                         text = ocr.text(f);
                         source = "OCR";
+                    } else if (PDFS.contains(ext(f))) {
+                        // the text layer; scanned pages through OCR when it is set up on this machine
+                        if (ocr == null && Ocr.findTessdata("eng").isPresent()) ocr = Ocr.english();
+                        text = Pdf.text(f, ocr);
+                        source = "PDF";
                     } else {
                         text = Layout.text(Files.readString(f, StandardCharsets.UTF_8));
                         source = "Text";
@@ -123,7 +131,8 @@ final class Scan {
                     out.add(new FileResult(f, source, text, BillingDocument.detect(text), ValueObject.tables(text),
                             ValueObject.scan(text), "", Duration.ofNanos(System.nanoTime() - start)));
                 } catch (RuntimeException | IOException | LinkageError e) {
-                    out.add(new FileResult(f, IMAGES.contains(ext(f)) ? "OCR" : "Text", "", Optional.empty(), List.of(),
+                    out.add(new FileResult(f, IMAGES.contains(ext(f)) ? "OCR" : PDFS.contains(ext(f)) ? "PDF" : "Text", "",
+                            Optional.empty(), List.of(),
                             List.of(), String.valueOf(e.getMessage()), Duration.ofNanos(System.nanoTime() - start)));
                 }
                 progress.accept(i + 1, chosen.size());
@@ -132,6 +141,12 @@ final class Scan {
             if (ocr != null) ocr.close();
         }
         return out;
+    }
+
+    /** Text first, then a PDF, then an image: the cheapest faithful copy of a document wins. */
+    private static int rank(Path p) {
+        String e = ext(p);
+        return TEXTS.contains(e) ? 0 : PDFS.contains(e) ? 1 : 2;
     }
 
     static String ext(Path p) {
