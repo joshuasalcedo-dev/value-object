@@ -47,8 +47,38 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <dependencies>
+        <!-- Nullness annotations (@NullMarked, @Nullable) used across the value objects. -->
+        <dependency>
+            <groupId>org.jspecify</groupId>
+            <artifactId>jspecify</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <!-- OCR in the JVM (Tesseract through JavaCPP: native libraries for Windows, Linux and macOS are in the
+             jars; no install, no Docker). Optional: only io.joshuasalcedo.valueobject.ocr needs it, so a project
+             that wants OCR adds this dependency itself. Language data (eng.traineddata) is found through
+             TESSDATA_PREFIX or the usual install folders, or given to Ocr.open. -->
+        <dependency>
+            <groupId>org.bytedeco</groupId>
+            <artifactId>tesseract-platform</artifactId>
+            <version>5.5.0-1.5.11</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.12.2</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.5.3</version>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -70,7 +100,8 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>3.11.2</version>
                 <configuration>
-                    <!-- No public types yet: do not fail, the javadoc jar is still attached. -->
+                    <!-- Some older types lack full Javadoc: do not fail on that, the javadoc jar is still attached. -->
+                    <doclint>none</doclint>
                     <failOnError>false</failOnError>
                 </configuration>
                 <executions>
@@ -79,6 +110,12 @@
                         <goals><goal>jar</goal></goals>
                     </execution>
                 </executions>
+            </plugin>
+            <!-- the documentation site: mvn pretty-docs:generate (target/pretty-docs), mvn pretty-docs:serve -->
+            <plugin>
+                <groupId>io.joshuasalcedo.pretty</groupId>
+                <artifactId>pretty-docs-maven-plugin</artifactId>
+                <version>1.3.0</version>
             </plugin>
         </plugins>
     </build>

@@ -1,0 +1,36 @@
+                                                                                                Ana Reyes <ana.reyes@mail.example>
+Mailbox
+
+Paylo Bills Pay Receipt
+Paylo Bills Payment <no-reply@paylo.example>                                                             Thu, Feb 19, 2026 at 6:41 PM
+To: ana.reyes@mail.example
+
+                                          Thank you for using Paylo!
+
+                                                           Amount Paid
+
+                                                    PHP       5,025.00
+
+                                     Biller Name                MINDANAO WATER DISTRICT
+
+                                     Total Amount               PHP 5,025.00
+
+                                     Amount Paid                PHP 5,000.00
+
+                                     Fee                        PHP 25.00
+
+                                                                wee
+                                     Account Number                   3318
+
+                                     Date/Time                  19 February 2026 06:41:07 PM
+
+                                     Paylo Ref. No.             8820471163
+
+                                     Email Receipt Sent To      ana.reyes@mail.example
+
+                                                            Paylo
+
+                                                             Pay Bills
+
+Reminder: This has been processed and your payment will be posted within 3 business days. Please use this reference number 771204 when verifying the
+                                                      transaction with the biller.

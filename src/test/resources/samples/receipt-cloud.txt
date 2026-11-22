@@ -1,0 +1,43 @@
+ee
+ceeeeeeeeeeeee
+
+       Receipt                                                                                                nw |
+
+       Invoice number     7F3D21C8-0012
+       Receipt number     4418-6072
+       Date paid          January 15, 2026
+                              -
+       Payment method     Visa  4242
+
+       Northwind Cloud                           Bill to
+       100 Example Ave                           Kalayaan Digital
+       Suite 400                                 ops@kalayaan.example
+       Springfield, Oregon 97477
+       United States
+
+       billing@northwind.example
+
+       $42.50 paid on January 15, 2026
+
+       Description                                                            Qty             Unit price        Amount
+
+       Compute (per vCPU / hour)                                              120               $0.25           $30.00
+              -
+       Dec 15  Jan 14, 2026
+
+       Object storage (per GB)                                                 50               $0.20           $10.00
+              -
+       Dec 15  Jan 14, 2026
+
+       Starter (per seat)                                                       1               $2.50            $2.50
+             —
+       Jan 15  Feb 14, 2026
+
+                                                             Subtotal                                           $42.50
+
+                                                            Total                                               $42.50
+
+                                                            Amount paid                                         $42.50
+
+                -
+       4418-6072 $42.50 paid on January 15, 2026                                                              Page 1 of 1

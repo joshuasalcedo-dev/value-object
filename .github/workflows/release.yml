@@ -25,6 +25,8 @@ jobs:
           server-id: central
           server-username: MAVEN_CENTRAL_USERNAME
           server-password: MAVEN_CENTRAL_PASSWORD
+      - name: ValueObject.java is generated from the current value objects
+        run: java codegen/GenerateValueObject.java --check
       - name: Publish to Maven Central
         run: |
           VERSION="${{ github.event.inputs.version }}"
