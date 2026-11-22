@@ -1,0 +1,21 @@
+                                                   INVOICE
+
+Invoice No.:     INV-2026-011
+Invoice Date:    January 20, 2026
+Terms:           Net 30 EOM
+
+Bill from:  Lumen Design Studio
+            21 Harbor View Rd
+            Portland, OR 97209
+            United States
+
+Bill to:    Kalayaan Digital
+            5F Seaside Tower
+            Cebu City, 6000
+            Philippines
+
+Description                    Qty     UOM     Unit Price          Amount
+Brand guidelines                  1     EA       USD 1,800.00     USD 1,800.00
+Icon set                         24     PCS         USD 35.00       USD 840.00
+
+                                                  TOTAL       USD 2,640.00

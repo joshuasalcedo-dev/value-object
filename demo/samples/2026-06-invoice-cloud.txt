@@ -1,0 +1,22 @@
+                                                   INVOICE
+
+Invoice No.:     NWC-2026-0601
+Invoice Date:    June 1, 2026
+Terms:           Net 15
+
+Bill from:  Northwind Cloud
+            100 Example Ave
+            Springfield, Oregon 97477
+            United States
+
+Bill to:    Kalayaan Digital
+            5F Seaside Tower
+            Cebu City, 6000
+            Philippines
+
+Description                    Qty     UOM     Unit Price          Amount
+Compute                         744     HUR          USD 0.25       USD 186.00
+Object storage                  650     GB           USD 0.02        USD 13.00
+Support                           1     MON         USD 49.00        USD 49.00
+
+                                                  TOTAL         USD 248.00

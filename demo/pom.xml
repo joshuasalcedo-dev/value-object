@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- A desktop demo of the value-object library: open a folder of bills, invoices, receipts (images are read with
+         OCR, text files as they are) and see them as sheets and charts. Not published; it uses the library as built
+         in this repository:
+           mvn install                       (in the repository root, once: puts value-object in ~/.m2)
+           mvn -f demo/pom.xml javafx:run    (opens the app)
+           demo/screenshots.sh               (runs it on the sample documents and saves screenshots to image/) -->
+    <groupId>io.joshuasalcedo</groupId>
+    <artifactId>value-object-demo</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <name>value-object demo</name>
+
+    <properties>
+        <maven.compiler.release>25</maven.compiler.release>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <javafx.version>27.0.1</javafx.version>
+        <main.class>io.joshuasalcedo.valueobject.demo.Launcher</main.class>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.joshuasalcedo</groupId>
+            <artifactId>value-object</artifactId>
+            <version>0.1.0-SNAPSHOT</version>
+        </dependency>
+        <!-- OCR for image files: optional in the library, so the demo adds it -->
+        <dependency>
+            <groupId>org.bytedeco</groupId>
+            <artifactId>tesseract-platform</artifactId>
+            <version>5.5.0-1.5.11</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-swing</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+        <!-- the look: AtlantaFX themes (Primer, Nord, Cupertino, Dracula) -->
+        <dependency>
+            <groupId>io.github.mkpaz</groupId>
+            <artifactId>atlantafx-base</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+        <!-- the sheets: ControlsFX SpreadsheetView -->
+        <dependency>
+            <groupId>org.controlsfx</groupId>
+            <artifactId>controlsfx</artifactId>
+            <version>11.2.7</version>
+        </dependency>
+        <!-- icons -->
+        <dependency>
+            <groupId>org.kordamp.ikonli</groupId>
+            <artifactId>ikonli-javafx</artifactId>
+            <version>12.4.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.kordamp.ikonli</groupId>
+            <artifactId>ikonli-feather-pack</artifactId>
+            <version>12.4.0</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.14.0</version>
+            </plugin>
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>0.0.8</version>
+                <configuration>
+                    <mainClass>${main.class}</mainClass>
+                    <!-- ControlsFX reaches into JavaFX internals -->
+                    <options>
+                        <option>--add-exports=javafx.base/com.sun.javafx.event=ALL-UNNAMED</option>
+                        <option>--add-exports=javafx.controls/com.sun.javafx.scene.control=ALL-UNNAMED</option>
+                        <option>--add-exports=javafx.controls/com.sun.javafx.scene.control.behavior=ALL-UNNAMED</option>
+                        <option>--add-exports=javafx.controls/com.sun.javafx.scene.control.inputmap=ALL-UNNAMED</option>
+                        <option>--add-exports=javafx.graphics/com.sun.javafx.scene=ALL-UNNAMED</option>
+                        <option>--add-exports=javafx.graphics/com.sun.javafx.scene.traversal=ALL-UNNAMED</option>
+                        <option>--add-opens=javafx.controls/javafx.scene.control.skin=ALL-UNNAMED</option>
+                        <option>--add-opens=javafx.graphics/javafx.scene=ALL-UNNAMED</option>
+                        <option>--enable-native-access=ALL-UNNAMED</option>
+                    </options>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
