@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Published as io.joshuasalcedo:value-object, with its sources and Javadoc:
+           mvn install                  on this machine
+           mvn deploy -Prelease         Maven Central (the release workflow does this; it needs the Central
+                                        token in settings.xml server "central", and MAVEN_GPG_KEY /
+                                        MAVEN_GPG_PASSPHRASE for signing)
+         A release sets the version from the tag v1.2.3: mvn versions:set -DnewVersion=1.2.3 -->
+    <groupId>io.joshuasalcedo</groupId>
+    <artifactId>value-object</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>value-object</name>
+    <description>Small, immutable, self-validating value objects for Java.</description>
+    <url>https://github.com/joshuasalcedo-dev/value-object</url>
+    <inceptionYear>2026</inceptionYear>
+
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>joshuasalcedo-dev</id>
+            <name>Joshua Salcedo</name>
+            <url>https://github.com/joshuasalcedo-dev</url>
+        </developer>
+    </developers>
+
+    <scm>
+        <url>https://github.com/joshuasalcedo-dev/value-object</url>
+        <connection>scm:git:https://github.com/joshuasalcedo-dev/value-object.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/joshuasalcedo-dev/value-object.git</developerConnection>
+    </scm>
+
+    <properties>
+        <maven.compiler.release>25</maven.compiler.release>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.14.0</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.3.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals><goal>jar-no-fork</goal></goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.11.2</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals><goal>jar</goal></goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <!-- Signing and Maven Central: only on a release (mvn deploy -Prelease). -->
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>3.2.7</version>
+                        <configuration>
+                            <!-- Signs in-process from env MAVEN_GPG_KEY (ASCII-armoured) + MAVEN_GPG_PASSPHRASE;
+                                 no gpg binary or keyring needed. -->
+                            <signer>bc</signer>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals><goal>sign</goal></goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.sonatype.central</groupId>
+                        <artifactId>central-publishing-maven-plugin</artifactId>
+                        <version>0.9.0</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <publishingServerId>central</publishingServerId>
+                            <autoPublish>true</autoPublish>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>
