@@ -52,7 +52,7 @@ class FormatTest {
         assertTrue(json.contains("\"sources\": {"), json);
 
         String csv = r.lineItemsCsv();
-        assertTrue(csv.startsWith("description,quantity,unitPrice,amount,other\r\n"), csv);
+        assertTrue(csv.startsWith("description,quantity,unitPrice,amount,other,printed\r\n"), csv);
         assertTrue(csv.contains("Cafe Latte,2,,260.00 PHP,"), csv);
         assertNotNull(BillingDocument.detect(text).orElseThrow());
     }
