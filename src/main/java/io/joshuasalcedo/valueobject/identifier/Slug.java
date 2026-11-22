@@ -1,17 +1,20 @@
 package io.joshuasalcedo.valueobject.identifier;
 
+import java.util.Locale;
+import org.jspecify.annotations.Nullable;
+import java.util.Optional;
 import io.joshuasalcedo.valueobject.ValueObject;
 
 import io.joshuasalcedo.valueobject.exception.ValueObjectException;
 
 import java.text.Normalizer;
-import java.util.Objects;
 import java.util.regex.Pattern;
 
 /**
- * Value object representing a URL-friendly slug.
- * Slugs are lowercase, use hyphens for spaces, and contain only alphanumeric characters.
+ * A URL-friendly slug: at most 100 lower-case ASCII letters and digits in words joined by single hyphens, e.g.
+ * {@code "billing-report-2026"}. Use {@link #fromText(String)} to make one from any text.
  *
+ * @param value the slug, trimmed and lower case
  * @author JoshuaSalcedo
  * @since 1/24/2026
  */
@@ -26,13 +29,18 @@ public record Slug(String value) implements ValueObject, Comparable<Slug> {
     // Maximum slug length
     private static final int MAX_LENGTH = 100;
 
-    /** Null object representing an absent Slug. */
-    public static final Slug NULL = new Slug("");
 
+    /**
+     * Creates a slug from text already in slug form, trimming and lower-casing it.
+     *
+     * @throws ValueObjectException if it is {@code null}, blank, longer than 100 characters, or not in slug form
+     */
     public Slug {
-        Objects.requireNonNull(value, "Slug cannot be null");
-        if (!value.isEmpty()) {
-            value = value.trim().toLowerCase();
+        if (value == null) {
+            throw new ValueObjectException("Slug cannot be null");
+        }
+        {
+            value = value.trim().toLowerCase(Locale.ROOT);
 
             if (value.isBlank()) {
                 throw new ValueObjectException("Slug cannot be blank");
@@ -48,45 +56,38 @@ public record Slug(String value) implements ValueObject, Comparable<Slug> {
     }
 
     
-    public boolean isNull() {
-        return value.isEmpty();
-    }
 
     /**
-     * Creates a Slug from an already-valid slug string.
+     * Creates a slug from text already in slug form; the same as the constructor.
      *
-     * @param slug the slug string
-     * @return a new Slug
+     * @param slug the slug, e.g. {@code "billing-report"}
+     * @return the slug
+     * @throws ValueObjectException if it is not in slug form
      */
     public static Slug of(String slug) {
         return new Slug(slug);
     }
 
-    /**
-     * Returns the null object representation of Slug.
-     *
-     * @return the NULL slug constant
-     */
-    public static Slug nullValue() {
-        return NULL;
-    }
 
     /**
-     * Creates a Slug from any string by converting it to slug format.
-     * Converts spaces to hyphens, removes special characters, normalizes unicode.
+     * Makes a slug from any text: accents are removed ({@code "é"} to {@code "e"}), it is lower-cased, each run
+     * of other characters becomes one hyphen, hyphens at the ends are dropped, and it is cut to 100 characters.
      *
-     * @param text the text to convert
-     * @return a new Slug
+     * @param text the text to convert, e.g. {@code "Café Menu: 2026!"}
+     * @return the slug, e.g. {@code "cafe-menu-2026"}
+     * @throws ValueObjectException if {@code text} is {@code null} or no letters or digits are left
      */
     public static Slug fromText(String text) {
-        Objects.requireNonNull(text, "Text cannot be null");
+        if (text == null) {
+            throw new ValueObjectException("Text cannot be null");
+        }
 
         // Normalize unicode characters (é -> e, ñ -> n, etc.)
         String normalized = Normalizer.normalize(text, Normalizer.Form.NFD)
             .replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
 
         // Convert to lowercase
-        String lower = normalized.toLowerCase();
+        String lower = normalized.toLowerCase(Locale.ROOT);
 
         // Replace non-alphanumeric with hyphens
         String slugified = NON_ALPHANUMERIC.matcher(lower).replaceAll("-");
@@ -112,36 +113,40 @@ public record Slug(String value) implements ValueObject, Comparable<Slug> {
     }
 
     /**
-     * Checks if a string is a valid slug format.
+     * Checks whether a text, lower-cased and trimmed, is in slug form and at most 100 characters.
      *
-     * @param value the string to check
-     * @return true if valid slug format
+     * @param value the string to check; may be {@code null}
+     * @return whether it is a valid slug
      */
-    public static boolean isValid(String value) {
-        if (value == null || value.isBlank() || value.length() > MAX_LENGTH) {
-            return false;
-        }
-        return SLUG_PATTERN.matcher(value.toLowerCase().trim()).matches();
+    public static boolean isValid(@Nullable String value) {
+        return tryParse(value).isPresent();
     }
 
     /**
-     * Creates a unique slug by appending a number suffix.
+     * Returns a slug with a number appended after a hyphen, e.g. {@code "report-2"}, to tell apart slugs that
+     * would otherwise be the same.
      *
-     * @param suffix the number to append
-     * @return a new Slug with the suffix
+     * @param suffix the number to append; not negative
+     * @return the new slug
+     * @throws ValueObjectException if the number is negative or the result is longer than 100 characters
      */
     public Slug withSuffix(int suffix) {
         return new Slug(value + "-" + suffix);
     }
 
     /**
-     * Creates a unique slug by appending a string suffix.
+     * Returns a slug with a text appended after a hyphen. The text is lower-cased and everything but ASCII
+     * letters and digits is removed from it.
      *
-     * @param suffix the suffix to append
-     * @return a new Slug with the suffix
+     * @param suffix the suffix to append, e.g. {@code "Draft"}
+     * @return the new slug, or this slug when nothing is left of the suffix
+     * @throws ValueObjectException if {@code suffix} is {@code null} or the result is longer than 100 characters
      */
     public Slug withSuffix(String suffix) {
-        String normalizedSuffix = suffix.toLowerCase().replaceAll("[^a-z0-9]", "");
+        if (suffix == null) {
+            throw new ValueObjectException("A suffix is required");
+        }
+        String normalizedSuffix = suffix.toLowerCase(Locale.ROOT).replaceAll("[^a-z0-9]", "");
         if (normalizedSuffix.isBlank()) {
             return this;
         }
@@ -149,16 +154,16 @@ public record Slug(String value) implements ValueObject, Comparable<Slug> {
     }
 
     /**
-     * Returns the slug as a relative URL path.
+     * Returns the slug as a URL path, with a {@code /} in front.
      *
-     * @return the path starting with /
+     * @return the path, e.g. {@code "/billing-report"}
      */
     public String toPath() {
         return "/" + value;
     }
 
     /**
-     * Returns the number of segments (hyphen-separated parts).
+     * Returns the number of words (hyphen-separated parts).
      *
      * @return the segment count
      */
@@ -167,9 +172,9 @@ public record Slug(String value) implements ValueObject, Comparable<Slug> {
     }
 
     /**
-     * Returns the slug converted to camelCase.
+     * Returns the slug in camelCase.
      *
-     * @return the camelCase string
+     * @return the camelCase string, e.g. {@code "billingReport"}
      */
     public String toCamelCase() {
         String[] parts = value.split("-");
@@ -186,9 +191,9 @@ public record Slug(String value) implements ValueObject, Comparable<Slug> {
     }
 
     /**
-     * Returns the slug converted to PascalCase.
+     * Returns the slug in PascalCase.
      *
-     * @return the PascalCase string
+     * @return the PascalCase string, e.g. {@code "BillingReport"}
      */
     public String toPascalCase() {
         String[] parts = value.split("-");
@@ -205,9 +210,9 @@ public record Slug(String value) implements ValueObject, Comparable<Slug> {
     }
 
     /**
-     * Returns the slug converted to snake_case.
+     * Returns the slug in snake_case, its hyphens made underscores.
      *
-     * @return the snake_case string
+     * @return the snake_case string, e.g. {@code "billing_report"}
      */
     public String toSnakeCase() {
         return value.replace("-", "_");
@@ -222,4 +227,32 @@ public record Slug(String value) implements ValueObject, Comparable<Slug> {
     public String toString() {
         return value;
     }
+
+    /**
+     * Parses text already in slug form, trimming and lower-casing it.
+     *
+     * @param text the slug
+     * @return the slug
+     * @throws ValueObjectException if it is {@code null} or not a slug
+     */
+    public static Slug parse(String text) {
+        if (text == null) throw new ValueObjectException("A Slug is required");
+        return of(text);
+    }
+
+    /**
+     * Parses a slug as {@link #parse(String)} does, without throwing.
+     *
+     * @param text any text
+     * @return it as a {@link Slug}, or empty when it is not one; never throws
+     */
+    public static Optional<Slug> tryParse(@Nullable String text) {
+        if (text == null) return Optional.empty();
+        try {
+            return Optional.of(parse(text));
+        } catch (RuntimeException e) {
+            return Optional.empty();
+        }
+    }
+
 }

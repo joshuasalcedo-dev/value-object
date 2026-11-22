@@ -1,125 +1,137 @@
 package io.joshuasalcedo.valueobject.identifier;
 
+import java.util.Optional;
 import io.joshuasalcedo.valueobject.ValueObject;
 
 import io.joshuasalcedo.valueobject.exception.ValueObjectException;
 import org.jspecify.annotations.Nullable;
 
-import java.util.Objects;
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 /**
- * Value object representing a unique identifier.
- * Wraps UUID for type safety and provides convenient provider methods.
+ * A unique identifier: a typed wrapper around a {@link UUID}, made at random, from a UUID string or from a name.
  *
+ * @param value the UUID
  * @author JoshuaSalcedo
  * @since 1/24/2026
  */
 public record UniqueId(UUID value) implements ValueObject, Comparable<UniqueId> {
 
-    /** Null object representing an absent UniqueId (nil UUID). */
-    public static final UniqueId NULL = new UniqueId(new UUID(0, 0));
+    private static final Pattern CANONICAL =
+            Pattern.compile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}");
 
+
+    /**
+     * Wraps a UUID.
+     *
+     * @throws ValueObjectException if {@code value} is {@code null}
+     */
     public UniqueId {
-        Objects.requireNonNull(value, "UniqueId value cannot be null");
+        if (value == null) {
+            throw new ValueObjectException("UniqueId value cannot be null");
+        }
     }
 
     
-    public boolean isNull() {
-        return value.getMostSignificantBits() == 0 && value.getLeastSignificantBits() == 0;
-    }
 
     /**
-     * Creates a new random UniqueId.
+     * Creates a random (version 4) identifier.
      *
-     * @return a new random UniqueId
+     * @return a new random identifier
      */
     public static UniqueId generate() {
         return new UniqueId(UUID.randomUUID());
     }
 
     /**
-     * Creates a UniqueId from an existing UUID.
+     * Wraps an existing UUID; the same as the constructor.
      *
      * @param uuid the UUID
-     * @return a new UniqueId
+     * @return the identifier
+     * @throws ValueObjectException if {@code uuid} is {@code null}
      */
     public static UniqueId of(UUID uuid) {
         return new UniqueId(uuid);
     }
 
     /**
-     * Creates a UniqueId from a string representation.
+     * Creates an identifier from a UUID string, trimmed: 32 hex digits in either case, in the 8-4-4-4-12 dashed
+     * form. The short forms {@link UUID#fromString(String)} also tolerates (such as {@code "1-2-3-4-5"}) are
+     * rejected.
      *
-     * @param value the UUID string
-     * @return a new UniqueId
-     * @throws ValueObjectException if the string is not a valid UUID
+     * @param value the UUID string, e.g. {@code "123e4567-e89b-12d3-a456-426614174000"}
+     * @return the identifier
+     * @throws ValueObjectException if the string is {@code null} or not a valid UUID
      */
     public static UniqueId of(String value) {
-        Objects.requireNonNull(value, "UniqueId string cannot be null");
+        if (value == null) {
+            throw new ValueObjectException("UniqueId string cannot be null");
+        }
+        String t = value.trim();
+        if (!CANONICAL.matcher(t).matches()) {
+            throw new ValueObjectException("Invalid UUID format: " + value);
+        }
         try {
-            return new UniqueId(UUID.fromString(value.trim()));
+            return new UniqueId(UUID.fromString(t));
         } catch (IllegalArgumentException e) {
             throw new ValueObjectException("Invalid UUID format: " + value, e);
         }
     }
 
+
     /**
-     * Parses a UUID string, returning null if invalid.
+     * Parses an identifier from a UUID string, trimmed.
      *
-     * @param value the UUID string
-     * @return the UniqueId or null
+     * @param text the text
+     * @return the identifier
+     * @throws ValueObjectException if it is {@code null} or not a valid UUID
      */
-    public static @Nullable UniqueId parse(String value) {
-        try {
-            return of(value);
-        } catch (ValueObjectException e) {
-            return null;
-        }
+    public static UniqueId parse(String text) {
+        if (text == null) throw new ValueObjectException("A UniqueId is required");
+        return of(text);
+    }
+
+
+    /**
+     * Checks whether a text, once trimmed, is a UUID in the dashed form {@link #of(String)} reads.
+     *
+     * @param value the string to check; may be {@code null}
+     * @return whether it is a valid UUID
+     */
+    public static boolean isValid(@Nullable String value) {
+        return tryParse(value).isPresent();
     }
 
     /**
-     * Returns the null object representation of UniqueId.
-     *
-     * @return the NULL unique id constant (nil UUID)
-     */
-    public static UniqueId nullValue() {
-        return NULL;
-    }
-
-    /**
-     * Checks if a string is a valid UUID format.
-     *
-     * @param value the string to check
-     * @return true if valid UUID format
-     */
-    public static boolean isValid(String value) {
-        if (value == null || value.isBlank()) {
-            return false;
-        }
-        try {
-            UUID.fromString(value.trim());
-            return true;
-        } catch (IllegalArgumentException e) {
-            return false;
-        }
-    }
-
-    /**
-     * Creates a name-based (version 3) UUID using MD5 hashing.
+     * Creates a name-based (version 3, MD5) identifier as RFC 4122 (section 4.3) defines it: the MD5 hash of the
+     * namespace's 16 bytes followed by the name in UTF-8, with the version and variant bits set. The same
+     * namespace and name always give the same identifier, and it matches other RFC 4122 implementations: the
+     * DNS namespace ({@code 6ba7b810-9dad-11d1-80b4-00c04fd430c8}) and {@code "www.example.com"} give
+     * {@code 5df41881-3aed-3515-88a7-2f4a814cf09e}.
      *
      * @param namespace the namespace UUID
      * @param name the name within the namespace
-     * @return a new UniqueId
+     * @return the identifier
+     * @throws ValueObjectException if either is {@code null}
      */
     public static UniqueId fromName(UUID namespace, String name) {
-        return new UniqueId(UUID.nameUUIDFromBytes(
-            (namespace.toString() + name).getBytes()
-        ));
+        if (namespace == null || name == null) {
+            throw new ValueObjectException("A namespace and a name are required");
+        }
+        byte[] nameBytes = name.getBytes(StandardCharsets.UTF_8);
+        ByteBuffer buffer = ByteBuffer.allocate(16 + nameBytes.length);
+        buffer.putLong(namespace.getMostSignificantBits());
+        buffer.putLong(namespace.getLeastSignificantBits());
+        buffer.put(nameBytes);
+        // nameUUIDFromBytes takes the MD5 of the bytes and sets version 3 and the IETF variant
+        return new UniqueId(UUID.nameUUIDFromBytes(buffer.array()));
     }
 
     /**
-     * Returns the string representation of the UUID.
+     * Returns the UUID as text, lower case with dashes.
      *
      * @return the UUID string in standard format
      */
@@ -128,7 +140,7 @@ public record UniqueId(UUID value) implements ValueObject, Comparable<UniqueId> 
     }
 
     /**
-     * Returns the UUID as a compact string (no dashes).
+     * Returns the UUID as 32 lower-case hex digits, without dashes.
      *
      * @return the compact UUID string
      */
@@ -137,7 +149,7 @@ public record UniqueId(UUID value) implements ValueObject, Comparable<UniqueId> 
     }
 
     /**
-     * Returns the most significant bits.
+     * Returns the most significant 64 bits of the UUID.
      *
      * @return the most significant 64 bits
      */
@@ -146,7 +158,7 @@ public record UniqueId(UUID value) implements ValueObject, Comparable<UniqueId> 
     }
 
     /**
-     * Returns the least significant bits.
+     * Returns the least significant 64 bits of the UUID.
      *
      * @return the least significant 64 bits
      */
@@ -155,18 +167,18 @@ public record UniqueId(UUID value) implements ValueObject, Comparable<UniqueId> 
     }
 
     /**
-     * Returns the UUID version.
+     * Returns the UUID version, as {@link UUID#version()}.
      *
-     * @return the version
+     * @return the version: 4 for random, 3 for name-based
      */
     public int version() {
         return value.version();
     }
 
     /**
-     * Returns the UUID variant.
+     * Returns the UUID variant, as {@link UUID#variant()}.
      *
-     * @return the variant
+     * @return the variant: 2 for the IETF (RFC 4122) layout
      */
     public int variant() {
         return value.variant();
@@ -181,4 +193,20 @@ public record UniqueId(UUID value) implements ValueObject, Comparable<UniqueId> 
     public String toString() {
         return value.toString();
     }
+
+    /**
+     * Parses an identifier as {@link #parse(String)} does, without throwing.
+     *
+     * @param text any text
+     * @return it as a {@link UniqueId}, or empty when it is not one; never throws
+     */
+    public static Optional<UniqueId> tryParse(@Nullable String text) {
+        if (text == null) return Optional.empty();
+        try {
+            return Optional.of(parse(text));
+        } catch (RuntimeException e) {
+            return Optional.empty();
+        }
+    }
+
 }

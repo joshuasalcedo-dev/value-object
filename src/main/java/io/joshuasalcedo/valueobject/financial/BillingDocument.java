@@ -49,8 +49,9 @@ public interface BillingDocument extends ValueObject {
     }
 
     /**
+     * {@return it read as a {@link Receipt}, {@link Invoice} or {@link Bill}, or empty when it is none of them}
+     *
      * @param text any text
-     * @return it read as a {@link Receipt}, {@link Invoice} or {@link Bill}, or empty when it is none of them
      */
     static Optional<BillingDocument> detect(@Nullable String text) {
         if (text == null || text.isBlank()) return Optional.empty();
@@ -61,83 +62,80 @@ public interface BillingDocument extends ValueObject {
         });
     }
 
-    /** @return what the document shares with the other kinds */
+    /** {@return what the document shares with the other kinds} */
     Fields fields();
 
-    /** @return its number: the invoice, receipt or bill number */
+    /** {@return its number: the invoice, receipt or bill number} */
     default Optional<String> number() {
         return Optional.ofNullable(fields().number());
     }
 
-    /** @return the date it was issued (for a receipt, the date paid) */
+    /** {@return the date it was issued (for a receipt, the date paid)} */
     default Optional<LocalDate> date() {
         return Optional.ofNullable(fields().date());
     }
 
-    /** @return who issued it: the seller, merchant or biller */
+    /** {@return who issued it: the seller, merchant or biller} */
     default Optional<Party> issuer() {
         return Optional.ofNullable(fields().issuer());
     }
 
-    /** @return who it is for: the customer, client or account holder */
+    /** {@return who it is for: the customer, client or account holder} */
     default Optional<Party> customer() {
         return Optional.ofNullable(fields().customer());
     }
 
-    /** @return the lines charged, from its line-item table */
+    /** {@return the lines charged, from its line-item table} */
     default List<LineItem> lineItems() {
         return fields().lineItems();
     }
 
-    /** @return every table found on it, the line items' among them */
+    /** {@return every table found on it, the line items' among them} */
     default List<Table> tables() {
         return fields().tables();
     }
 
-    /** @return the total before tax */
+    /** {@return the total before tax} */
     default Optional<Money> subtotal() {
         return Optional.ofNullable(fields().subtotal());
     }
 
-    /** @return the tax (VAT, GST, sales tax) */
+    /** {@return the tax (VAT, GST, sales tax)} */
     default Optional<Money> tax() {
         return Optional.ofNullable(fields().tax());
     }
 
-    /** @return the total: the amount due, or the amount of the payment */
+    /** {@return the total: the amount due, or the amount of the payment} */
     default Optional<Money> total() {
         return Optional.ofNullable(fields().total());
     }
 
-    /** @return the currency most of its amounts are in */
+    /** {@return the currency most of its amounts are in} */
     default Optional<Currency> currency() {
         return Optional.ofNullable(fields().currency());
     }
 
     /**
-     * @return everything else found on it, by label as printed ("Merchant", "Status", "Channel", ...), plus
-     *         {@code "addresses"}, {@code "emails"}, {@code "phones"} and {@code "links"} when any were found. A value
-     *         is a {@link ValueObject} or a {@link LocalDate} when it parses as one, else the text.
+     * {@return everything else found on it, by label as printed ("Merchant", "Status", "Channel", ...), plus {@code "addresses"}, {@code "emails"}, {@code "phones"} and {@code "links"} when any were found. A value is a {@link ValueObject} or a {@link LocalDate} when it parses as one, else the text.}
      */
     default Map<String, Object> metadata() {
         return fields().metadata();
     }
 
-    /** @return every value object found anywhere in its text, by type */
+    /** {@return every value object found anywhere in its text, by type} */
     default Map<ValueObject.Type, List<ValueObject>> detected() {
         Map<ValueObject.Type, List<ValueObject>> out = new java.util.EnumMap<>(ValueObject.Type.class);
         for (Found f : fields().found()) out.computeIfAbsent(f.type(), k -> new java.util.ArrayList<>()).add(f.value());
         return out;
     }
 
-    /** @return every value object found in its text, in order, each with the shape that matched it and where */
+    /** {@return every value object found in its text, in order, each with the shape that matched it and where} */
     default List<Found> found() {
         return fields().found();
     }
 
     /**
-     * @return how each field was read, by field name ({@code "number"}, {@code "total"}, {@code "issuer"},
-     *         {@code "dueDate"}, ...): the label, the value as printed, the line, and the form it was in
+     * {@return how each field was read, by field name ({@code "number"}, {@code "total"}, {@code "issuer"}, {@code "dueDate"}, ...): the label, the value as printed, the line, and the form it was in}
      */
     default Map<String, Source> sources() {
         return fields().sources();
@@ -174,17 +172,17 @@ public interface BillingDocument extends ValueObject {
         INFERRED
     }
 
-    /** @return it as JSON: its kind, fields, line items, metadata, sources and found values */
+    /** {@return it as JSON: its kind, fields, line items, metadata, sources and found values} */
     default String toJson() {
         return io.joshuasalcedo.valueobject.format.Json.pretty(this);
     }
 
-    /** @return its line items as CSV: description, quantity, unit price, amount, other columns */
+    /** {@return its line items as CSV: description, quantity, unit price, amount, other columns} */
     default String lineItemsCsv() {
         return io.joshuasalcedo.valueobject.format.Csv.of(lineItems());
     }
 
-    /** @return its text, as read */
+    /** {@return its text, as read} */
     default String text() {
         return fields().text();
     }
@@ -212,6 +210,7 @@ public interface BillingDocument extends ValueObject {
                   @Nullable Money total, @Nullable Currency currency, Map<String, Object> metadata,
                   List<Found> found, Map<String, Source> sources, String text) {
 
+        /** Makes the fields; null lists and maps become empty, a null text empty. */
         public Fields {
             lineItems = lineItems == null ? List.of() : List.copyOf(lineItems);
             tables = tables == null ? List.of() : List.copyOf(tables);
@@ -221,4 +220,28 @@ public interface BillingDocument extends ValueObject {
             text = text == null ? "" : text;
         }
     }
+
+    /**
+     * {@return it as a {@link BillingDocument}, or empty when it is not one; never throws}
+     *
+     * @param text any text
+     */
+    public static Optional<BillingDocument> tryParse(@Nullable String text) {
+        if (text == null) return Optional.empty();
+        try {
+            return Optional.of(parse(text));
+        } catch (RuntimeException e) {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * {@return whether it is a {@link BillingDocument}}
+     *
+     * @param text any text
+     */
+    public static boolean isValid(@Nullable String text) {
+        return tryParse(text).isPresent();
+    }
+
 }

@@ -60,6 +60,7 @@ public final class TableDetector {
      * @param height its height
      */
     public record Word(String text, double x, double y, double width, double height) {
+        /** Makes a word; its text is required. */
         public Word {
             Objects.requireNonNull(text, "text");
         }
@@ -80,24 +81,35 @@ public final class TableDetector {
     // ── Entry points ──────────────────────────────────────────────────────
 
     /**
+     * {@return the tables in it, in reading order; empty when there are none}
+     *
      * @param text Tesseract TSV, positioned words, or plain text
-     * @return the tables in it, in reading order; empty when there are none
      */
     public static List<Table> detect(@Nullable String text) {
         if (text == null || text.isBlank()) return List.of();
         if (TSV_HEADER.matcher(text).find()) return fromTsv(text);
         List<Word> positioned = positioned(text);
         if (positioned != null) return detect(1, positioned);
-        return tables(1, plainLines(text), false);
+        String[] raw = text.split("\\R", -1);
+        return tables(1, plainLines(text), false).stream()
+                .map(t -> t.withText(String.join("\n", java.util.Arrays.asList(raw)
+                        .subList(t.firstLine(), Math.min(raw.length, t.lastLine() + 1)))))
+                .toList();
     }
 
     /**
+     * {@return the tables among them}
+     *
      * @param page  the page number to report
      * @param words the page's words with their boxes, in any order
-     * @return the tables among them
      */
     public static List<Table> detect(int page, List<Word> words) {
-        return tables(page, wordLines(words), true);
+        List<Line> lines = wordLines(words);
+        return tables(page, lines, true).stream().map(t -> t.withText(lines.stream()
+                        .filter(l -> l.number() >= t.firstLine() && l.number() <= t.lastLine() && !l.cells().isEmpty())
+                        .map(l -> String.join("  ", l.cells().stream().map(Cell::text).toList()))
+                        .collect(java.util.stream.Collectors.joining("\n"))))
+                .toList();
     }
 
     // ── Reading the input ─────────────────────────────────────────────────
@@ -110,7 +122,13 @@ public final class TableDetector {
     }
 
     /** A line of cells; {@code gapBefore} when a blank line (or a wide gap) comes before it. */
-    private record Line(int number, List<Cell> cells, boolean gapBefore, boolean rule) {}
+    private record Line(int number, List<Cell> cells, boolean gapBefore, boolean rule, double y) {
+
+        /** A line of plain text: its y is its number. */
+        Line(int number, List<Cell> cells, boolean gapBefore, boolean rule) {
+            this(number, cells, gapBefore, rule, number);
+        }
+    }
 
     private static List<Table> fromTsv(String tsv) {
         List<Table> out = new ArrayList<>();
@@ -238,7 +256,7 @@ public final class TableDetector {
             previousY = lineY;
             String joined = line.stream().map(Word::text).collect(Collectors.joining(" "));
             if (RULE_LINE.matcher(joined).matches()) {
-                lines.add(new Line(i, List.of(), gap, true));
+                lines.add(new Line(i, List.of(), gap, true, lineY));
                 continue;
             }
             List<Cell> cells = new ArrayList<>();
@@ -256,7 +274,7 @@ public final class TableDetector {
             }
             if (!cell.isEmpty()) cells.add(cellOf(cell));
             cells.removeIf(TableDetector::isScanNoise);
-            lines.add(new Line(i, cells, gap, false));
+            lines.add(new Line(i, cells, gap, false, lineY));
         }
         return lines;
     }
@@ -294,15 +312,22 @@ public final class TableDetector {
         }
         close(block, blocks);
 
+        // one character's width in the lines' units (1 in plain text; pixels or points for word boxes)
+        double unit = 1;
+        if (positioned) {
+            double[] widths = lines.stream().flatMap(l -> l.cells().stream())
+                    .filter(c -> c.text().length() >= 2).mapToDouble(c -> (c.right() - c.x()) / c.text().length()).sorted().toArray();
+            if (widths.length > 0) unit = Math.max(1, widths[widths.length / 2]);
+        }
         // 2. rows are often apart (tall bordered rows on a page, blank lines in OCR text): blocks whose columns line
         //    up are one table; so is a block of wrapped one-cell lines between two such blocks
         List<List<Line>> merged = new ArrayList<>();
         for (int i = 0; i < blocks.size(); i++) {
             List<Line> b = blocks.get(i);
             boolean oneCells = b.stream().allMatch(l -> l.cells().size() < 2);
-            if (!merged.isEmpty() && !oneCells && aligned(merged.getLast(), b)) {
+            if (!merged.isEmpty() && !oneCells && aligned(merged.getLast(), b, unit)) {
                 merged.getLast().addAll(b);
-            } else if (!merged.isEmpty() && oneCells && i + 1 < blocks.size() && aligned(merged.getLast(), blocks.get(i + 1))) {
+            } else if (!merged.isEmpty() && oneCells && i + 1 < blocks.size() && aligned(merged.getLast(), blocks.get(i + 1), unit)) {
                 merged.getLast().addAll(b);
             } else {
                 merged.add(new ArrayList<>(b));
@@ -328,25 +353,25 @@ public final class TableDetector {
     }
 
     /** Whether most columns of {@code next} sit under columns of {@code previous}, and the other way round. */
-    private static boolean aligned(List<Line> previous, List<Line> next) {
+    private static boolean aligned(List<Line> previous, List<Line> next, double unit) {
         List<Line> pa = previous.stream().filter(l -> l.cells().size() >= 2).toList();
         List<Line> pb = next.stream().filter(l -> l.cells().size() >= 2).toList();
         if (pa.isEmpty() || pb.isEmpty()) return false;
         List<Span> a = spans(pa);
         List<Span> b = spans(pb);
         if (a.size() < 2 || b.size() < 2) return false;
-        return share(a, b) >= 0.6 && share(b, a) >= 0.6;
+        return share(a, b, unit) >= 0.6 && share(b, a, unit) >= 0.6;
     }
 
     /** The share of columns in {@code of} that line up with one in {@code in}: same left edge, or same right edge. */
-    private static double share(List<Span> of, List<Span> in) {
-        long hits = of.stream().filter(s -> in.stream().anyMatch(o -> edges(s, o))).count();
+    private static double share(List<Span> of, List<Span> in, double unit) {
+        long hits = of.stream().filter(s -> in.stream().anyMatch(o -> edges(s, o, unit))).count();
         return (double) hits / of.size();
     }
 
     /** Two columns line up when they start or end together (left- or right-aligned), within a little. */
-    private static boolean edges(Span a, Span b) {
-        double tolerance = Math.max(4, Math.min(a.right - a.left, b.right - b.left) * 0.15);
+    private static boolean edges(Span a, Span b, double unit) {
+        double tolerance = Math.max(4 * unit, Math.min(a.right - a.left, b.right - b.left) * 0.15);
         if (a.left >= 1_000_000 || b.left >= 1_000_000) return Math.abs(a.left - b.left) < 1;   // split by delimiters
         return Math.abs(a.left - b.left) <= tolerance || Math.abs(a.right - b.right) <= tolerance;
     }
@@ -412,9 +437,12 @@ public final class TableDetector {
             return build(page, lines.subList(header, lines.size()));
         }
 
-        // a row that starts with an empty first column and fills less than half continues the row above
         List<String[]> rows = new ArrayList<>();
         List<int[]> rowLines = new ArrayList<>();
+        if (anchoredRows(grid, lineNumbers, lines.stream().map(Line::y).toList(), rows, rowLines)) {
+            grid = List.of();   // rows made from their anchors; nothing left to join below
+        }
+        // a row that starts with an empty first column and fills less than half continues the row above
         for (int i = 0; i < grid.size(); i++) {
             String[] row = grid.get(i);
             long filled = Arrays.stream(row).filter(s -> !s.isEmpty()).count();
@@ -479,6 +507,113 @@ public final class TableDetector {
         }
         List<List<String>> cells = body.stream().map(List::of).toList();
         return new Table(page, rowLines.getFirst()[0], rowLines.getLast()[1], headerRows > 0, columns, cells);
+    }
+
+    /**
+     * Rows anchored on their numbers. A line with a number, an amount or a quantity in it is a row's anchor; every
+     * other short line (fewer than half the columns filled) is part of an anchor's row. When text comes before the
+     * first anchor, the rows are printed centred on their anchors (a wrapped description above and below its numbers),
+     * so a line belongs to the nearest anchor; otherwise it belongs to the anchor above it. A header row stays a row.
+     *
+     * @return false (and nothing added) when fewer than two lines are anchors: the plain joining applies
+     */
+    private static boolean anchoredRows(List<String[]> grid, List<Integer> lineNumbers, List<Double> ys, List<String[]> rows,
+                                        List<int[]> rowLines) {
+        int start = !grid.isEmpty() && isHeaderRow(grid.getFirst()) ? 1 : 0;
+        int n = grid.size();
+        boolean[] anchor = new boolean[n];
+        boolean[] part = new boolean[n];
+        int anchors = 0;
+        // the key column: the first one holding a number in at least one line in six (an item number, a quantity;
+        // a row can span several lines);
+        // a row is an anchor when it has a number there (or, without such a column, anywhere)
+        int width = grid.isEmpty() ? 0 : grid.getFirst().length;
+        int key = -1;
+        for (int c = 0; c < width && key < 0; c++) {
+            int col = c;
+            long numbers = grid.subList(start, n).stream().filter(r -> isAmount(r[col])).count();
+            if (numbers >= 2 && numbers * 6 >= n - start) key = c;
+        }
+        for (int i = start; i < n; i++) {
+            String[] row = grid.get(i);
+            long filled = Arrays.stream(row).filter(s -> !s.isEmpty()).count();
+            anchor[i] = key >= 0 ? isAmount(row[key]) : Arrays.stream(row).anyMatch(TableDetector::isAmount);
+            part[i] = !anchor[i] && filled > 0 && (filled == 1 || filled * 2 <= row.length || key >= 0);
+            if (anchor[i]) anchors++;
+        }
+        // after the last anchor, a line with amounts is a total ("Subtotal  390.00"), not part of the last row
+        int lastAnchor = -1;
+        for (int i = start; i < n; i++) if (anchor[i]) lastAnchor = i;
+        for (int i = lastAnchor + 1; i < n; i++) {
+            if (Arrays.stream(grid.get(i)).anyMatch(TableDetector::isAmount)) part[i] = false;
+        }
+        if (anchors < 2) return false;
+        // only when there are lines to place: otherwise the table is already one line per row
+        boolean anyPart = false;
+        for (int i = start; i < n; i++) anyPart |= part[i];
+        if (!anyPart) return false;
+
+        int firstAnchor = start;
+        while (!anchor[firstAnchor]) firstAnchor++;
+        boolean centred = false;
+        for (int i = start; i < firstAnchor; i++) centred |= part[i];
+
+        int[] owner = new int[n];
+        for (int i = 0; i < n; i++) {
+            owner[i] = i;
+            if (!part[i]) continue;
+            int best = -1;
+            if (centred) {
+                double bestDistance = Double.MAX_VALUE;
+                for (int a = start; a < n; a++) {
+                    if (!anchor[a]) continue;
+                    double d = Math.abs(ys.get(a) - ys.get(i));
+                    if (d <= bestDistance) {   // a tie goes to the anchor below: centred text starts above its numbers
+                        bestDistance = d;
+                        best = a;
+                    }
+                }
+            } else {
+                for (int a = start; a < i; a++) if (anchor[a]) best = a;
+            }
+            if (best >= 0) owner[i] = best;
+        }
+
+        // one row per header, anchor, or line that belongs to none; parts joined in line order
+        Map<Integer, String[]> made = new LinkedHashMap<>();
+        Map<Integer, int[]> lines = new LinkedHashMap<>();
+        for (int i = 0; i < n; i++) {
+            if (owner[i] == i) {
+                made.put(i, grid.get(i).clone());
+                lines.put(i, new int[] {lineNumbers.get(i), lineNumbers.get(i)});
+            }
+        }
+        for (int i = 0; i < n; i++) {
+            if (owner[i] == i) continue;
+            String[] into = made.get(owner[i]);
+            String[] from = grid.get(i);
+            int[] span = lines.get(owner[i]);
+            for (int c = 0; c < from.length; c++) {
+                if (from[c].isEmpty()) continue;
+                // a line above its anchor reads before it, a line below after it
+                boolean above = lineNumbers.get(i) < span[0] || i < owner[i];
+                into[c] = into[c].isEmpty() ? from[c] : above ? from[c] + " " + into[c] : into[c] + " " + from[c];
+            }
+            span[0] = Math.min(span[0], lineNumbers.get(i));
+            span[1] = Math.max(span[1], lineNumbers.get(i));
+        }
+        rows.addAll(made.values());
+        rowLines.addAll(lines.values());
+        return true;
+    }
+
+    /** A number, an amount of money, or a quantity: what a table row's anchor holds. */
+    private static boolean isAmount(String cell) {
+        if (cell.isEmpty()) return false;
+        if (isNumber(cell)) return true;
+        Optional<ValueObject.Type> t = ValueObject.identify(cell);
+        return t.filter(x -> x == ValueObject.Type.MONEY || x == ValueObject.Type.QUANTITY || x == ValueObject.Type.PERCENTAGE)
+                .isPresent();
     }
 
     /** Column extents: the cells of the most common row shape, merged where they overlap; other cells join or add. */

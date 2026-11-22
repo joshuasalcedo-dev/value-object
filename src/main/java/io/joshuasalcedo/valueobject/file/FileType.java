@@ -1,5 +1,6 @@
 package io.joshuasalcedo.valueobject.file;
 
+import io.joshuasalcedo.valueobject.exception.ValueObjectException;
 import io.joshuasalcedo.valueobject.ValueObject;
 
 import org.jspecify.annotations.Nullable;
@@ -29,59 +30,101 @@ import java.util.stream.Collectors;
 public enum FileType implements ValueObject {
 
     // ── Documents ───────────────────────────────────────────────────────────
+    /** application/pdf. */
     PDF("application/pdf", Category.DOCUMENT, bytes("%PDF"), "pdf"),
+    /** application/msword. */
     DOC("application/msword", Category.DOCUMENT, hex("D0CF11E0A1B11AE1"), "doc"),
+    /** application/vnd.openxmlformats-officedocument.wordprocessingml.document. */
     DOCX("application/vnd.openxmlformats-officedocument.wordprocessingml.document", Category.DOCUMENT, null, "docx"),
+    /** application/vnd.ms-excel. */
     XLS("application/vnd.ms-excel", Category.SPREADSHEET, hex("D0CF11E0A1B11AE1"), "xls"),
+    /** application/vnd.openxmlformats-officedocument.spreadsheetml.sheet. */
     XLSX("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", Category.SPREADSHEET, null, "xlsx"),
+    /** application/vnd.ms-powerpoint. */
     PPT("application/vnd.ms-powerpoint", Category.PRESENTATION, hex("D0CF11E0A1B11AE1"), "ppt"),
+    /** application/vnd.openxmlformats-officedocument.presentationml.presentation. */
     PPTX("application/vnd.openxmlformats-officedocument.presentationml.presentation", Category.PRESENTATION, null, "pptx"),
+    /** application/vnd.oasis.opendocument.text. */
     ODT("application/vnd.oasis.opendocument.text", Category.DOCUMENT, null, "odt"),
+    /** application/rtf. */
     RTF("application/rtf", Category.DOCUMENT, bytes("{\\rtf"), "rtf"),
 
     // ── Text / data ─────────────────────────────────────────────────────────
+    /** text/plain. */
     TXT("text/plain", Category.TEXT, null, "txt", "text", "log"),
+    /** text/csv. */
     CSV("text/csv", Category.SPREADSHEET, null, "csv"),
+    /** text/markdown. */
     MARKDOWN("text/markdown", Category.TEXT, null, "md", "markdown"),
+    /** text/html. */
     HTML("text/html", Category.TEXT, null, "html", "htm"),
+    /** application/json. */
     JSON("application/json", Category.DATA, null, "json"),
+    /** application/xml. */
     XML("application/xml", Category.DATA, bytes("<?xml"), "xml"),
+    /** application/yaml. */
     YAML("application/yaml", Category.DATA, null, "yaml", "yml"),
 
     // ── Images ──────────────────────────────────────────────────────────────
+    /** image/png. */
     PNG("image/png", Category.IMAGE, hex("89504E470D0A1A0A"), "png"),
+    /** image/jpeg. */
     JPEG("image/jpeg", Category.IMAGE, hex("FFD8FF"), "jpg", "jpeg"),
+    /** image/gif. */
     GIF("image/gif", Category.IMAGE, bytes("GIF8"), "gif"),
+    /** image/webp. */
     WEBP("image/webp", Category.IMAGE, null, "webp"),
+    /** image/bmp. */
     BMP("image/bmp", Category.IMAGE, bytes("BM"), "bmp"),
+    /** image/tiff. */
     TIFF("image/tiff", Category.IMAGE, hex("49492A00"), "tif", "tiff"),
+    /** image/svg+xml. */
     SVG("image/svg+xml", Category.IMAGE, null, "svg"),
+    /** image/vnd.microsoft.icon. */
     ICO("image/vnd.microsoft.icon", Category.IMAGE, hex("00000100"), "ico"),
+    /** image/heic. */
     HEIC("image/heic", Category.IMAGE, null, "heic"),
 
     // ── Audio ───────────────────────────────────────────────────────────────
+    /** audio/mpeg. */
     MP3("audio/mpeg", Category.AUDIO, bytes("ID3"), "mp3"),
+    /** audio/wav. */
     WAV("audio/wav", Category.AUDIO, null, "wav"),
+    /** audio/ogg. */
     OGG("audio/ogg", Category.AUDIO, bytes("OggS"), "ogg", "oga"),
+    /** audio/flac. */
     FLAC("audio/flac", Category.AUDIO, bytes("fLaC"), "flac"),
+    /** audio/aac. */
     AAC("audio/aac", Category.AUDIO, null, "aac"),
+    /** audio/mp4. */
     M4A("audio/mp4", Category.AUDIO, null, "m4a"),
 
     // ── Video ───────────────────────────────────────────────────────────────
+    /** video/mp4. */
     MP4("video/mp4", Category.VIDEO, null, "mp4", "m4v"),
+    /** video/quicktime. */
     MOV("video/quicktime", Category.VIDEO, null, "mov"),
+    /** video/webm. */
     WEBM("video/webm", Category.VIDEO, hex("1A45DFA3"), "webm"),
+    /** video/x-matroska. */
     MKV("video/x-matroska", Category.VIDEO, hex("1A45DFA3"), "mkv"),
+    /** video/x-msvideo. */
     AVI("video/x-msvideo", Category.VIDEO, null, "avi"),
 
     // ── Archives ────────────────────────────────────────────────────────────
+    /** application/zip. */
     ZIP("application/zip", Category.ARCHIVE, hex("504B0304"), "zip"),
+    /** application/gzip. */
     GZIP("application/gzip", Category.ARCHIVE, hex("1F8B"), "gz"),
+    /** application/x-tar. */
     TAR("application/x-tar", Category.ARCHIVE, null, "tar"),
+    /** application/x-7z-compressed. */
     SEVEN_ZIP("application/x-7z-compressed", Category.ARCHIVE, hex("377ABCAF271C"), "7z"),
+    /** application/vnd.rar. */
     RAR("application/vnd.rar", Category.ARCHIVE, bytes("Rar!"), "rar"),
 
     // ── Unknown / Default ───────────────────────────────────────────────────
+    /** Any other content: application/octet-stream. */
     UNKNOWN("application/octet-stream", Category.OTHER, null, "bin");
 
     private static final Map<String, FileType> BY_EXTENSION = Arrays.stream(values())
@@ -106,15 +149,19 @@ public enum FileType implements ValueObject {
     // ── Lookups ─────────────────────────────────────────────────────────────
 
     /**
+     * Looks a type up by MIME type, then by file name, then by extension; never throws.
+     *
      * @param text a MIME type ({@code "image/png"}), a file name ({@code "a.pdf"}) or an extension ({@code "pdf"})
      * @return the type it names, or empty
      */
-    public static Optional<FileType> parse(@Nullable String text) {
+    public static Optional<FileType> tryParse(@Nullable String text) {
         if (text == null || text.isBlank()) return Optional.empty();
         return fromMimeType(text).or(() -> fromFileName(text)).or(() -> fromExtension(text));
     }
 
     /**
+     * Looks a type up by extension, ignoring case, surrounding whitespace and a leading dot.
+     *
      * @param extension e.g. {@code "pdf"}, {@code ".PDF"}
      * @return the type with that extension, or empty
      */
@@ -126,6 +173,8 @@ public enum FileType implements ValueObject {
     }
 
     /**
+     * Looks a type up by the extension after the last dot of a file name, ignoring case.
+     *
      * @param fileName e.g. {@code "invoice.pdf"}
      * @return the type its extension names, or empty when it has none or an unknown one
      */
@@ -136,6 +185,8 @@ public enum FileType implements ValueObject {
     }
 
     /**
+     * Looks a type up by MIME type, ignoring case.
+     *
      * @param mimeType e.g. {@code "image/png"}; parameters such as {@code ;charset=utf-8} are ignored
      * @return the type with that MIME type, or empty
      */
@@ -146,8 +197,9 @@ public enum FileType implements ValueObject {
     }
 
     /**
-     * Sniffs the content's first bytes. Container formats (DOCX, XLSX, ... are ZIPs; DOC, XLS, PPT share
-     * one header) are reported as the first type with that header, so prefer the file name when you have it.
+     * Sniffs the content's first bytes. Container formats are reported as the first type with their header:
+     * DOCX, XLSX, PPTX and ODT come back as {@link #ZIP}, DOC, XLS and PPT as {@link #DOC}, WEBM and MKV as
+     * {@link #WEBM}; so prefer the file name when you have it.
      *
      * @param content the file's bytes, or at least its first few
      * @return the type its magic bytes match, or {@link #UNKNOWN}
@@ -162,32 +214,34 @@ public enum FileType implements ValueObject {
 
     // ── Accessors ───────────────────────────────────────────────────────────
 
-    /** @return the MIME type, e.g. {@code "application/pdf"} */
+    /** {@return the MIME type, e.g. {@code "application/pdf"}} */
     public String mimeType() {
         return mimeType;
     }
 
-    /** @return what kind of content it holds */
+    /** {@return what kind of content it holds} */
     public Category category() {
         return category;
     }
 
-    /** @return the extensions, lower case without the dot, the usual one first */
+    /** {@return the extensions, lower case without the dot, the usual one first} */
     public List<String> extensions() {
         return extensions;
     }
 
-    /** @return the usual extension, e.g. {@code "jpg"} */
+    /** {@return the usual extension, e.g. {@code "jpg"}} */
     public String extension() {
         return extensions.getFirst();
     }
 
-    /** @return whether its content can be recognised by its first bytes */
+    /** {@return whether its content can be recognised by its first bytes} */
     public boolean hasMagicBytes() {
         return magic != null;
     }
 
     /**
+     * Checks a file's content against this type's magic bytes.
+     *
      * @param content a file's bytes
      * @return whether they start with this type's magic bytes; always false for a type without them
      */
@@ -197,6 +251,8 @@ public enum FileType implements ValueObject {
     }
 
     /**
+     * Checks a file name's extension against this type's, ignoring case.
+     *
      * @param fileName e.g. {@code "invoice.pdf"}
      * @return whether its extension is one of this type's
      */
@@ -204,8 +260,8 @@ public enum FileType implements ValueObject {
         return fromFileName(fileName).filter(t -> t == this).isPresent();
     }
 
-    /** @return whether this is {@link #UNKNOWN} */
-    public boolean isNull() {
+    /** {@return whether this is {@link #UNKNOWN}} */
+    public boolean isUnknown() {
         return this == UNKNOWN;
     }
 
@@ -225,15 +281,47 @@ public enum FileType implements ValueObject {
 
     /** What kind of content a {@link FileType} holds. */
     public enum Category {
+        /** Document. */
         DOCUMENT,
+        /** Spreadsheet. */
         SPREADSHEET,
+        /** Presentation. */
         PRESENTATION,
+        /** Text. */
         TEXT,
+        /** Data. */
         DATA,
+        /** Image. */
         IMAGE,
+        /** Audio. */
         AUDIO,
+        /** Video. */
         VIDEO,
+        /** Archive. */
         ARCHIVE,
+        /** Other. */
         OTHER
     }
+
+    /**
+     * Looks a type up by MIME type, file name or extension, as {@link #tryParse(String)} does.
+     *
+     * @param text a MIME type, file name or extension
+     * @return the type it names
+     * @throws ValueObjectException if it names no known type
+     */
+    public static FileType parse(String text) {
+        return tryParse(text).orElseThrow(() -> new ValueObjectException("Not a FileType: '" + text + "'"));
+    }
+
+    /**
+     * Tells whether a text names a known type, as {@link #tryParse(String)} reads it.
+     *
+     * @param text any text
+     * @return whether it is a {@link FileType}
+     */
+    public static boolean isValid(@Nullable String text) {
+        return tryParse(text).isPresent();
+    }
+
 }

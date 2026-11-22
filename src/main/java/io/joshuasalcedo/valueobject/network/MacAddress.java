@@ -1,18 +1,20 @@
 package io.joshuasalcedo.valueobject.network;
 
+import java.util.Optional;
 import io.joshuasalcedo.valueobject.ValueObject;
 
 import io.joshuasalcedo.valueobject.exception.ValueObjectException;
 import org.jspecify.annotations.Nullable;
 
 import java.util.Arrays;
-import java.util.Objects;
+import java.util.Locale;
 import java.util.regex.Pattern;
 
 /**
- * Value object representing a MAC (Media Access Control) address.
- * Stores in canonical format (uppercase, colon-separated).
+ * A 48-bit MAC (Media Access Control) address, held as its six bytes. It reads the colon, hyphen, Cisco dot and
+ * plain hex forms, and prints as upper-case colon-separated hex ({@code 00:1A:2B:3C:4D:5E}).
  *
+ * @param bytes the six bytes, most significant first; copied in and out
  * @author JoshuaSalcedo
  * @since 1/24/2026
  */
@@ -27,8 +29,15 @@ public record MacAddress(byte[] bytes) implements ValueObject, Comparable<MacAdd
     private static final Pattern DOT_FORMAT = Pattern.compile("^([0-9A-Fa-f]{4}\\.){2}[0-9A-Fa-f]{4}$");
     private static final Pattern PLAIN_FORMAT = Pattern.compile("^[0-9A-Fa-f]{12}$");
 
+    /**
+     * Creates a MAC address from a copy of its bytes.
+     *
+     * @throws ValueObjectException if {@code bytes} is {@code null} or there are not exactly six bytes
+     */
     public MacAddress {
-        Objects.requireNonNull(bytes, "MAC address bytes cannot be null");
+        if (bytes == null) {
+            throw new ValueObjectException("MAC address bytes cannot be null");
+        }
         if (bytes.length != MAC_LENGTH) {
             throw new ValueObjectException(
                 "MAC address must be exactly " + MAC_LENGTH + " bytes, got " + bytes.length
@@ -39,28 +48,33 @@ public record MacAddress(byte[] bytes) implements ValueObject, Comparable<MacAdd
     }
 
     /**
-     * Creates a MacAddress from a byte array.
+     * Creates a MAC address from a copy of its bytes; the same as the constructor.
      *
      * @param bytes the 6 bytes of the MAC address
-     * @return a new MacAddress
+     * @return the MAC address
+     * @throws ValueObjectException if {@code bytes} is {@code null} or there are not exactly six bytes
      */
     public static MacAddress of(byte[] bytes) {
         return new MacAddress(bytes);
     }
 
     /**
-     * Creates a MacAddress from a string in various formats.
-     * Supported formats:
-     * - Colon-separated: 00:1A:2B:3C:4D:5E
-     * - Hyphen-separated: 00-1A-2B-3C-4D-5E
-     * - Dot-separated (Cisco): 001A.2B3C.4D5E
-     * - Plain: 001A2B3C4D5E
+     * Creates a MAC address from text in one of these forms, in either case, surrounding whitespace ignored:
+     * <ul>
+     *     <li>colon-separated: {@code 00:1A:2B:3C:4D:5E}</li>
+     *     <li>hyphen-separated: {@code 00-1A-2B-3C-4D-5E}</li>
+     *     <li>dot-separated (Cisco): {@code 001A.2B3C.4D5E}</li>
+     *     <li>plain: {@code 001A2B3C4D5E}</li>
+     * </ul>
      *
      * @param mac the MAC address string
-     * @return a new MacAddress
+     * @return the MAC address
+     * @throws ValueObjectException if it is {@code null} or in none of those forms
      */
     public static MacAddress of(String mac) {
-        Objects.requireNonNull(mac, "MAC address string cannot be null");
+        if (mac == null) {
+            throw new ValueObjectException("MAC address string cannot be null");
+        }
         mac = mac.trim();
 
         String normalized;
@@ -85,27 +99,26 @@ public record MacAddress(byte[] bytes) implements ValueObject, Comparable<MacAdd
         return new MacAddress(bytes);
     }
 
+
     /**
-     * Parses a MAC address string, returning null if invalid.
+     * Parses a MAC address in any of the forms {@link #of(String)} reads.
      *
-     * @param mac the MAC address string
-     * @return the MacAddress or null
+     * @param text the text
+     * @return the MAC address
+     * @throws ValueObjectException if it is {@code null} or not a MAC address
      */
-    public static @Nullable MacAddress parse(String mac) {
-        try {
-            return of(mac);
-        } catch (ValueObjectException e) {
-            return null;
-        }
+    public static MacAddress parse(String text) {
+        if (text == null) throw new ValueObjectException("A MacAddress is required");
+        return of(text);
     }
 
     /**
-     * Checks if a string is a valid MAC address format.
+     * Checks whether a text, once trimmed, is a MAC address in any of the forms {@link #of(String)} reads.
      *
-     * @param mac the string to check
-     * @return true if valid
+     * @param mac the string to check; may be {@code null}
+     * @return whether it is valid
      */
-    public static boolean isValid(String mac) {
+    public static boolean isValid(@Nullable String mac) {
         if (mac == null || mac.isBlank()) {
             return false;
         }
@@ -117,7 +130,7 @@ public record MacAddress(byte[] bytes) implements ValueObject, Comparable<MacAdd
     }
 
     /**
-     * Gets the byte array (defensive copy).
+     * Returns a copy of the six bytes.
      *
      * @return copy of the bytes
      */
@@ -127,110 +140,111 @@ public record MacAddress(byte[] bytes) implements ValueObject, Comparable<MacAdd
     }
 
     /**
-     * Returns the MAC address in colon-separated format (canonical).
+     * Returns the MAC address in canonical colon-separated form.
      *
-     * @return the colon-separated MAC address
+     * @return the colon-separated MAC address, e.g. {@code 00:1A:2B:3C:4D:5E}
      */
     public String toColonFormat() {
-        return String.format("%02X:%02X:%02X:%02X:%02X:%02X",
+        return String.format(Locale.ROOT, "%02X:%02X:%02X:%02X:%02X:%02X",
             bytes[0] & 0xFF, bytes[1] & 0xFF, bytes[2] & 0xFF,
             bytes[3] & 0xFF, bytes[4] & 0xFF, bytes[5] & 0xFF);
     }
 
     /**
-     * Returns the MAC address in hyphen-separated format (Windows style).
+     * Returns the MAC address in hyphen-separated form (Windows style).
      *
-     * @return the hyphen-separated MAC address
+     * @return the hyphen-separated MAC address, e.g. {@code 00-1A-2B-3C-4D-5E}
      */
     public String toHyphenFormat() {
-        return String.format("%02X-%02X-%02X-%02X-%02X-%02X",
+        return String.format(Locale.ROOT, "%02X-%02X-%02X-%02X-%02X-%02X",
             bytes[0] & 0xFF, bytes[1] & 0xFF, bytes[2] & 0xFF,
             bytes[3] & 0xFF, bytes[4] & 0xFF, bytes[5] & 0xFF);
     }
 
     /**
-     * Returns the MAC address in dot-separated format (Cisco style).
+     * Returns the MAC address in dot-separated form (Cisco style).
      *
-     * @return the dot-separated MAC address
+     * @return the dot-separated MAC address, e.g. {@code 001A.2B3C.4D5E}
      */
     public String toDotFormat() {
-        return String.format("%02X%02X.%02X%02X.%02X%02X",
+        return String.format(Locale.ROOT, "%02X%02X.%02X%02X.%02X%02X",
             bytes[0] & 0xFF, bytes[1] & 0xFF, bytes[2] & 0xFF,
             bytes[3] & 0xFF, bytes[4] & 0xFF, bytes[5] & 0xFF);
     }
 
     /**
-     * Returns the MAC address as a plain hex string.
+     * Returns the MAC address as 12 upper-case hex digits with no separators.
      *
-     * @return the plain hex string
+     * @return the plain hex string, e.g. {@code 001A2B3C4D5E}
      */
     public String toPlainFormat() {
-        return String.format("%02X%02X%02X%02X%02X%02X",
+        return String.format(Locale.ROOT, "%02X%02X%02X%02X%02X%02X",
             bytes[0] & 0xFF, bytes[1] & 0xFF, bytes[2] & 0xFF,
             bytes[3] & 0xFF, bytes[4] & 0xFF, bytes[5] & 0xFF);
     }
 
     /**
-     * Returns the Organizationally Unique Identifier (first 3 bytes).
-     * This identifies the manufacturer.
+     * Returns the Organizationally Unique Identifier: the first three bytes, which identify the manufacturer.
      *
-     * @return the OUI as a hex string
+     * @return the OUI as colon-separated hex, e.g. {@code 00:1A:2B}
      */
     public String oui() {
-        return String.format("%02X:%02X:%02X",
+        return String.format(Locale.ROOT, "%02X:%02X:%02X",
             bytes[0] & 0xFF, bytes[1] & 0xFF, bytes[2] & 0xFF);
     }
 
     /**
-     * Returns the Network Interface Controller specific part (last 3 bytes).
+     * Returns the part the manufacturer assigns to the network interface: the last three bytes.
      *
-     * @return the NIC part as a hex string
+     * @return the NIC part as colon-separated hex, e.g. {@code 3C:4D:5E}
      */
     public String nic() {
-        return String.format("%02X:%02X:%02X",
+        return String.format(Locale.ROOT, "%02X:%02X:%02X",
             bytes[3] & 0xFF, bytes[4] & 0xFF, bytes[5] & 0xFF);
     }
 
     /**
-     * Checks if this is a unicast address.
+     * Checks whether this is a unicast address: the lowest bit of the first byte is 0.
      *
-     * @return true if unicast
+     * @return whether it is unicast
      */
     public boolean isUnicast() {
         return (bytes[0] & 0x01) == 0;
     }
 
     /**
-     * Checks if this is a multicast address.
+     * Checks whether this is a multicast address: the lowest bit of the first byte is 1. The broadcast address
+     * is multicast too.
      *
-     * @return true if multicast
+     * @return whether it is multicast
      */
     public boolean isMulticast() {
         return (bytes[0] & 0x01) == 1;
     }
 
     /**
-     * Checks if this is a locally administered address.
+     * Checks whether this is a locally administered address: the second-lowest bit of the first byte is 1.
      *
-     * @return true if locally administered
+     * @return whether it is locally administered
      */
     public boolean isLocallyAdministered() {
         return (bytes[0] & 0x02) == 2;
     }
 
     /**
-     * Checks if this is a universally administered address.
+     * Checks whether this is a universally administered (manufacturer-assigned) address: the second-lowest bit
+     * of the first byte is 0.
      *
-     * @return true if universally administered
+     * @return whether it is universally administered
      */
     public boolean isUniversallyAdministered() {
         return (bytes[0] & 0x02) == 0;
     }
 
     /**
-     * Checks if this is the broadcast address (FF:FF:FF:FF:FF:FF).
+     * Checks whether this is the broadcast address, {@code FF:FF:FF:FF:FF:FF}.
      *
-     * @return true if broadcast
+     * @return whether it is the broadcast address
      */
     public boolean isBroadcast() {
         for (byte b : bytes) {
@@ -268,4 +282,20 @@ public record MacAddress(byte[] bytes) implements ValueObject, Comparable<MacAdd
     public String toString() {
         return toColonFormat();
     }
+
+    /**
+     * Parses a MAC address as {@link #parse(String)} does, without throwing.
+     *
+     * @param text any text
+     * @return it as a {@link MacAddress}, or empty when it is not one; never throws
+     */
+    public static Optional<MacAddress> tryParse(@Nullable String text) {
+        if (text == null) return Optional.empty();
+        try {
+            return Optional.of(parse(text));
+        } catch (RuntimeException e) {
+            return Optional.empty();
+        }
+    }
+
 }

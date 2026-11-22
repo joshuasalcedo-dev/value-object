@@ -1,34 +1,46 @@
 package io.joshuasalcedo.valueobject.contact;
 
+import java.util.Locale;
+import java.util.Optional;
 import io.joshuasalcedo.valueobject.ValueObject;
 
 import io.joshuasalcedo.valueobject.exception.ValueObjectException;
 import org.jspecify.annotations.Nullable;
 
-import java.util.Objects;
+import java.util.List;
 import java.util.regex.Pattern;
 
 /**
- * Value object representing an email address.
- * Performs basic validation on structure but does not verify deliverability.
+ * An email address, trimmed and lower-cased. Checks the shape only ({@code local@domain.tld}, with letters,
+ * digits and {@code . _ % + -} in the local part and a top-level domain of two or more letters); it does not
+ * check that the address can receive mail.
  *
+ * @param value the address, trimmed and lower case
  * @author JoshuaSalcedo
  * @since 1/24/2026
  */
 public record Email(String value) implements ValueObject, Comparable<Email> {
 
     // Basic email pattern - covers most valid emails
+    private static final List<String> PERSONAL_DOMAINS =
+            List.of("gmail.com", "yahoo.com", "outlook.com", "hotmail.com", "icloud.com", "aol.com");
+
     private static final Pattern EMAIL_PATTERN = Pattern.compile(
             "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
     );
 
-    /** Null object representing an absent Email. */
-    public static final Email NULL = new Email("");
 
+    /**
+     * Creates an email address, trimming and lower-casing it.
+     *
+     * @throws ValueObjectException if {@code value} is {@code null}, blank or not shaped like an email address
+     */
     public Email {
-        Objects.requireNonNull(value, "Email cannot be null");
-        if (!value.isEmpty()) {
-            value = value.trim().toLowerCase();
+        if (value == null) {
+            throw new ValueObjectException("Email cannot be null");
+        }
+        {
+            value = value.trim().toLowerCase(Locale.ROOT);
             if (value.isBlank()) {
                 throw new ValueObjectException("Email cannot be blank");
             }
@@ -39,54 +51,40 @@ public record Email(String value) implements ValueObject, Comparable<Email> {
     }
 
     
-    public boolean isNull() {
-        return value.isEmpty();
-    }
 
     /**
-     * Creates an Email from a string value.
+     * Creates an email address; the same as the constructor.
      *
-     * @param email the email string
-     * @return a new Email instance
+     * @param email the address, e.g. {@code "Andrea@Example.com"}
+     * @return the email, lower case
+     * @throws ValueObjectException if it is {@code null}, blank or not shaped like an email address
      */
     public static Email of(String email) {
         return new Email(email);
     }
 
-    /**
-     * Parses an email string, returning null for invalid emails instead of throwing.
-     *
-     * @param email the email string
-     * @return the Email or null if invalid
-     */
-    public static @Nullable Email parse(String email) {
-        try {
-            return new Email(email);
-        } catch (ValueObjectException e) {
-            return null;
-        }
-    }
 
     /**
-     * Returns the null object representation of Email.
+     * Parses an email address, trimming and lower-casing it.
      *
-     * @return the NULL email constant
+     * @param text the text
+     * @return the email
+     * @throws ValueObjectException if it is {@code null}, blank or not shaped like an email address
      */
-    public static Email nullValue() {
-        return NULL;
+    public static Email parse(String text) {
+        if (text == null) throw new ValueObjectException("A Email is required");
+        return of(text);
     }
 
+
     /**
-     * Checks if a string is a valid email format.
+     * Checks whether a text, once trimmed, is shaped like an email address.
      *
-     * @param email the email string to check
-     * @return true if valid format
+     * @param email the text to check; may be {@code null}
+     * @return whether it is a valid email address
      */
-    public static boolean isValid(String email) {
-        if (email == null || email.isBlank()) {
-            return false;
-        }
-        return EMAIL_PATTERN.matcher(email.trim()).matches();
+    public static boolean isValid(@Nullable String email) {
+        return tryParse(email).isPresent();
     }
 
     /**
@@ -108,7 +106,9 @@ public record Email(String value) implements ValueObject, Comparable<Email> {
     }
 
     /**
-     * Returns a masked version of the email for display (e.g., j***@example.com).
+     * Returns the address masked for display: the first and last character of the local part are kept
+     * ({@code "j***n@example.com"}); a local part of one or two characters keeps only the first
+     * ({@code "j***@example.com"}).
      *
      * @return the masked email
      */
@@ -121,21 +121,26 @@ public record Email(String value) implements ValueObject, Comparable<Email> {
     }
 
     /**
-     * Checks if this is a common personal email domain.
+     * Checks whether the domain is a common free mail domain, or a subdomain of one: {@code gmail.com},
+     * {@code yahoo.com}, {@code outlook.com}, {@code hotmail.com}, {@code icloud.com} or {@code aol.com}. A domain
+     * that only ends with the same letters, such as {@code notgmail.com}, does not count.
      *
-     * @return true if personal domain (gmail, yahoo, outlook, etc.)
+     * @return whether it is a personal email domain
      */
     public boolean isPersonalDomain() {
-        String d = domain().toLowerCase();
-        return d.endsWith("gmail.com") || d.endsWith("yahoo.com") ||
-               d.endsWith("outlook.com") || d.endsWith("hotmail.com") ||
-               d.endsWith("icloud.com") || d.endsWith("aol.com");
+        String d = domain().toLowerCase(Locale.ROOT);
+        for (String personal : PERSONAL_DOMAINS) {
+            if (d.equals(personal) || d.endsWith("." + personal)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
-     * Checks if this appears to be a business/corporate email.
+     * Checks whether this looks like a business email: the opposite of {@link #isPersonalDomain()}.
      *
-     * @return true if likely a business email
+     * @return whether it is likely a business email
      */
     public boolean isBusinessDomain() {
         return !isPersonalDomain();
@@ -150,4 +155,20 @@ public record Email(String value) implements ValueObject, Comparable<Email> {
     public String toString() {
         return value;
     }
+
+    /**
+     * Parses an email address as {@link #parse(String)} does, without throwing.
+     *
+     * @param text any text
+     * @return it as an {@link Email}, or empty when it is not one; never throws
+     */
+    public static Optional<Email> tryParse(@Nullable String text) {
+        if (text == null) return Optional.empty();
+        try {
+            return Optional.of(parse(text));
+        } catch (RuntimeException e) {
+            return Optional.empty();
+        }
+    }
+
 }

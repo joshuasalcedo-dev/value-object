@@ -33,7 +33,7 @@ import java.util.regex.Pattern;
  * <pre>{@code
  * PaymentTerms t = PaymentTerms.parse("Net 30 EOM");
  * t.dueDate(LocalDate.of(2026, 1, 5));          // Optional[2026-03-02]: Jan 31 + 30 days
- * PaymentTerms.parse("2/10 Net 30").discountedAmount(invoiceTotal, paidOn, invoiceDate);
+ * PaymentTerms.parse("2/10 Net 30").amountDue(invoiceTotal, paidOn, invoiceDate);
  * }</pre>
  *
  * @param basis           what the due date counts from
@@ -66,7 +66,15 @@ public record PaymentTerms(Basis basis, int days, Optional<Percentage> discount,
     private static final Pattern MFI = Pattern.compile("^(\\d{1,2})(?:st|nd|rd|th)?\\s*(?:mfi|prox(?:imo)?|of the month following(?: invoice)?)$");
 
     /**
-     * @throws ValueObjectException if the days are negative, or a month-following day is not 1-31
+     * Checks the terms; a {@code null} discount becomes empty.
+     *
+     * @param basis        what the due date counts from
+     * @param days         days after the basis; for {@code MONTH_FOLLOWING}, the day of the month
+     * @param discount     an early-payment discount, if any
+     * @param discountDays the days from the invoice date the discount holds; 0 when none
+     * @throws ValueObjectException if the basis is {@code null}, the days are negative, a month-following day is
+     *                              not 1-31, there is a discount with 0 discount days, or the discount is not
+     *                              more than 0% and at most 100%
      */
     public PaymentTerms {
         if (basis == null) throw new ValueObjectException("Payment terms need a basis");
@@ -75,39 +83,59 @@ public record PaymentTerms(Basis basis, int days, Optional<Percentage> discount,
             throw new ValueObjectException("A month-following day is 1-31: " + days);
         discount = discount == null ? Optional.empty() : discount;
         if (discount.isPresent() && discountDays == 0) throw new ValueObjectException("A discount needs its days (2/10)");
+        if (discount.isPresent() && (!discount.get().isPositive() || discount.get().isGreaterThan(Percentage.HUNDRED)))
+            throw new ValueObjectException("An early-payment discount is more than 0% and at most 100%: " + discount.get());
     }
 
     /**
+     * Net terms: due a number of days after the invoice date.
+     *
      * @param days days after the invoice date
      * @return Net {@code days}
+     * @throws ValueObjectException if the days are negative
      */
     public static PaymentTerms net(int days) {
         return new PaymentTerms(Basis.NET, days, Optional.empty(), 0);
     }
 
     /**
+     * End-of-month terms: due a number of days after the last day of the invoice's month.
+     *
      * @param days days after the end of the invoice's month (0: the end of the month itself)
      * @return {@code EOM} or Net {@code days} EOM
+     * @throws ValueObjectException if the days are negative
      */
     public static PaymentTerms endOfMonth(int days) {
         return new PaymentTerms(Basis.END_OF_MONTH, days, Optional.empty(), 0);
     }
 
     /**
+     * Month-following terms: due on a day of the month after the invoice's.
+     *
      * @param dayOfMonth the day of the following month, 1-31
      * @return {@code dayOfMonth} MFI
+     * @throws ValueObjectException if the day is not 1-31
      */
     public static PaymentTerms monthFollowing(int dayOfMonth) {
         return new PaymentTerms(Basis.MONTH_FOLLOWING, dayOfMonth, Optional.empty(), 0);
     }
 
-    /** @return due on receipt */
+    /**
+     * Terms due on receipt: due on the invoice date.
+     *
+     * @return due on receipt
+     */
     public static PaymentTerms onReceipt() {
         return new PaymentTerms(Basis.ON_RECEIPT, 0, Optional.empty(), 0);
     }
 
     /**
-     * @param text terms as printed: {@code "Net 30"}, {@code "N30"}, {@code "30 days"}, {@code "2/10 Net 30"},
+     * Reads payment terms as printed on an invoice. Case, dots (but not a decimal point, as in {@code "1.5/10"}),
+     * extra spaces and a leading {@code "Terms:"} or {@code "Payment terms:"} are ignored; an early-payment discount
+     * ({@code "2/10"} or {@code "2% 10"}) may come first. {@code "Net 0"}, {@code "Immediate"} and {@code "Cash"}
+     * read as due on receipt.
+     *
+     * @param text terms as printed:{@code "Net 30"}, {@code "N30"}, {@code "30 days"}, {@code "2/10 Net 30"},
      *             {@code "2% 10 Net 30"}, {@code "EOM"}, {@code "Net 30 EOM"}, {@code "EOM + 15"}, {@code "10th MFI"},
      *             {@code "Due on receipt"}, {@code "COD"}, {@code "CIA"}, {@code "CWO"}, {@code "PIA"}, {@code "Prepaid"}
      * @return the terms
@@ -115,7 +143,15 @@ public record PaymentTerms(Basis basis, int days, Optional<Percentage> discount,
      */
     public static PaymentTerms parse(String text) {
         if (text == null) throw new ValueObjectException("Payment terms are required");
-        String t = text.strip().toLowerCase(Locale.ROOT).replaceAll("[.]", "").replaceAll("\\s+", " ")
+        try {
+            return read(text);
+        } catch (NumberFormatException | ArithmeticException tooBig) {
+            throw new ValueObjectException("Not payment terms (a number is too large): '" + text + "'");
+        }
+    }
+
+    private static PaymentTerms read(String text) {
+        String t = text.strip().toLowerCase(Locale.ROOT).replaceAll("(?<!\\d)\\.|\\.(?!\\d)", "").replaceAll("\\s+", " ")
                 .replaceFirst("^(payment )?terms?:?\\s*", "");
         switch (t) {
             case "due on receipt", "on receipt", "upon receipt", "due upon receipt", "payable on receipt", "immediate",
@@ -163,8 +199,10 @@ public record PaymentTerms(Basis basis, int days, Optional<Percentage> discount,
     }
 
     /**
+     * Reads payment terms like {@link #parse(String)}, without throwing.
+     *
      * @param text any text
-     * @return the payment terms it is, or empty
+     * @return the payment terms it is, or empty when it is {@code null}, blank or not payment terms
      */
     public static Optional<PaymentTerms> tryParse(@Nullable String text) {
         if (text == null || text.isBlank()) return Optional.empty();
@@ -176,10 +214,24 @@ public record PaymentTerms(Basis basis, int days, Optional<Percentage> discount,
     }
 
     /**
+     * Works out the due date from the invoice date. A month-following day past the end of the next month falls on
+     * that month's last day (31 MFI from January is the last day of February).
+     *
      * @param invoiceDate the invoice's date
      * @return when it falls due; empty for {@code COD}, which falls due on a delivery the invoice does not date
+     * @throws ValueObjectException if the invoice date is {@code null}, or the due date is past the dates
+     *                              {@link LocalDate} holds
      */
     public Optional<LocalDate> dueDate(LocalDate invoiceDate) {
+        if (invoiceDate == null) throw new ValueObjectException("An invoice date is required");
+        try {
+            return dueDateOf(invoiceDate);
+        } catch (java.time.DateTimeException tooFar) {
+            throw new ValueObjectException("Due date out of range: " + this + " from " + invoiceDate);
+        }
+    }
+
+    private Optional<LocalDate> dueDateOf(LocalDate invoiceDate) {
         return Optional.ofNullable(switch (basis) {
             case NET -> invoiceDate.plusDays(days);
             case END_OF_MONTH -> invoiceDate.with(TemporalAdjusters.lastDayOfMonth()).plusDays(days);
@@ -193,32 +245,52 @@ public record PaymentTerms(Basis basis, int days, Optional<Percentage> discount,
     }
 
     /**
+     * Works out the last day of the early-payment discount: the invoice date plus the discount days.
+     *
      * @param invoiceDate the invoice's date
-     * @return the last day the early-payment discount holds, if there is one
+     * @return the last day the early-payment discount holds, or empty when there is no discount
+     * @throws ValueObjectException if the invoice date is {@code null}
      */
     public Optional<LocalDate> discountDate(LocalDate invoiceDate) {
+        if (invoiceDate == null) throw new ValueObjectException("An invoice date is required");
         return discount.map(d -> invoiceDate.plusDays(discountDays));
     }
 
     /**
+     * Works out what is owed on a given payment day. Paid on or before the last discount day, the discount comes
+     * off the total, rounded to the currency's decimal places; otherwise the full total is owed.
+     *
      * @param total       the invoice total
      * @param paidOn      the day it is paid
      * @param invoiceDate the invoice's date
      * @return what is owed if paid that day: the total less the discount when paid within its days
+     * @throws ValueObjectException if any argument is {@code null}
      */
     public Money amountDue(Money total, LocalDate paidOn, LocalDate invoiceDate) {
+        if (total == null || paidOn == null || invoiceDate == null)
+            throw new ValueObjectException("A total, payment date and invoice date are required");
         if (discount.isPresent() && !paidOn.isAfter(invoiceDate.plusDays(discountDays))) {
             return total.subtractPercentage(discount.get());
         }
         return total;
     }
 
-    /** @return whether there is an early-payment discount */
+    /**
+     * Tells whether these terms give an early-payment discount.
+     *
+     * @return whether there is an early-payment discount
+     */
     public boolean hasDiscount() {
         return discount.isPresent();
     }
 
-    /** @return the standard notation: {@code "Net 30"}, {@code "2/10 Net 30"}, {@code "Net 30 EOM"}, {@code "EOM"}, {@code "10 MFI"} */
+    /**
+     * Writes the terms in the standard notation. Cash-on-delivery terms print as {@code "COD"} and all in-advance
+     * terms as {@code "CIA"}.
+     *
+     * @return the standard notation: {@code "Net 30"}, {@code "2/10 Net 30"}, {@code "Net 30 EOM"}, {@code "EOM"},
+     *         {@code "10 MFI"}, {@code "Due on receipt"}
+     */
     @Override
     public String toString() {
         String prefix = discount.map(p -> p.value().stripTrailingZeros().toPlainString() + "/" + discountDays + " ").orElse("");
@@ -231,4 +303,15 @@ public record PaymentTerms(Basis basis, int days, Optional<Percentage> discount,
             case IN_ADVANCE -> "CIA";
         };
     }
+
+    /**
+     * Tells whether text reads as payment terms.
+     *
+     * @param text any text
+     * @return whether it is a {@link PaymentTerms}
+     */
+    public static boolean isValid(@Nullable String text) {
+        return tryParse(text).isPresent();
+    }
+
 }

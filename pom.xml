@@ -45,6 +45,7 @@
     <properties>
         <maven.compiler.release>25</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <buildDir>${project.basedir}/target</buildDir>
     </properties>
 
     <dependencies>
@@ -64,6 +65,54 @@
             <version>5.5.0-1.5.11</version>
             <optional>true</optional>
         </dependency>
+        <!-- PDFs: optional; only io.joshuasalcedo.valueobject.pdf needs it -->
+        <dependency>
+            <groupId>org.apache.pdfbox</groupId>
+            <artifactId>pdfbox</artifactId>
+            <version>3.0.8</version>
+            <optional>true</optional>
+        </dependency>
+        <!-- Connectors, all optional: a project gets them from its own framework (Spring Boot, Quarkus, ...).
+               io.joshuasalcedo.valueobject.jackson   (Jackson 2: com.fasterxml)   ValueObjectModule
+               io.joshuasalcedo.valueobject.jackson3  (Jackson 3: tools.jackson)   ValueObjectModule
+               io.joshuasalcedo.valueobject.jpa       Jakarta Persistence converters
+               io.joshuasalcedo.valueobject.validation  Jakarta Validation constraints -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.23.0</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>tools.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>3.3.0</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
+            <version>3.2.0</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
+            <version>3.1.1</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>9.2.0.Final</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.expressly</groupId>
+            <artifactId>expressly</artifactId>
+            <version>6.0.0</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
@@ -73,6 +122,8 @@
     </dependencies>
 
     <build>
+        <!-- overridable, so parallel builds can each use their own folder: mvn test -DbuildDir=target-x -->
+        <directory>${buildDir}</directory>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -83,6 +134,19 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.14.0</version>
+            </plugin>
+            <!-- a stable module name for the module path (the library has no module-info: its connectors are optional) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.4.2</version>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <Automatic-Module-Name>io.joshuasalcedo.valueobject</Automatic-Module-Name>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -100,9 +164,16 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>3.11.2</version>
                 <configuration>
-                    <!-- Some older types lack full Javadoc: do not fail on that, the javadoc jar is still attached. -->
-                    <doclint>none</doclint>
-                    <failOnError>false</failOnError>
+                    <!-- every check on: broken references, bad HTML and missing comments fail the build -->
+                    <doclint>all</doclint>
+                    <failOnWarnings>true</failOnWarnings>
+                    <quiet>true</quiet>
+                    <additionalOptions>
+                        <additionalOption>-Xmaxwarns</additionalOption>
+                        <additionalOption>10000</additionalOption>
+                        <additionalOption>-Xmaxerrs</additionalOption>
+                        <additionalOption>10000</additionalOption>
+                    </additionalOptions>
                 </configuration>
                 <executions>
                     <execution>

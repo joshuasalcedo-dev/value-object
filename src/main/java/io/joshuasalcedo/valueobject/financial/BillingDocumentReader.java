@@ -74,8 +74,14 @@ final class BillingDocumentReader {
         add(score, Kind.BILL, lower, 5, "statement of account", "billing statement", "billing period");
         add(score, Kind.BILL, lower, 3, "account number", "account no", "service address", "previous balance",
                 "amount due", "total amount due", "statement date", "bill date");
+        // Filipino
+        add(score, Kind.RECEIPT, lower, 5, "opisyal na resibo", "resibo");
+        add(score, Kind.RECEIPT, lower, 2, "sukli", "salamat po", "ibinayad", "bayad");
+        add(score, Kind.BILL, lower, 4, "singil", "bayarin", "pahayag ng account");
+        add(score, Kind.BILL, lower, 2, "takdang petsa", "panahon ng singil");
         for (String line : top) {
-            if (line.matches(".*\\b(official )?receipt\\b.*") || line.contains("payment confirmation")) score.merge(Kind.RECEIPT, 6, Integer::sum);
+            if (line.matches(".*\\b(official )?receipt\\b.*") || line.contains("payment confirmation")
+                    || line.matches(".*\\b(opisyal na )?resibo\\b.*")) score.merge(Kind.RECEIPT, 6, Integer::sum);
             if (line.matches(".*\\b(tax )?invoice\\b.*") && !line.contains("number")) score.merge(Kind.INVOICE, 6, Integer::sum);
             if (line.contains("statement of account") || line.matches(".*\\bbill(ing)?\\b(?! (to|from)).*")) score.merge(Kind.BILL, 6, Integer::sum);
         }
@@ -130,7 +136,9 @@ final class BillingDocumentReader {
 
     /** What a label can mean. */
     enum Field {
+        /** Number. */
         NUMBER, DATE, DUE, PAID_ON, TOTAL, SUBTOTAL, TAX, PAID, CHANGE, METHOD, REFERENCE, ACCOUNT, PERIOD, PO,
+        /** Issuer. */
         ISSUER, CUSTOMER, TAX_ID, TERMS
     }
 
@@ -167,6 +175,25 @@ final class BillingDocumentReader {
                 "payer");
         label(Field.TAX_ID, "vat id", "vat number", "tax id", "vat reg tin", "tin");
         label(Field.TERMS, "payment terms", "terms of payment", "credit terms", "terms");
+
+        // Filipino (Tagalog) wordings, as Philippine receipts and bills print them; "blg." is "bilang" (number)
+        label(Field.NUMBER, "resibo blg", "opisyal na resibo blg", "numero ng resibo", "blg ng resibo", "numero ng invoice",
+                "invoice blg", "blg ng invoice");
+        label(Field.DATE, "petsa", "petsa ng resibo", "petsa ng invoice", "araw");
+        label(Field.DUE, "takdang petsa", "huling araw ng pagbabayad", "dapat bayaran bago", "takdang araw");
+        label(Field.PAID_ON, "petsa ng pagbabayad", "petsa ng bayad");
+        label(Field.TOTAL, "kabuuang halaga", "kabuuang dapat bayaran", "kabuuan", "halagang dapat bayaran", "babayaran",
+                "halaga");
+        label(Field.SUBTOTAL, "kabuuang halaga bago ang buwis", "bahagyang kabuuan");
+        label(Field.TAX, "buwis", "vat na buwis");
+        label(Field.PAID, "halagang ibinayad", "ibinayad", "naibayad", "bayad", "salapi");
+        label(Field.CHANGE, "sukli");
+        label(Field.METHOD, "paraan ng pagbabayad", "paraan ng bayad");
+        label(Field.REFERENCE, "reperensya", "numero ng reperensya", "ref blg");
+        label(Field.ACCOUNT, "numero ng account", "account blg", "numero ng akawnt");
+        label(Field.PERIOD, "panahon ng singil", "saklaw na panahon");
+        label(Field.ISSUER, "nagbenta", "tindahan", "mula kay", "galing kay");
+        label(Field.CUSTOMER, "pangalan ng mamimili", "mamimili", "kostumer", "para kay", "pangalan");
     }
 
     private static void label(Field f, String... words) {
@@ -341,6 +368,11 @@ final class BillingDocumentReader {
                     Field f = field(label.text());
                     if (f == null && !colon) continue;
                     if (!colon && !label.text().strip().contains(" ") && (f == Field.TOTAL || f == Field.TAX)) continue;
+                    // a value beside the label on its own line ("Mamimili:  Juan dela Cruz") is read beside, not below
+                    int at = cells.indexOf(label);
+                    // ("Billing Period   Plan" is two headings, the values below: "Plan" is no billing period)
+                    if (at + 1 < cells.size() && !isLabel(cells.get(at + 1).text()) && !cells.get(at + 1).text().endsWith(":")
+                            && fits(f, cells.get(at + 1).text())) continue;
                     // the first line below with a cell under the label (other columns' lines may come between)
                     int j = i + 1;
                     while (j < lines.size() && j <= i + 4
@@ -757,7 +789,7 @@ final class BillingDocumentReader {
             Matcher m = CODE_AMOUNT.matcher(text);
             while (m.find()) {
                 String code = m.group(1) != null ? m.group(1) : m.group(2);
-                Currency.parse(code).ifPresent(c -> votes.merge(c, 1, Integer::sum));
+                Currency.tryParse(code).ifPresent(c -> votes.merge(c, 1, Integer::sum));
             }
             if (!votes.isEmpty()) {
                 currencyHow = "the currency code most amounts are written with";
@@ -769,12 +801,15 @@ final class BillingDocumentReader {
                     return e.getValue();
                 }
             }
-            // no currency printed: the one of the country the document is from
+            // no currency printed: the one of the country the document is from; with a "$", that country's dollar
+            // when it has one (AUD, CAD, SGD, ...), else US dollars
+            boolean dollar = text.contains("$");
             Country country = country();
             if (country != null) {
                 Optional<FiatCurrency> local = FiatCurrency.forCountry(country);
-                if (local.isPresent()) {
-                    currencyHow = "the currency of " + country.displayName() + ", where it is from";
+                if (local.isPresent() && (!dollar || local.get().symbol().contains("$"))) {
+                    currencyHow = dollar ? "the $ symbol, in " + country.displayName() + ", whose currency is "
+                            + local.get().code() : "the currency of " + country.displayName() + ", where it is from";
                     return local.get();
                 }
             }
@@ -861,6 +896,10 @@ final class BillingDocumentReader {
                     amount.ifPresent(a -> tableTotals.putIfAbsent(f, a));
                     continue;
                 }
+                Map<String, String> printed = new LinkedHashMap<>();
+                for (Table.Column c : best.columns()) {
+                    if (c.index() < row.size() && !row.get(c.index()).isBlank()) printed.put(c.name(), row.get(c.index()));
+                }
                 Optional<io.joshuasalcedo.valueobject.measurement.Quantity> quantity =
                         quantity(cell(row, columns.get(Role.QUANTITY)), cell(row, columns.get(Role.UOM)));
                 Optional<Money> unit = parseMoney(cell(row, columns.get(Role.UNIT_PRICE)), currency);
@@ -868,8 +907,10 @@ final class BillingDocumentReader {
                     // a wrapped line ("Dec 15 - Jan 14, 2026"): part of the line above
                     if (!items.isEmpty() && !description.isBlank()) {
                         LineItem last = items.removeLast();
+                        Map<String, String> joined = new LinkedHashMap<>(last.printed());
+                        printed.forEach((k, v) -> joined.merge(k, v, (a, b) -> a + " " + b));
                         items.add(new LineItem(last.description() + " " + description, last.quantity(), last.unitPrice(),
-                                last.amount(), last.other()));
+                                last.amount(), last.other(), joined));
                     }
                     continue;
                 }
@@ -878,7 +919,7 @@ final class BillingDocumentReader {
                     if (!columns.containsValue(c.index()) && !row.get(c.index()).isBlank()) other.put(c.name(), row.get(c.index()));
                 }
                 if (description.isBlank() && amount.isEmpty() && unit.isEmpty()) continue;
-                items.add(new LineItem(description, quantity, unit, amount, other));
+                items.add(new LineItem(description, quantity, unit, amount, other, printed));
             }
         }
 
@@ -951,7 +992,7 @@ final class BillingDocumentReader {
             }
             if (currency != null && currencyHow != null) {
                 sources.put("currency", new BillingDocument.Source("currency", "", currencyHow, -1,
-                        currencyHow.startsWith("the currency of") ? BillingDocument.Form.INFERRED : BillingDocument.Form.LABEL_BESIDE));
+                        currencyHow.startsWith("the currency code") ? BillingDocument.Form.LABEL_BESIDE : BillingDocument.Form.INFERRED));
             }
             return new BillingDocument.Fields(number, date, issuer, customer, items, tables,
                     subtotal, tax, total, currency, metadata, found, sources, text);
@@ -1070,7 +1111,7 @@ final class BillingDocumentReader {
         String t = s.strip();
         Currency currency = null;
         Matcher code = EXPLICIT_CODE.matcher(t);
-        while (code.find() && currency == null) currency = Currency.parse(code.group(1).toUpperCase(Locale.ROOT)).orElse(null);
+        while (code.find() && currency == null) currency = Currency.tryParse(code.group(1).toUpperCase(Locale.ROOT)).orElse(null);
         if (currency == null) {
             for (var e : SYMBOLS.entrySet()) {
                 if (t.contains(e.getKey())) {

@@ -1,5 +1,7 @@
 package io.joshuasalcedo.valueobject.financial;
 
+import io.joshuasalcedo.valueobject.exception.ValueObjectException;
+import org.jspecify.annotations.Nullable;
 import java.time.LocalDate;
 import java.util.Optional;
 
@@ -20,20 +22,21 @@ import java.util.Optional;
 public interface Invoice extends BillingDocument {
 
     /**
+     * {@return it read as an invoice}
+     *
      * @param text the invoice's text
-     * @return it read as an invoice
      */
     static Invoice parse(String text) {
         return BillingDocumentReader.invoice(text);
     }
 
-    /** @return when it must be paid */
+    /** {@return when it must be paid} */
     Optional<LocalDate> dueDate();
 
-    /** @return the purchase order it answers */
+    /** {@return the purchase order it answers} */
     Optional<String> purchaseOrder();
 
-    /** @return its payment terms ({@code Net 30}, {@code EOM}, {@code 2/10 Net 30}, ...) */
+    /** {@return its payment terms ({@code Net 30}, {@code EOM}, {@code 2/10 Net 30}, ...)} */
     Optional<PaymentTerms> paymentTerms();
 
     /**
@@ -46,10 +49,35 @@ public interface Invoice extends BillingDocument {
      */
     record Data(Fields fields, Optional<LocalDate> dueDate, Optional<String> purchaseOrder,
                 Optional<PaymentTerms> paymentTerms) implements Invoice {
+        /** Makes an invoices data; a null part is empty. */
         public Data {
             dueDate = dueDate == null ? Optional.empty() : dueDate;
             purchaseOrder = purchaseOrder == null ? Optional.empty() : purchaseOrder;
             paymentTerms = paymentTerms == null ? Optional.empty() : paymentTerms;
         }
     }
+
+    /**
+     * {@return it as a {@link Invoice}, or empty when it is not one; never throws}
+     *
+     * @param text any text
+     */
+    public static Optional<Invoice> tryParse(@Nullable String text) {
+        if (text == null) return Optional.empty();
+        try {
+            return Optional.of(parse(text));
+        } catch (RuntimeException e) {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * {@return whether it is a {@link Invoice}}
+     *
+     * @param text any text
+     */
+    public static boolean isValid(@Nullable String text) {
+        return tryParse(text).isPresent();
+    }
+
 }

@@ -58,6 +58,8 @@ public record CalendarDate(LocalDate value) implements ValueObject, Comparable<C
     }
 
     /**
+     * Checks that the date is present.
+     *
      * @throws ValueObjectException if the date is missing
      */
     public CalendarDate {
@@ -65,14 +67,19 @@ public record CalendarDate(LocalDate value) implements ValueObject, Comparable<C
     }
 
     /**
+     * Wraps a {@link LocalDate}.
+     *
      * @param date the day
      * @return it
+     * @throws ValueObjectException if {@code date} is null
      */
     public static CalendarDate of(LocalDate date) {
         return new CalendarDate(date);
     }
 
     /**
+     * Makes the day from its year, month and day of the month.
+     *
      * @param year  e.g. 2026
      * @param month 1-12
      * @param day   1-31
@@ -87,12 +94,19 @@ public record CalendarDate(LocalDate value) implements ValueObject, Comparable<C
         }
     }
 
-    /** @return today, in this machine's zone */
+    /**
+     * Today's date in this machine's default zone.
+     *
+     * @return today, in this machine's zone
+     */
     public static CalendarDate today() {
         return new CalendarDate(LocalDate.now());
     }
 
     /**
+     * Reads a text that is a date and nothing else, in any of the forms listed on the class; surrounding blanks and
+     * one trailing {@code .} or {@code ,} are ignored.
+     *
      * @param text a date as printed, e.g. {@code "January 15, 2026"}
      * @return it
      * @throws ValueObjectException if the text is not (only) a date
@@ -107,8 +121,10 @@ public record CalendarDate(LocalDate value) implements ValueObject, Comparable<C
     }
 
     /**
-     * @param text any text
-     * @return the first date in it, or empty
+     * Finds the first date in a text; a match that is not a real day (such as {@code 02/30/2026}) is skipped.
+     *
+     * @param text any text, or null
+     * @return the first date in it, or empty (also when {@code text} is null)
      */
     public static Optional<CalendarDate> find(@Nullable String text) {
         if (text == null) return Optional.empty();
@@ -121,8 +137,10 @@ public record CalendarDate(LocalDate value) implements ValueObject, Comparable<C
     }
 
     /**
-     * @param text any text
-     * @return whether it is a date
+     * Tells whether a text is a date that {@link #parse(String)} accepts.
+     *
+     * @param text any text, or null
+     * @return whether it is a date ({@code false} for null)
      */
     public static boolean isValid(@Nullable String text) {
         if (text == null) return false;
@@ -151,22 +169,36 @@ public record CalendarDate(LocalDate value) implements ValueObject, Comparable<C
         return null;
     }
 
-    /** @return its year */
+    /**
+     * The year of this day.
+     *
+     * @return its year
+     */
     public int year() {
         return value.getYear();
     }
 
-    /** @return its day of the week */
+    /**
+     * The day of the week this day falls on.
+     *
+     * @return its day of the week
+     */
     public DayOfWeek dayOfWeek() {
         return value.getDayOfWeek();
     }
 
-    /** @return whether it is a Saturday or Sunday */
+    /**
+     * Tells whether this day falls on a weekend.
+     *
+     * @return whether it is a Saturday or Sunday
+     */
     public boolean isWeekend() {
         return value.getDayOfWeek() == DayOfWeek.SATURDAY || value.getDayOfWeek() == DayOfWeek.SUNDAY;
     }
 
     /**
+     * Counts the days from this day to another.
+     *
      * @param other another day
      * @return the days from this one to it (negative when it is earlier)
      */
@@ -175,6 +207,8 @@ public record CalendarDate(LocalDate value) implements ValueObject, Comparable<C
     }
 
     /**
+     * Moves this day by a number of days.
+     *
      * @param days days to add (negative to go back)
      * @return that day
      */
@@ -182,12 +216,18 @@ public record CalendarDate(LocalDate value) implements ValueObject, Comparable<C
         return new CalendarDate(value.plusDays(days));
     }
 
-    /** @return whether it is before today */
+    /**
+     * Tells whether this day is before today, in this machine's default zone.
+     *
+     * @return whether it is before today
+     */
     public boolean isPast() {
         return value.isBefore(LocalDate.now());
     }
 
     /**
+     * Writes this day in a {@link DateTimeFormatter} pattern, with English month and day names.
+     *
      * @param pattern a {@link DateTimeFormatter} pattern, e.g. {@code "MMM d, uuuu"}
      * @return it written in that pattern, in English
      */
@@ -200,9 +240,29 @@ public record CalendarDate(LocalDate value) implements ValueObject, Comparable<C
         return value.compareTo(other.value);
     }
 
-    /** @return ISO-8601, e.g. {@code 2026-01-15} */
+    /**
+     * Writes this day in ISO-8601 form.
+     *
+     * @return ISO-8601, e.g. {@code 2026-01-15}
+     */
     @Override
     public String toString() {
         return value.toString();
     }
+
+    /**
+     * Reads a text like {@link #parse(String)}, without throwing.
+     *
+     * @param text any text, or null
+     * @return it as a {@link CalendarDate}, or empty when it is not one; never throws
+     */
+    public static Optional<CalendarDate> tryParse(@Nullable String text) {
+        if (text == null) return Optional.empty();
+        try {
+            return Optional.of(parse(text));
+        } catch (RuntimeException e) {
+            return Optional.empty();
+        }
+    }
+
 }

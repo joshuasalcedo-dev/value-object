@@ -1,5 +1,6 @@
 package io.joshuasalcedo.valueobject.identifier;
 
+import java.util.Optional;
 import io.joshuasalcedo.valueobject.ValueObject;
 
 import io.joshuasalcedo.valueobject.exception.ValueObjectException;
@@ -8,16 +9,18 @@ import org.jspecify.annotations.Nullable;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.util.Base64;
-import java.util.Objects;
 import java.util.regex.Pattern;
 
 /**
- * Value object representing a JSON Web Token (JWT).
- * Stores the raw token string and provides methods to extract its parts.
+ * A JSON Web Token in compact form: {@code header.payload.signature}, each part Base64URL text, the signature
+ * possibly empty. Only the shape is checked; the signature is <b>not</b> verified, so do not trust its claims
+ * without verifying it elsewhere.
  *
- * This class performs basic structural validation but does NOT verify the signature.
- * For signature verification, use JwtTokenPort with an appropriate implementation.
+ * <p>The claim accessors find a claim by a plain text search of the decoded payload, not a JSON parse: they
+ * read only top-level string claims and whole-second numeric claims, and give {@code null} for anything else
+ * (an {@code aud} array, for example).
  *
+ * @param value the token, trimmed
  * @author JoshuaSalcedo
  * @since 1/24/2026
  */
@@ -32,8 +35,15 @@ public record JwtToken(String value) implements ValueObject {
     private static final int PAYLOAD_INDEX = 1;
     private static final int SIGNATURE_INDEX = 2;
 
+    /**
+     * Creates a token, trimming it.
+     *
+     * @throws ValueObjectException if it is {@code null}, blank, or not three dot-separated Base64URL parts
+     */
     public JwtToken {
-        Objects.requireNonNull(value, "JWT token cannot be null");
+        if (value == null) {
+            throw new ValueObjectException("JWT token cannot be null");
+        }
         value = value.trim();
 
         if (value.isBlank()) {
@@ -45,36 +55,36 @@ public record JwtToken(String value) implements ValueObject {
     }
 
     /**
-     * Creates a JwtToken from a token string.
+     * Creates a token; the same as the constructor.
      *
      * @param token the JWT string
-     * @return a new JwtToken
+     * @return the token
+     * @throws ValueObjectException if it is {@code null}, blank, or not three dot-separated Base64URL parts
      */
     public static JwtToken of(String token) {
         return new JwtToken(token);
     }
 
+
     /**
-     * Parses a JWT string, returning null if invalid.
+     * Parses a token, trimming it.
      *
-     * @param token the JWT string
-     * @return the JwtToken or null if invalid
+     * @param text the text
+     * @return the token
+     * @throws ValueObjectException if it is {@code null}, blank or not three dot-separated Base64URL parts
      */
-    public static @Nullable JwtToken parse(String token) {
-        try {
-            return new JwtToken(token);
-        } catch (ValueObjectException e) {
-            return null;
-        }
+    public static JwtToken parse(String text) {
+        if (text == null) throw new ValueObjectException("A JwtToken is required");
+        return of(text);
     }
 
     /**
-     * Checks if a string is a valid JWT format.
+     * Checks whether a text, once trimmed, has the shape of a JWT; the signature is not checked.
      *
-     * @param token the token to check
-     * @return true if valid JWT format
+     * @param token the token to check; may be {@code null}
+     * @return whether it is shaped like a JWT
      */
-    public static boolean isValid(String token) {
+    public static boolean isValid(@Nullable String token) {
         if (token == null || token.isBlank()) {
             return false;
         }
@@ -109,55 +119,55 @@ public record JwtToken(String value) implements ValueObject {
     }
 
     /**
-     * Decodes and returns the header as a JSON string.
+     * Decodes the header from Base64URL, as UTF-8.
      *
-     * @return the decoded header JSON
+     * @return the decoded header JSON, or {@code "{}"} when it is not valid Base64URL
      */
     public String decodedHeader() {
         return decodeBase64Url(header());
     }
 
     /**
-     * Decodes and returns the payload as a JSON string.
+     * Decodes the payload from Base64URL, as UTF-8.
      *
-     * @return the decoded payload JSON
+     * @return the decoded payload JSON, or {@code "{}"} when it is not valid Base64URL
      */
     public String decodedPayload() {
         return decodeBase64Url(payload());
     }
 
     /**
-     * Extracts the 'sub' (subject) claim from the payload if present.
-     * Returns null if not found or if parsing fails.
+     * Reads the {@code sub} (subject) claim from the payload.
      *
-     * @return the subject or null
+     * @return the subject, or {@code null} when it is missing or not a string
      */
     public @Nullable String subject() {
         return extractClaim("\"sub\"");
     }
 
     /**
-     * Extracts the 'iss' (issuer) claim from the payload if present.
+     * Reads the {@code iss} (issuer) claim from the payload.
      *
-     * @return the issuer or null
+     * @return the issuer, or {@code null} when it is missing or not a string
      */
     public @Nullable String issuer() {
         return extractClaim("\"iss\"");
     }
 
     /**
-     * Extracts the 'aud' (audience) claim from the payload if present.
+     * Reads the {@code aud} (audience) claim from the payload, when it is a single string.
      *
-     * @return the audience or null
+     * @return the audience, or {@code null} when it is missing or not a string (an array of audiences gives
+     *         {@code null})
      */
     public @Nullable String audience() {
         return extractClaim("\"aud\"");
     }
 
     /**
-     * Extracts the 'exp' (expiration) claim and returns it as an Instant.
+     * Reads the {@code exp} (expiration) claim, in seconds since the epoch.
      *
-     * @return the expiration time or null if not present
+     * @return the expiration time, or {@code null} when it is missing or not a number
      */
     public @Nullable Instant expirationTime() {
         String exp = extractNumericClaim("\"exp\"");
@@ -172,9 +182,9 @@ public record JwtToken(String value) implements ValueObject {
     }
 
     /**
-     * Extracts the 'iat' (issued at) claim and returns it as an Instant.
+     * Reads the {@code iat} (issued at) claim, in seconds since the epoch.
      *
-     * @return the issued at time or null if not present
+     * @return the issue time, or {@code null} when it is missing or not a number
      */
     public @Nullable Instant issuedAt() {
         String iat = extractNumericClaim("\"iat\"");
@@ -189,9 +199,9 @@ public record JwtToken(String value) implements ValueObject {
     }
 
     /**
-     * Extracts the 'nbf' (not before) claim and returns it as an Instant.
+     * Reads the {@code nbf} (not before) claim, in seconds since the epoch.
      *
-     * @return the not before time or null if not present
+     * @return the time it becomes valid, or {@code null} when it is missing or not a number
      */
     public @Nullable Instant notBefore() {
         String nbf = extractNumericClaim("\"nbf\"");
@@ -206,19 +216,19 @@ public record JwtToken(String value) implements ValueObject {
     }
 
     /**
-     * Extracts the 'jti' (JWT ID) claim from the payload if present.
+     * Reads the {@code jti} (JWT ID) claim from the payload.
      *
-     * @return the JWT ID or null
+     * @return the JWT ID, or {@code null} when it is missing or not a string
      */
     public @Nullable String jwtId() {
         return extractClaim("\"jti\"");
     }
 
     /**
-     * Checks if this token appears to be expired based on the 'exp' claim.
-     * Note: This does NOT verify the signature.
+     * Checks whether the {@code exp} claim is in the past. A token without a readable {@code exp} counts as
+     * expired. The signature is not verified.
      *
-     * @return true if expired or if exp claim is not present
+     * @return whether it is expired, or has no expiration time
      */
     public boolean isExpired() {
         Instant exp = expirationTime();
@@ -229,9 +239,10 @@ public record JwtToken(String value) implements ValueObject {
     }
 
     /**
-     * Checks if this token is not yet valid based on the 'nbf' claim.
+     * Checks whether the {@code nbf} claim is in the future. A token without a readable {@code nbf} is valid
+     * already.
      *
-     * @return true if not yet valid
+     * @return whether it is not yet valid
      */
     public boolean isNotYetValid() {
         Instant nbf = notBefore();
@@ -242,9 +253,9 @@ public record JwtToken(String value) implements ValueObject {
     }
 
     /**
-     * Returns the algorithm used from the header.
+     * Reads the {@code alg} (signing algorithm) from the header.
      *
-     * @return the algorithm (e.g., "HS256", "RS256") or null
+     * @return the algorithm, e.g. {@code "HS256"} or {@code "RS256"}, or {@code null} when it is missing
      */
     public @Nullable String algorithm() {
         String header = decodedHeader();
@@ -264,8 +275,8 @@ public record JwtToken(String value) implements ValueObject {
     }
 
     /**
-     * Returns a masked version of the token for logging/display.
-     * Shows first 20 chars and last 10 chars.
+     * Returns the token shortened for logs: its first 20 and last 10 characters around {@code "..."}; a token of
+     * 40 characters or fewer shows only its first 10.
      *
      * @return the masked token
      */
@@ -277,18 +288,18 @@ public record JwtToken(String value) implements ValueObject {
     }
 
     /**
-     * Returns the token length.
+     * Returns the length of the token text.
      *
-     * @return the length
+     * @return the number of characters
      */
     public int length() {
         return value.length();
     }
 
     /**
-     * Checks if the signature is present (non-empty).
+     * Checks whether the signature part is non-empty; an unsigned ({@code alg: none}) token has an empty one.
      *
-     * @return true if signature is present
+     * @return whether a signature is present
      */
     public boolean hasSignature() {
         return !signature().isEmpty();
@@ -370,4 +381,20 @@ public record JwtToken(String value) implements ValueObject {
 
         return numBuilder.isEmpty() ? null : numBuilder.toString();
     }
+
+    /**
+     * Parses a token as {@link #parse(String)} does, without throwing.
+     *
+     * @param text any text
+     * @return it as a {@link JwtToken}, or empty when it is not one; never throws
+     */
+    public static Optional<JwtToken> tryParse(@Nullable String text) {
+        if (text == null) return Optional.empty();
+        try {
+            return Optional.of(parse(text));
+        } catch (RuntimeException e) {
+            return Optional.empty();
+        }
+    }
+
 }

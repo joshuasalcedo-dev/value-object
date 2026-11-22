@@ -24,9 +24,9 @@ public final class Layout {
     private Layout() {}
 
     /**
+     * {@return the text laid out as on the page; pages are separated by a form feed; the input as is when it is neither}
+     *
      * @param tsv Tesseract TSV (every page), or positioned words ({@code "x y w h<TAB>text"})
-     * @return the text laid out as on the page; pages are separated by a form feed; the input as is when it is
-     *         neither
      */
     public static String text(@Nullable String tsv) {
         if (tsv == null || tsv.isBlank()) return "";
@@ -38,8 +38,9 @@ public final class Layout {
     }
 
     /**
+     * {@return the page as text, words at the columns of their positions}
+     *
      * @param words one page's words with their boxes
-     * @return the page as text, words at the columns of their positions
      */
     public static String text(List<TableDetector.Word> words) {
         List<TableDetector.Word> sorted = words.stream().filter(w -> !w.text().isBlank())

@@ -1,5 +1,6 @@
 package io.joshuasalcedo.valueobject.table;
 
+import org.jspecify.annotations.Nullable;
 import io.joshuasalcedo.valueobject.ValueObject;
 import io.joshuasalcedo.valueobject.exception.ValueObjectException;
 
@@ -30,10 +31,12 @@ import java.util.stream.Collectors;
  * @param hasHeader whether its first line(s) named the columns (else they are "Column 1", "Column 2", ...)
  * @param columns   its columns, left to right
  * @param rows      its body rows, top to bottom; each has one cell per column, "" when empty
+ * @param text      the lines it was read from, as they were (header included): what to read again, by hand or with
+ *                  another tool, when its columns came out wrong; "" when it was not read from text
  * @author JoshuaSalcedo
  */
-public record Table(int page, int firstLine, int lastLine, boolean hasHeader, List<Column> columns, List<List<String>> rows)
-        implements ValueObject {
+public record Table(int page, int firstLine, int lastLine, boolean hasHeader, List<Column> columns, List<List<String>> rows,
+                    String text) implements ValueObject {
 
     /**
      * A column.
@@ -52,9 +55,12 @@ public record Table(int page, int firstLine, int lastLine, boolean hasHeader, Li
     }
 
     /**
+     * Makes a table; the columns and rows are copied.
+     *
      * @throws ValueObjectException if it has no columns, or a row has not one cell per column
      */
     public Table {
+        text = text == null ? "" : text;
         if (columns == null || columns.isEmpty()) throw new ValueObjectException("A table needs at least one column");
         if (rows == null) throw new ValueObjectException("A table's rows are required");
         columns = List.copyOf(columns);
@@ -67,8 +73,33 @@ public record Table(int page, int firstLine, int lastLine, boolean hasHeader, Li
     }
 
     /**
+     * Makes a table that was not read from text.
+     *
+     * @param page      the page it is on
+     * @param firstLine the line its first row starts on
+     * @param lastLine  the line its last row ends on
+     * @param hasHeader whether its first line(s) named the columns
+     * @param columns   its columns, left to right
+     * @param rows      its body rows, one cell per column
+     * @throws ValueObjectException if it has no columns, or a row has not one cell per column
+     */
+    public Table(int page, int firstLine, int lastLine, boolean hasHeader, List<Column> columns, List<List<String>> rows) {
+        this(page, firstLine, lastLine, hasHeader, columns, rows, "");
+    }
+
+    /**
+     * {@return this table, with the text it was read from}
+     *
+     * @param text the lines it was read from
+     */
+    public Table withText(String text) {
+        return new Table(page, firstLine, lastLine, hasHeader, columns, rows, text);
+    }
+
+    /**
+     * {@return its first table}
+     *
      * @param text text that holds a table (Tesseract TSV, positioned words, or plain text)
-     * @return its first table
      * @throws ValueObjectException if it holds none
      */
     public static Table parse(String text) {
@@ -77,61 +108,66 @@ public record Table(int page, int firstLine, int lastLine, boolean hasHeader, Li
         return found.getFirst();
     }
 
-    /** @return how many body rows it has */
+    /** {@return how many body rows it has} */
     public int height() {
         return rows.size();
     }
 
-    /** @return how many columns it has */
+    /** {@return how many columns it has} */
     public int width() {
         return columns.size();
     }
 
     /**
+     * {@return that column, or empty}
+     *
      * @param name a column name, any case
-     * @return that column, or empty
      */
     public Optional<Column> column(String name) {
         return columns.stream().filter(c -> c.name().equalsIgnoreCase(name.trim())).findFirst();
     }
 
     /**
+     * {@return the cell's text, "" when empty}
+     *
      * @param row    a body row, from 0
      * @param column a column, from 0
-     * @return the cell's text, "" when empty
      */
     public String cell(int row, int column) {
         return rows.get(row).get(column);
     }
 
     /**
+     * {@return the cell's text, or empty when there is no such column}
+     *
      * @param row    a body row, from 0
      * @param column a column name
-     * @return the cell's text, or empty when there is no such column
      */
     public Optional<String> cell(int row, String column) {
         return column(column).map(c -> cell(row, c.index()));
     }
 
     /**
+     * {@return the cell as its column's value object, or empty when the column has no type or the cell is not one}
+     *
      * @param row    a body row, from 0
      * @param column a column, from 0
-     * @return the cell as its column's value object, or empty when the column has no type or the cell is not one
      */
     public Optional<ValueObject> value(int row, int column) {
         return columns.get(column).type().flatMap(t -> t.tryParse(cell(row, column)));
     }
 
     /**
+     * {@return the cell as its column's value object, or empty}
+     *
      * @param row    a body row, from 0
      * @param column a column name
-     * @return the cell as its column's value object, or empty
      */
     public Optional<ValueObject> value(int row, String column) {
         return column(column).flatMap(c -> value(row, c.index()));
     }
 
-    /** @return every row as column name to cell text, in column order */
+    /** {@return every row as column name to cell text, in column order} */
     public List<Map<String, String>> records() {
         List<Map<String, String>> out = new ArrayList<>(rows.size());
         for (List<String> row : rows) {
@@ -142,7 +178,7 @@ public record Table(int page, int firstLine, int lastLine, boolean hasHeader, Li
         return out;
     }
 
-    /** @return it as a Markdown table */
+    /** {@return it as a Markdown table} */
     public String toMarkdown() {
         StringBuilder out = new StringBuilder();
         out.append("| ").append(columns.stream().map(Column::name).map(Table::escape).collect(Collectors.joining(" | "))).append(" |\n");
@@ -153,12 +189,12 @@ public record Table(int page, int firstLine, int lastLine, boolean hasHeader, Li
         return out.toString();
     }
 
-    /** @return it as CSV: the column names, then the rows */
+    /** {@return it as CSV: the column names, then the rows} */
     public String toCsv() {
         return io.joshuasalcedo.valueobject.format.Csv.of(this);
     }
 
-    /** @return it as JSON: its columns (name, type, numeric) and rows */
+    /** {@return it as JSON: its columns (name, type, numeric) and rows} */
     public String toJson() {
         return io.joshuasalcedo.valueobject.format.Json.of(this);
     }
@@ -172,4 +208,28 @@ public record Table(int page, int firstLine, int lastLine, boolean hasHeader, Li
         return String.format(Locale.ROOT, "Table[page %d, lines %d-%d, %d x %d, columns=%s]",
                 page, firstLine, lastLine, height(), width(), columns);
     }
+
+    /**
+     * {@return it as a {@link Table}, or empty when it is not one; never throws}
+     *
+     * @param text any text
+     */
+    public static Optional<Table> tryParse(@Nullable String text) {
+        if (text == null) return Optional.empty();
+        try {
+            return Optional.of(parse(text));
+        } catch (RuntimeException e) {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * {@return whether it is a {@link Table}}
+     *
+     * @param text any text
+     */
+    public static boolean isValid(@Nullable String text) {
+        return tryParse(text).isPresent();
+    }
+
 }

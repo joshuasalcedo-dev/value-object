@@ -1,17 +1,20 @@
 package io.joshuasalcedo.valueobject.network;
 
+import java.util.Optional;
 import io.joshuasalcedo.valueobject.ValueObject;
 
 import io.joshuasalcedo.valueobject.exception.ValueObjectException;
 import org.jspecify.annotations.Nullable;
 
 import java.util.Arrays;
-import java.util.Objects;
+import java.util.Locale;
 import java.util.regex.Pattern;
 
 /**
- * Value object representing an IPv4 address.
+ * An IPv4 address in dotted-decimal form, {@code 192.168.1.10}: four numbers of 0 to 255 without leading zeros.
+ * Only the literal is read; host names are rejected and no DNS lookup is made.
  *
+ * @param value the address, trimmed
  * @author JoshuaSalcedo
  * @since 1/24/2026
  */
@@ -23,12 +26,22 @@ public record Ipv4Address(String value) implements ValueObject, IpAddress {
     );
 
     // Common addresses
+    /** Localhost: {@code new Ipv4Address("127.0.0.1")}. */
     public static final Ipv4Address LOCALHOST = new Ipv4Address("127.0.0.1");
+    /** Any: {@code new Ipv4Address("0.0.0.0")}. */
     public static final Ipv4Address ANY = new Ipv4Address("0.0.0.0");
+    /** Broadcast: {@code new Ipv4Address("255.255.255.255")}. */
     public static final Ipv4Address BROADCAST = new Ipv4Address("255.255.255.255");
 
+    /**
+     * Creates an address from its dotted-decimal text, trimmed.
+     *
+     * @throws ValueObjectException if {@code value} is {@code null} or not four numbers of 0 to 255 without leading zeros
+     */
     public Ipv4Address {
-        Objects.requireNonNull(value, "IPv4 address cannot be null");
+        if (value == null) {
+            throw new ValueObjectException("IPv4 address cannot be null");
+        }
         value = value.trim();
 
         if (!IPV4_PATTERN.matcher(value).matches()) {
@@ -37,10 +50,11 @@ public record Ipv4Address(String value) implements ValueObject, IpAddress {
     }
 
     /**
-     * Creates an IPv4 address from a string.
+     * Creates an address from its dotted-decimal text; the same as the constructor.
      *
-     * @param address the address string
-     * @return a new Ipv4Address
+     * @param address the address string, e.g. {@code "10.0.0.1"}
+     * @return the address
+     * @throws ValueObjectException if it is not a dotted-decimal IPv4 address
      */
     public static Ipv4Address of(String address) {
         return new Ipv4Address(address);
@@ -53,7 +67,8 @@ public record Ipv4Address(String value) implements ValueObject, IpAddress {
      * @param b second octet
      * @param c third octet
      * @param d fourth octet
-     * @return a new Ipv4Address
+     * @return the address
+     * @throws ValueObjectException if an octet is outside 0 to 255
      */
     public static Ipv4Address of(int a, int b, int c, int d) {
         validateOctet(a, "first");
@@ -66,16 +81,17 @@ public record Ipv4Address(String value) implements ValueObject, IpAddress {
     private static void validateOctet(int value, String position) {
         if (value < 0 || value > 255) {
             throw new ValueObjectException(
-                String.format("%s octet must be 0-255, got %d", position, value)
+                String.format(Locale.ROOT, "%s octet must be 0-255, got %d", position, value)
             );
         }
     }
 
     /**
-     * Creates an IPv4 address from a byte array.
+     * Creates an address from its four bytes, most significant first; each is read as unsigned.
      *
      * @param bytes 4 bytes
-     * @return a new Ipv4Address
+     * @return the address
+     * @throws ValueObjectException if {@code bytes} is {@code null} or not 4 bytes long
      */
     public static Ipv4Address of(byte[] bytes) {
         if (bytes == null || bytes.length != 4) {
@@ -84,25 +100,24 @@ public record Ipv4Address(String value) implements ValueObject, IpAddress {
         return of(bytes[0] & 0xFF, bytes[1] & 0xFF, bytes[2] & 0xFF, bytes[3] & 0xFF);
     }
 
+
     /**
-     * Parses an IPv4 address string, returning null if invalid.
+     * Parses an address from its dotted-decimal text, trimmed.
      *
-     * @param address the address string
-     * @return the Ipv4Address or null
+     * @param text the text
+     * @return the address
+     * @throws ValueObjectException if it is {@code null} or not a dotted-decimal IPv4 address
      */
-    public static @Nullable Ipv4Address parse(String address) {
-        try {
-            return of(address);
-        } catch (ValueObjectException e) {
-            return null;
-        }
+    public static Ipv4Address parse(String text) {
+        if (text == null) throw new ValueObjectException("A Ipv4Address is required");
+        return of(text);
     }
 
     /**
-     * Checks if a string is a valid IPv4 address.
+     * Checks whether a text, once trimmed, is a dotted-decimal IPv4 address.
      *
-     * @param address the address string
-     * @return true if valid
+     * @param address the address string; may be {@code null}
+     * @return whether it is valid
      */
     public static boolean isValid(String address) {
         if (address == null || address.isBlank()) {
@@ -128,9 +143,9 @@ public record Ipv4Address(String value) implements ValueObject, IpAddress {
     }
 
     /**
-     * Returns the octets as an int array.
+     * Returns the four numbers of the address.
      *
-     * @return the 4 octets
+     * @return the 4 octets, each 0 to 255
      */
     public int[] octets() {
         String[] parts = value.split("\\.");
@@ -143,9 +158,9 @@ public record Ipv4Address(String value) implements ValueObject, IpAddress {
     }
 
     /**
-     * Returns the address as a 32-bit integer.
+     * Returns the address as an unsigned 32-bit number.
      *
-     * @return the numeric value
+     * @return the numeric value, 0 to 4294967295
      */
     public long toLong() {
         int[] o = octets();
@@ -184,25 +199,26 @@ public record Ipv4Address(String value) implements ValueObject, IpAddress {
     }
 
     /**
-     * Checks if this is a broadcast address (255.255.255.255).
+     * Checks whether this is the limited broadcast address, {@code 255.255.255.255}.
      *
-     * @return true if broadcast
+     * @return whether it is the broadcast address
      */
     public boolean isBroadcast() {
         return "255.255.255.255".equals(value);
     }
 
     /**
-     * Checks if this is the any/unspecified address (0.0.0.0).
+     * Checks whether this is the unspecified ("any") address, {@code 0.0.0.0}.
      *
-     * @return true if any address
+     * @return whether it is the any address
      */
     public boolean isAny() {
         return "0.0.0.0".equals(value);
     }
 
     /**
-     * Gets the network class (A, B, C, D, or E).
+     * Returns the old classful network class, from the first number: A (0 to 127), B (128 to 191),
+     * C (192 to 223), D (224 to 239, multicast) or E (240 to 255).
      *
      * @return the class letter
      */
@@ -240,4 +256,20 @@ public record Ipv4Address(String value) implements ValueObject, IpAddress {
     public String toString() {
         return value;
     }
+
+    /**
+     * Parses an address as {@link #parse(String)} does, without throwing.
+     *
+     * @param text any text
+     * @return it as an {@link Ipv4Address}, or empty when it is not one; never throws
+     */
+    public static Optional<Ipv4Address> tryParse(@Nullable String text) {
+        if (text == null) return Optional.empty();
+        try {
+            return Optional.of(parse(text));
+        } catch (RuntimeException e) {
+            return Optional.empty();
+        }
+    }
+
 }

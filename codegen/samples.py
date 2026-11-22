@@ -54,6 +54,23 @@ def main() -> None:
                        check=True, capture_output=True)
         print(f"{html.name} -> {png.relative_to(ROOT)}")
 
+    # PDFs: each document printed (a text layer), and one page that is only an image (a scan, read with OCR)
+    for name in ["invoice-contractor", "bill-telco"]:
+        pdf = OUT / f"{name}.pdf"
+        subprocess.run([exe, "--headless=new", "--disable-gpu", "--no-pdf-header-footer", f"--print-to-pdf={pdf}",
+                        (SOURCES / f"{name}.html").as_uri()], check=True, capture_output=True)
+        print(f"{name}.html -> {pdf.relative_to(ROOT)}")
+    scan_html = OUT.parent / "scan-page.html"
+    scan_html.write_text('<!doctype html><html><body style="margin:0"><img src="samples/receipt-store.png" '
+                         'style="width:100%"></body></html>', encoding="utf-8")
+    try:
+        scan = OUT / "receipt-store-scan.pdf"
+        subprocess.run([exe, "--headless=new", "--disable-gpu", "--no-pdf-header-footer", f"--print-to-pdf={scan}",
+                        scan_html.as_uri()], check=True, capture_output=True)
+        print(f"receipt-store.png -> {scan.relative_to(ROOT)} (image only)")
+    finally:
+        scan_html.unlink()
+
 
 if __name__ == "__main__":
     main()

@@ -1,5 +1,7 @@
 package io.joshuasalcedo.valueobject.geo;
 
+import java.util.Locale;
+import io.joshuasalcedo.valueobject.exception.ValueObjectException;
 import io.joshuasalcedo.valueobject.ValueObject;
 
 import org.jspecify.annotations.Nullable;
@@ -166,10 +168,8 @@ public enum Race implements ValueObject {
     /** Unknown or not collected. */
     UNKNOWN("Unknown", Classification.SELF_IDENTIFICATION, "Not Specified", "N/A");
 
-    /**
-     * @return whether this is {@link #UNKNOWN}
-     */
-    public boolean isNull() {
+    /** {@return whether this is {@link #UNKNOWN}} */
+    public boolean isUnknown() {
         return this == UNKNOWN;
     }
 
@@ -325,9 +325,9 @@ public enum Race implements ValueObject {
      * @return list of matching categories
      */
     public static List<Race> startingWith(String prefix) {
-        String lowerPrefix = prefix.toLowerCase();
+        String lowerPrefix = prefix.toLowerCase(Locale.ROOT);
         return Arrays.stream(values())
-                .filter(r -> r.displayName.toLowerCase().startsWith(lowerPrefix))
+                .filter(r -> r.displayName.toLowerCase(Locale.ROOT).startsWith(lowerPrefix))
                 .toList();
     }
 
@@ -374,14 +374,6 @@ public enum Race implements ValueObject {
         return this.displayName.compareToIgnoreCase(other.displayName);
     }
 
-    /**
-     * Returns the null object representation of Race.
-     *
-     * @return the UNKNOWN race constant
-     */
-    public static Race nullValue() {
-        return UNKNOWN;
-    }
 
     @Override
     public String toString() {
@@ -434,8 +426,50 @@ public enum Race implements ValueObject {
             this.displayName = displayName;
         }
 
+        /** {@return the name of the classification system, e.g. {@code "Self-Identification"}} */
         public String displayName() {
             return displayName;
         }
     }
+
+    /**
+     * Parses a race from its display name, enum name or an alternative name, ignoring case and surrounding
+     * whitespace, as {@link #fromAny(String)} does.
+     *
+     * @param text the name, e.g. {@code "Asian"} or {@code "Caucasian"}
+     * @return the race
+     * @throws ValueObjectException if it is {@code null} or matches nothing other than {@link #UNKNOWN}
+     */
+    public static Race parse(String text) {
+        if (text == null) throw new ValueObjectException("A Race is required");
+        Race r = fromAny(text);
+        if (r == null || r == UNKNOWN) throw new ValueObjectException("Not a race: '" + text + "'");
+        return r;
+    }
+
+    /**
+     * Parses a race as {@link #parse(String)} does, without throwing.
+     *
+     * @param text any text
+     * @return it as a {@link Race}, or empty when it is not one; never throws
+     */
+    public static Optional<Race> tryParse(@Nullable String text) {
+        if (text == null) return Optional.empty();
+        try {
+            return Optional.of(parse(text));
+        } catch (RuntimeException e) {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * Tells whether a text names a race, as {@link #parse(String)} reads it.
+     *
+     * @param text any text
+     * @return whether it is a {@link Race}
+     */
+    public static boolean isValid(@Nullable String text) {
+        return tryParse(text).isPresent();
+    }
+
 }

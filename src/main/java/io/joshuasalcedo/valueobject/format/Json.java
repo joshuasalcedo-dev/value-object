@@ -41,8 +41,9 @@ public final class Json {
     private Json() {}
 
     /**
+     * {@return it as compact JSON}
+     *
      * @param value anything
-     * @return it as compact JSON
      */
     public static String of(@Nullable Object value) {
         StringBuilder out = new StringBuilder();
@@ -51,8 +52,9 @@ public final class Json {
     }
 
     /**
+     * {@return it as JSON indented by two spaces}
+     *
      * @param value anything
-     * @return it as JSON indented by two spaces
      */
     public static String pretty(@Nullable Object value) {
         StringBuilder out = new StringBuilder();
@@ -61,8 +63,9 @@ public final class Json {
     }
 
     /**
+     * {@return it as the plain Java value JSON would hold: a map, a list, a string, a number, a boolean or null}
+     *
      * @param value anything
-     * @return it as the plain Java value JSON would hold: a map, a list, a string, a number, a boolean or null
      */
     public static @Nullable Object toPlain(@Nullable Object value) {
         if (value == null) return null;
@@ -109,6 +112,194 @@ public final class Json {
             return out;
         }
         return value.toString();
+    }
+
+    // ── reading ───────────────────────────────────────────────────────────
+
+    /**
+     * Parses JSON into plain Java values.
+     *
+     * @param json any JSON
+     * @return a {@code Map<String, Object>} for an object, a {@code List<Object>} for an array, a {@code String},
+     *         a {@code BigDecimal} for a number, a {@code Boolean}, or null
+     * @throws io.joshuasalcedo.valueobject.exception.ValueObjectException if it is not valid JSON
+     */
+    public static @Nullable Object parse(String json) {
+        if (json == null) throw new io.joshuasalcedo.valueobject.exception.ValueObjectException("JSON is required");
+        Reader r = new Reader(json);
+        Object v = r.value();
+        r.space();
+        if (r.at < json.length()) throw r.fail("text after the JSON value");
+        return v;
+    }
+
+    /**
+     * Reads a value object, or a list or record of them, back from the JSON {@link #of(Object)} writes: a value object
+     * of one part from its text ({@code "jane@example.com"}), {@code Money} from {@code {"amount":..,"currency":..}},
+     * an enum from its name or code, a record part by part.
+     *
+     * @param json the JSON
+     * @param type the type wanted, e.g. {@code Email.class}, {@code LineItem.class}
+     * @param <T>  that type
+     * @return the value
+     * @throws io.joshuasalcedo.valueobject.exception.ValueObjectException if it is not valid JSON, or not a {@code T}
+     */
+    public static <T> T read(String json, Class<T> type) {
+        return type.cast(Values.convert(parse(json), type));
+    }
+
+    /**
+     * Turns plain values (maps, lists, strings, numbers, booleans) into a value of the given type: the reverse of
+     * {@link #toPlain(Object)}. For framework connectors that read JSON with their own parser.
+     *
+     * @param plain a plain value, as {@link #parse(String)} gives
+     * @param type  the type wanted, possibly generic ({@code List<Email>})
+     * @return the value, of that type; null for null
+     * @throws io.joshuasalcedo.valueobject.exception.ValueObjectException if it cannot be one
+     */
+    public static @Nullable Object fromPlain(@Nullable Object plain, java.lang.reflect.Type type) {
+        return Values.convert(plain, type);
+    }
+
+    /**
+     * Reads a JSON array back into a list.
+     *
+     * @param json        the JSON array
+     * @param elementType the type of each element, e.g. {@code Found.class}
+     * @param <T>         that type
+     * @return the elements, in order
+     * @throws io.joshuasalcedo.valueobject.exception.ValueObjectException if it is not a JSON array of {@code T}
+     */
+    public static <T> java.util.List<T> readList(String json, Class<T> elementType) {
+        Object plain = parse(json);
+        if (!(plain instanceof java.util.List<?> list)) {
+            throw new io.joshuasalcedo.valueobject.exception.ValueObjectException("Expected a JSON array");
+        }
+        java.util.List<T> out = new java.util.ArrayList<>();
+        for (Object o : list) out.add(elementType.cast(Values.convert(o, elementType)));
+        return out;
+    }
+
+    /** A small, strict JSON reader (RFC 8259). */
+    private static final class Reader {
+        private final String s;
+        private int at;
+
+        Reader(String s) {
+            this.s = s;
+        }
+
+        io.joshuasalcedo.valueobject.exception.ValueObjectException fail(String what) {
+            return new io.joshuasalcedo.valueobject.exception.ValueObjectException("Not valid JSON at " + at + ": " + what);
+        }
+
+        void space() {
+            while (at < s.length() && " \t\r\n".indexOf(s.charAt(at)) >= 0) at++;
+        }
+
+        @Nullable Object value() {
+            space();
+            if (at >= s.length()) throw fail("unexpected end");
+            char c = s.charAt(at);
+            return switch (c) {
+                case '{' -> object();
+                case '[' -> array();
+                case '"' -> string();
+                case 't' -> word("true", Boolean.TRUE);
+                case 'f' -> word("false", Boolean.FALSE);
+                case 'n' -> word("null", null);
+                default -> number();
+            };
+        }
+
+        private @Nullable Object word(String w, @Nullable Object v) {
+            if (!s.startsWith(w, at)) throw fail("expected " + w);
+            at += w.length();
+            return v;
+        }
+
+        private Map<String, Object> object() {
+            Map<String, Object> out = new LinkedHashMap<>();
+            at++;
+            space();
+            if (at < s.length() && s.charAt(at) == '}') {
+                at++;
+                return out;
+            }
+            while (true) {
+                space();
+                if (at >= s.length() || s.charAt(at) != '"') throw fail("expected a name");
+                String key = string();
+                space();
+                if (at >= s.length() || s.charAt(at) != ':') throw fail("expected ':'");
+                at++;
+                out.put(key, value());
+                space();
+                if (at >= s.length()) throw fail("unexpected end");
+                char c = s.charAt(at++);
+                if (c == '}') return out;
+                if (c != ',') throw fail("expected ',' or '}'");
+            }
+        }
+
+        private java.util.List<Object> array() {
+            java.util.List<Object> out = new java.util.ArrayList<>();
+            at++;
+            space();
+            if (at < s.length() && s.charAt(at) == ']') {
+                at++;
+                return out;
+            }
+            while (true) {
+                out.add(value());
+                space();
+                if (at >= s.length()) throw fail("unexpected end");
+                char c = s.charAt(at++);
+                if (c == ']') return out;
+                if (c != ',') throw fail("expected ',' or ']'");
+            }
+        }
+
+        private String string() {
+            StringBuilder out = new StringBuilder();
+            at++;
+            while (at < s.length()) {
+                char c = s.charAt(at++);
+                if (c == '"') return out.toString();
+                if (c != '\\') {
+                    out.append(c);
+                    continue;
+                }
+                if (at >= s.length()) break;
+                char e = s.charAt(at++);
+                switch (e) {
+                    case '"', '\\', '/' -> out.append(e);
+                    case 'b' -> out.append('\b');
+                    case 'f' -> out.append('\f');
+                    case 'n' -> out.append('\n');
+                    case 'r' -> out.append('\r');
+                    case 't' -> out.append('\t');
+                    case 'u' -> {
+                        if (at + 4 > s.length()) throw fail("short \\u escape");
+                        out.append((char) Integer.parseInt(s.substring(at, at + 4), 16));
+                        at += 4;
+                    }
+                    default -> throw fail("bad escape \\" + e);
+                }
+            }
+            throw fail("unterminated string");
+        }
+
+        private BigDecimal number() {
+            int start = at;
+            while (at < s.length() && "+-0123456789.eE".indexOf(s.charAt(at)) >= 0) at++;
+            if (start == at) throw fail("unexpected '" + s.charAt(at) + "'");
+            try {
+                return new BigDecimal(s.substring(start, at));
+            } catch (NumberFormatException e) {
+                throw fail("bad number " + s.substring(start, at));
+            }
+        }
     }
 
     /** A document as its fields, flattened, with its kind; its raw text left out. */

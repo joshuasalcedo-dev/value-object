@@ -43,7 +43,8 @@ public final class Ocr implements AutoCloseable {
     }
 
     /**
-     * @return OCR for English, with the language data found on this machine
+     * {@return OCR for English, with the language data found on this machine}
+     *
      * @throws ValueObjectException if no {@code eng.traineddata} is found
      */
     public static Ocr english() {
@@ -52,6 +53,28 @@ public final class Ocr implements AutoCloseable {
     }
 
     /**
+     * Opens OCR for one or more languages, with the language data found on this machine.
+     *
+     * <pre>{@code
+     * Ocr.of("eng", "fil");   // English and Filipino, for Philippine receipts
+     * }</pre>
+     *
+     * @param languages Tesseract language codes, e.g. {@code "eng"}, {@code "fil"}
+     * @return OCR for those languages together
+     * @throws ValueObjectException if a folder holding every one of them is not found
+     */
+    public static Ocr of(String... languages) {
+        if (languages == null || languages.length == 0) return english();
+        Path folder = findTessdata(languages[0]).filter(dir -> java.util.Arrays.stream(languages)
+                        .allMatch(l -> Files.isRegularFile(dir.resolve(l + ".traineddata"))))
+                .orElseThrow(() -> new ValueObjectException("No folder holds the language data for "
+                        + String.join(", ", languages) + ": set TESSDATA_PREFIX to the folder that holds them"));
+        return open(folder, String.join("+", languages));
+    }
+
+    /**
+     * Opens OCR with the language data in a given folder.
+     *
      * @param tessdata the folder holding {@code <language>.traineddata}
      * @param language one or more languages, e.g. {@code "eng"} or {@code "eng+fil"}
      * @return OCR for those languages
@@ -70,9 +93,9 @@ public final class Ocr implements AutoCloseable {
     }
 
     /**
+     * {@return the folder that holds {@code <language>.traineddata}: TESSDATA_PREFIX (or its {@code tessdata}), then the usual Linux, macOS and Windows (scoop, installer) folders}
+     *
      * @param language e.g. {@code "eng"}
-     * @return the folder that holds {@code <language>.traineddata}: TESSDATA_PREFIX (or its {@code tessdata}),
-     *         then the usual Linux, macOS and Windows (scoop, installer) folders
      */
     public static Optional<Path> findTessdata(String language) {
         List<Path> candidates = new ArrayList<>();
@@ -94,41 +117,45 @@ public final class Ocr implements AutoCloseable {
     }
 
     /**
+     * {@return its text laid out as on the page: each word at the column of its position, so table columns line up and labels stay beside their values ({@link io.joshuasalcedo.valueobject.table.Layout})}
+     *
      * @param image a PNG, JPEG, TIFF or BMP file
-     * @return its text laid out as on the page: each word at the column of its position, so table columns line
-     *         up and labels stay beside their values ({@link io.joshuasalcedo.valueobject.table.Layout})
      */
     public synchronized String text(Path image) {
         return io.joshuasalcedo.valueobject.table.Layout.text(read(load(image), true));
     }
 
     /**
+     * {@return its text laid out as on the page}
+     *
      * @param image the bytes of a PNG, JPEG, TIFF or BMP image
-     * @return its text laid out as on the page
      */
     public synchronized String text(byte[] image) {
         return io.joshuasalcedo.valueobject.table.Layout.text(read(load(image), true));
     }
 
     /**
+     * {@return Tesseract's own text, as it spaces it}
+     *
      * @param image a PNG, JPEG, TIFF or BMP file
-     * @return Tesseract's own text, as it spaces it
      */
     public synchronized String rawText(Path image) {
         return read(load(image), false);
     }
 
     /**
+     * {@return its words with their boxes, as Tesseract TSV (what {@code ValueObject.tables} reads best)}
+     *
      * @param image a PNG, JPEG, TIFF or BMP file
-     * @return its words with their boxes, as Tesseract TSV (what {@code ValueObject.tables} reads best)
      */
     public synchronized String tsv(Path image) {
         return read(load(image), true);
     }
 
     /**
+     * {@return its words with their boxes, as Tesseract TSV}
+     *
      * @param image the bytes of a PNG, JPEG, TIFF or BMP image
-     * @return its words with their boxes, as Tesseract TSV
      */
     public synchronized String tsv(byte[] image) {
         return read(load(image), true);

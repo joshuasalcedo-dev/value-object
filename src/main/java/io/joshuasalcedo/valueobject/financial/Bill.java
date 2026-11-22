@@ -1,5 +1,7 @@
 package io.joshuasalcedo.valueobject.financial;
 
+import io.joshuasalcedo.valueobject.exception.ValueObjectException;
+import org.jspecify.annotations.Nullable;
 import io.joshuasalcedo.valueobject.temporal.DateRange;
 
 import java.time.LocalDate;
@@ -22,20 +24,21 @@ import java.util.Optional;
 public interface Bill extends BillingDocument {
 
     /**
+     * {@return it read as a bill}
+     *
      * @param text the bill's text
-     * @return it read as a bill
      */
     static Bill parse(String text) {
         return BillingDocumentReader.bill(text);
     }
 
-    /** @return the account it is for */
+    /** {@return the account it is for} */
     Optional<String> accountNumber();
 
-    /** @return the period it covers */
+    /** {@return the period it covers} */
     Optional<DateRange> billingPeriod();
 
-    /** @return when it must be paid */
+    /** {@return when it must be paid} */
     Optional<LocalDate> dueDate();
 
     /**
@@ -48,10 +51,35 @@ public interface Bill extends BillingDocument {
      */
     record Data(Fields fields, Optional<String> accountNumber, Optional<DateRange> billingPeriod,
                 Optional<LocalDate> dueDate) implements Bill {
+        /** Makes a bills data; a null part is empty. */
         public Data {
             accountNumber = accountNumber == null ? Optional.empty() : accountNumber;
             billingPeriod = billingPeriod == null ? Optional.empty() : billingPeriod;
             dueDate = dueDate == null ? Optional.empty() : dueDate;
         }
     }
+
+    /**
+     * {@return it as a {@link Bill}, or empty when it is not one; never throws}
+     *
+     * @param text any text
+     */
+    public static Optional<Bill> tryParse(@Nullable String text) {
+        if (text == null) return Optional.empty();
+        try {
+            return Optional.of(parse(text));
+        } catch (RuntimeException e) {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * {@return whether it is a {@link Bill}}
+     *
+     * @param text any text
+     */
+    public static boolean isValid(@Nullable String text) {
+        return tryParse(text).isPresent();
+    }
+
 }

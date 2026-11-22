@@ -1,6 +1,8 @@
 package io.joshuasalcedo.valueobject.file;
 
+import java.util.Locale;
 import io.joshuasalcedo.valueobject.ValueObject;
+import io.joshuasalcedo.valueobject.exception.ValueObjectException;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -10,7 +12,6 @@ import java.nio.file.Path;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.Base64;
-import java.util.Objects;
 
 /**
  * Value object representing an immutable PDF file.
@@ -45,20 +46,22 @@ public record PDFFile(
     /**
      * Compact constructor that validates and defensively copies all fields.
      *
-     * @throws NullPointerException     if {@code fileName} or {@code content} is {@code null}
-     * @throws IllegalArgumentException if {@code fileName} does not end with {@code .pdf},
-     *                                  if {@code content} is empty, or if the bytes do not
-     *                                  start with the PDF magic header ({@code %PDF})
+     * @throws ValueObjectException if {@code fileName} or {@code content} is {@code null}, if
+     *                              {@code fileName} does not end with {@code .pdf}, if {@code content} is
+     *                              empty, or if the bytes do not start with the PDF magic header
+     *                              ({@code %PDF})
      */
     public PDFFile {
-        Objects.requireNonNull(fileName, "fileName must not be null");
-        Objects.requireNonNull(content, "content must not be null");
+        if (fileName == null)
+            throw new ValueObjectException("fileName must not be null");
+        if (content == null)
+            throw new ValueObjectException("content must not be null");
         if (!FileType.PDF.hasExtension(fileName))
-            throw new IllegalArgumentException("File must have .pdf extension");
+            throw new ValueObjectException("File must have .pdf extension");
         if (content.length == 0)
-            throw new IllegalArgumentException("PDF content must not be empty");
+            throw new ValueObjectException("PDF content must not be empty");
         if (!isValidPdf(content))
-            throw new IllegalArgumentException("Content is not a valid PDF (missing %PDF header)");
+            throw new ValueObjectException("Content is not a valid PDF (missing %PDF header)");
         content = Arrays.copyOf(content, content.length);
         sizeInBytes = content.length;
         createdAt = createdAt != null ? createdAt : Instant.now();
@@ -75,10 +78,10 @@ public record PDFFile(
      * @param fileName the file name (must end with {@code .pdf})
      * @param content  the raw PDF bytes
      * @return a new {@code PDFFile} instance
-     * @throws IllegalArgumentException if validation fails (see compact constructor)
+     * @throws ValueObjectException if validation fails (see compact constructor)
      */
     public static PDFFile of(String fileName, byte[] content) {
-        return new PDFFile(fileName, content, content.length, Instant.now());
+        return new PDFFile(fileName, content, 0, Instant.now());
     }
 
     /**
@@ -87,10 +90,12 @@ public record PDFFile(
      *
      * @param path the path to the PDF file on disk
      * @return a new {@code PDFFile} wrapping the file's contents
-     * @throws IOException              if the file cannot be read
-     * @throws IllegalArgumentException if the file fails PDF validation
+     * @throws IOException          if the file cannot be read
+     * @throws ValueObjectException if {@code path} is {@code null} or the file fails PDF validation
      */
     public static PDFFile fromPath(Path path) throws IOException {
+        if (path == null || path.getFileName() == null)
+            throw new ValueObjectException("A path to a PDF file is required");
         byte[] bytes = Files.readAllBytes(path);
         return new PDFFile(path.getFileName().toString(), bytes, bytes.length, Instant.now());
     }
@@ -103,11 +108,18 @@ public record PDFFile(
      * @param fileName the file name to assign (must end with {@code .pdf})
      * @param base64   the Base64-encoded PDF content (standard encoding, no line breaks required)
      * @return a new {@code PDFFile} instance
-     * @throws IllegalArgumentException if the decoded bytes fail PDF validation,
-     *                                  or if {@code base64} is not valid Base64
+     * @throws ValueObjectException if {@code base64} is {@code null} or not valid Base64, or the decoded bytes
+     *                              fail PDF validation
      */
     public static PDFFile fromBase64(String fileName, String base64) {
-        byte[] decoded = Base64.getDecoder().decode(base64);
+        if (base64 == null)
+            throw new ValueObjectException("Base64 content must not be null");
+        byte[] decoded;
+        try {
+            decoded = Base64.getDecoder().decode(base64.trim());
+        } catch (IllegalArgumentException e) {
+            throw new ValueObjectException("Not valid Base64", e);
+        }
         return new PDFFile(fileName, decoded, decoded.length, Instant.now());
     }
 
@@ -167,7 +179,7 @@ public record PDFFile(
      *
      * @param newFileName the replacement file name (must end with {@code .pdf})
      * @return a new {@code PDFFile} with the updated name
-     * @throws IllegalArgumentException if {@code newFileName} does not end with {@code .pdf}
+     * @throws ValueObjectException if {@code newFileName} is {@code null} or does not end with {@code .pdf}
      */
     public PDFFile rename(String newFileName) {
         return new PDFFile(newFileName, content, sizeInBytes, createdAt);
@@ -183,8 +195,8 @@ public record PDFFile(
      */
     public String fileSizeFormatted() {
         if (sizeInBytes < 1024) return sizeInBytes + " B";
-        if (sizeInBytes < 1024 * 1024) return String.format("%.1f KB", sizeInBytes / 1024.0);
-        return String.format("%.2f MB", sizeInBytes / (1024.0 * 1024));
+        if (sizeInBytes < 1024 * 1024) return String.format(Locale.ROOT, "%.1f KB", sizeInBytes / 1024.0);
+        return String.format(Locale.ROOT, "%.2f MB", sizeInBytes / (1024.0 * 1024));
     }
 
     /**

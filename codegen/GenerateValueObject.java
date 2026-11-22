@@ -183,8 +183,13 @@ public class GenerateValueObject {
         int bodyStart = readHeader(code, dm.end(), t);
         if (t.isEnum()) t.constants = enumConstants(code, bodyStart);
 
-        Matcher fm = FACTORY.matcher(code);
+        // a signature split over lines ("parse(\n String text)") reads as one line
+        String flat = code.replaceAll("\\(\\s*\\R\\s*", "(").replaceAll(",\\s*\\R\\s*", ", ")
+                .replaceAll("\\R\\s*\\)", ")").replaceAll("(static[^;{=]*?)\\R\\s+", "$1 ");
+        Matcher fm = FACTORY.matcher(flat);
+        int read = 0;
         while (fm.find()) {
+            read++;
             String returnType = fm.group(2);
             String name = fm.group(3);
             String param = fm.group(4).replace("@Nullable", "").replaceAll("\\s+", "");
@@ -196,6 +201,15 @@ public class GenerateValueObject {
             else if (returnType.equals("Optional<" + t.name + ">")) kind = "optional";
             else continue;
             t.factories.add(new Factory(name, param, kind));
+        }
+        // a one-argument parse(...) or of(...) the pattern could not read is reported, not skipped quietly
+        Matcher declared = Pattern.compile("(?m)^[ \\t]*(?:public[ \\t]+)?static\\b[^;=]*?\\b(parse|of)\\(\\s*(?:final\\s+)?"
+                + "(?:@Nullable\\s+)?[\\w.<>\\[\\]]+\\s+\\w+\\s*\\)").matcher(flat);
+        int declaredCount = 0;
+        while (declared.find()) declaredCount++;
+        if (declaredCount > read) {
+            System.err.println("warning: " + file + ": " + declaredCount + " one-argument parse/of methods, "
+                    + read + " read; check their signatures");
         }
         if (t.kind.equals("record") && t.components.size() == 1) {
             String param = t.components.getFirst().type();
@@ -398,6 +412,8 @@ public class GenerateValueObject {
                     }
 
                     /**
+                     * Names the value object a whole string is.
+                     *
                      * @param text a whole value, e.g. {@code "jane@example.com"}
                      * @return the most specific value object it is, or empty
                      */
@@ -406,6 +422,8 @@ public class GenerateValueObject {
                     }
 
                     /**
+                     * Lists every value object a whole string could be.
+                     *
                      * @param text a whole value, e.g. {@code "jane@example.com"}
                      * @return every value object it could be, most specific first
                      */
@@ -414,6 +432,8 @@ public class GenerateValueObject {
                     }
 
                     /**
+                     * Reads a whole string as the most specific value object it is.
+                     *
                      * @param text a whole value, e.g. {@code "149.99 USD"}
                      * @return it as the most specific value object it is, or empty
                      */
@@ -462,6 +482,8 @@ public class GenerateValueObject {
         for (int i = 0; i < types.size(); i++) {
             TypeInfo t = types.get(i);
             Shape s = shapes.get(t.name);
+            out.append("        /** {@link ").append(t.ref()).append("}").append(s == null ? "" : s.scan() ? ", found in text" : ", recognised as a whole value")
+                    .append(". */\n");
             out.append("        ").append(constantName(t.name)).append('(').append(t.name).append(".class, ")
                     .append(s == null ? "null" : javaString(s.regex())).append(", ").append(s != null && s.scan())
                     .append(')').append(i == types.size() - 1 ? ";" : ",").append('\n');
@@ -478,17 +500,17 @@ public class GenerateValueObject {
                             this.scannable = scannable;
                         }
 
-                        /** @return its Java type, e.g. {@code Email.class} */
+                        /** {@return its Java type, e.g. {@code Email.class}} */
                         public Class<? extends ValueObject> type() {
                             return type;
                         }
 
-                        /** @return whether {@link ValueObject#detect} and {@link ValueObject#identify} recognise it */
+                        /** {@return whether {@link ValueObject#detect} and {@link ValueObject#identify} recognise it} */
                         public boolean detectable() {
                             return shape != null;
                         }
 
-                        /** @return the regex that recognises it in text ({@code codegen/detection.txt}), or null when it is not detectable */
+                        /** {@return the regex that recognises it in text ({@code codegen/detection.txt}), or null when it is not detectable} */
                         public @Nullable String shape() {
                             return shape;
                         }
@@ -498,6 +520,8 @@ public class GenerateValueObject {
                         }
 
                         /**
+                         * Makes this value object from anything.
+                         *
                          * @param value the value object itself, or anything one of its factories takes
                          * @return it as this value object
                          * @throws io.joshuasalcedo.valueobject.exception.ValueObjectException if it is not one
@@ -513,6 +537,8 @@ public class GenerateValueObject {
                         }
 
                         /**
+                         * Makes this value object from anything, if it can.
+                         *
                          * @param value anything
                          * @return it as this value object, or empty when it is not one
                          */
@@ -524,7 +550,7 @@ public class GenerateValueObject {
                             }
                         }
 
-                        /** @return its checks, the same as {@code ValueObject.Validate.<TYPE>} */
+                        /** {@return its checks, the same as {@code ValueObject.Validate.<TYPE>}} */
                         public Check<? extends ValueObject> check() {
                             return switch (this) {
                 """);
@@ -536,6 +562,8 @@ public class GenerateValueObject {
                         }
 
                         /**
+                         * Finds the type of a value object's class.
+                         *
                          * @param javaType a value object's class, e.g. {@code Email.class}, or a subtype of one
                          * @return its type, or empty
                          */
@@ -572,14 +600,15 @@ public class GenerateValueObject {
             }
             boolean hasNumber = byInstance.containsKey("Number");
             String numeric = null;
-            for (String n : List.of("Integer", "Long", "Double")) {
+            for (String n : List.of("Long", "Double", "Integer")) {   // widest first: no silent truncation
                 if (byInstance.containsKey(n)) {
                     numeric = n;
                     break;
                 }
             }
             String c = constantName(t.name);
-            out.append("\n        /**\n         * @param value a {@link ").append(t.name).append('}');
+            out.append("\n        /**\n         * Makes a {@link ").append(t.name).append("} from anything its factories take.\n         *");
+            out.append("\n         * @param value a {@link ").append(t.name).append('}');
             List<String> accepted = new ArrayList<>();
             byInstance.forEach((inst, fs) -> accepted.add("a " + simple(inst) + " ("
                     + fs.stream().map(f -> f.name().equals("new") ? "its constructor" : "{@code " + t.name + "." + f.name() + "}")
@@ -691,6 +720,7 @@ public class GenerateValueObject {
                 """);
         for (TypeInfo t : types) {
             String c = constantName(t.name);
+            out.append("        /** Checks for {@link ").append(t.name).append("}. */\n");
             if (rules.containsKey(t)) {
                 out.append("        public static final ").append(t.name).append("Check ").append(c).append(" = new ")
                         .append(t.name).append("Check();\n");
@@ -714,6 +744,10 @@ public class GenerateValueObject {
             out.append("            /** The values a {@link ").append(t.name).append("} can be checked against. */\n");
             out.append("            public final class Is {\n\n                private Is() {}\n\n");
             for (Map.Entry<String, String[]> r : e.getValue().entrySet()) {
+                String part = r.getValue()[0].equals("v -> v") ? "it is"
+                        : "its {@code " + r.getValue()[0].substring(r.getValue()[0].indexOf("::") + 2) + "} is";
+                out.append("                /** Passes a {@link ").append(t.name).append("} when ").append(part)
+                        .append(" {@link ").append(r.getValue()[1].replaceFirst("\\.([A-Z0-9_]+)$", "#$1")).append("}. */\n");
                 out.append("                public final Rule<").append(t.name).append("> ").append(r.getKey())
                         .append(" = isRule(\"").append(r.getKey()).append("\", ").append(r.getValue()[0]).append(", ")
                         .append(r.getValue()[1]).append(");\n");

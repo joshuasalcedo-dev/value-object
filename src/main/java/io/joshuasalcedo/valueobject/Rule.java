@@ -34,8 +34,9 @@ public final class Rule<T extends ValueObject> implements Predicate<@Nullable Ob
     }
 
     /**
+     * {@return whether it parses as {@code T} and passes}
+     *
      * @param value anything
-     * @return whether it parses as {@code T} and passes
      */
     @Override
     public boolean test(@Nullable Object value) {
@@ -43,16 +44,18 @@ public final class Rule<T extends ValueObject> implements Predicate<@Nullable Ob
     }
 
     /**
+     * {@return the parsed value when it passes, else empty}
+     *
      * @param value anything
-     * @return the parsed value when it passes, else empty
      */
     public Optional<T> match(@Nullable Object value) {
         return parser.apply(value).filter(test);
     }
 
     /**
+     * {@return the parsed value}
+     *
      * @param value anything
-     * @return the parsed value
      * @throws io.joshuasalcedo.valueobject.exception.ValueObjectException if it does not parse or does not pass
      */
     public T require(@Nullable Object value) {
@@ -61,7 +64,7 @@ public final class Rule<T extends ValueObject> implements Predicate<@Nullable Ob
                         "'" + value + "' is not " + description));
     }
 
-    /** @return what it checks, e.g. {@code "MONEY is USD"} */
+    /** {@return what it checks, e.g. {@code "MONEY is USD"}} */
     @Override
     public String toString() {
         return description;

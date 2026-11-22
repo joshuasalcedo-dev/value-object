@@ -1,5 +1,7 @@
 package io.joshuasalcedo.valueobject.financial;
 
+import io.joshuasalcedo.valueobject.exception.ValueObjectException;
+import org.jspecify.annotations.Nullable;
 import java.time.LocalDate;
 import java.util.Optional;
 
@@ -19,33 +21,32 @@ import java.util.Optional;
 public interface Receipt extends BillingDocument {
 
     /**
+     * {@return it read as a receipt}
+     *
      * @param text the receipt's text
-     * @return it read as a receipt
      */
     static Receipt parse(String text) {
         return BillingDocumentReader.receipt(text);
     }
 
-    /** @return how it was paid: card, cash, e-wallet channel */
+    /** {@return how it was paid: card, cash, e-wallet channel} */
     Optional<String> paymentMethod();
 
-    /** @return when it was paid */
+    /** {@return when it was paid} */
     Optional<LocalDate> paidOn();
 
-    /**
-     * @return the card it was paid with, when the payment method names one ({@code "Visa - 4242"})
-     */
+    /** {@return the card it was paid with, when the payment method names one ({@code "Visa - 4242"})} */
     default Optional<MaskedCard> card() {
         return paymentMethod().flatMap(MaskedCard::tryParse);
     }
 
-    /** @return how much was paid */
+    /** {@return how much was paid} */
     Optional<Money> amountPaid();
 
-    /** @return the change given back */
+    /** {@return the change given back} */
     Optional<Money> change();
 
-    /** @return the payment's reference or transaction number */
+    /** {@return the payment's reference or transaction number} */
     Optional<String> reference();
 
     /**
@@ -60,6 +61,7 @@ public interface Receipt extends BillingDocument {
      */
     record Data(Fields fields, Optional<String> paymentMethod, Optional<LocalDate> paidOn, Optional<Money> amountPaid,
                 Optional<Money> change, Optional<String> reference) implements Receipt {
+        /** Makes a receipts data; a null part is empty. */
         public Data {
             paymentMethod = paymentMethod == null ? Optional.empty() : paymentMethod;
             paidOn = paidOn == null ? Optional.empty() : paidOn;
@@ -68,4 +70,28 @@ public interface Receipt extends BillingDocument {
             reference = reference == null ? Optional.empty() : reference;
         }
     }
+
+    /**
+     * {@return it as a {@link Receipt}, or empty when it is not one; never throws}
+     *
+     * @param text any text
+     */
+    public static Optional<Receipt> tryParse(@Nullable String text) {
+        if (text == null) return Optional.empty();
+        try {
+            return Optional.of(parse(text));
+        } catch (RuntimeException e) {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * {@return whether it is a {@link Receipt}}
+     *
+     * @param text any text
+     */
+    public static boolean isValid(@Nullable String text) {
+        return tryParse(text).isPresent();
+    }
+
 }

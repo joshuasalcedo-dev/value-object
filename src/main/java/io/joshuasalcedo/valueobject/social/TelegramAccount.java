@@ -1,5 +1,8 @@
 package io.joshuasalcedo.valueobject.social;
 
+import java.util.Locale;
+import io.joshuasalcedo.valueobject.exception.ValueObjectException;
+import org.jspecify.annotations.Nullable;
 import io.joshuasalcedo.valueobject.ValueObject;
 
 import java.util.Objects;
@@ -18,6 +21,12 @@ import java.util.regex.Pattern;
  *   <li>Cannot have consecutive underscores</li>
  * </ul>
  *
+ * <p>It is read from {@code "username"}, {@code "@username"}, {@code "https://t.me/username"} or
+ * {@code "tg://resolve?domain=username"}, trimmed. Accounts are equal when their usernames match ignoring case. Bad
+ * input makes the constructor, {@link #of(String)} and {@link #parse(String)} throw
+ * {@link ValueObjectException}; {@link #tryParse(String)} and {@link #isValid(String)} never throw.
+ *
+ * @param username the username, without {@code @} or URL, case kept as given
  * @author JoshuaSalcedo
  * @since 2/3/2026 2:43 AM
  */
@@ -32,7 +41,9 @@ public record TelegramAccount(String username) implements ValueObject {
 
 	private static final Pattern CONSECUTIVE_UNDERSCORES = Pattern.compile("__");
 
+	/** Telegram url prefix: {@code "https://t.me/"}. */
 	public static final String TELEGRAM_URL_PREFIX = "https://t.me/";
+	/** Telegram app prefix: {@code "tg://resolve?domain="}. */
 	public static final String TELEGRAM_APP_PREFIX = "tg://resolve?domain=";
 
 	/**
@@ -40,7 +51,7 @@ public record TelegramAccount(String username) implements ValueObject {
 	 * Normalizes the username by removing any leading @ symbol.
 	 *
 	 * @param username the Telegram username
-	 * @throws IllegalArgumentException if username is null or invalid
+	 * @throws ValueObjectException if username is null or invalid
 	 */
 	public TelegramAccount {
 		username = normalize(username);
@@ -53,7 +64,7 @@ public record TelegramAccount(String username) implements ValueObject {
 	 *
 	 * @param input the username in any accepted format
 	 * @return a new TelegramAccount instance
-	 * @throws IllegalArgumentException if input is invalid
+	 * @throws ValueObjectException if input is null or invalid
 	 */
 	public static TelegramAccount of(String input) {
 		return new TelegramAccount(input);
@@ -65,10 +76,10 @@ public record TelegramAccount(String username) implements ValueObject {
 	 * @param input the username to parse
 	 * @return Optional containing TelegramAccount if valid, empty otherwise
 	 */
-	public static Optional<TelegramAccount> parse(String input) {
+	public static Optional<TelegramAccount> tryParse(@Nullable String input) {
 		try {
 			return Optional.of(new TelegramAccount(input));
-		} catch (IllegalArgumentException e) {
+		} catch (ValueObjectException e) {
 			return Optional.empty();
 		}
 	}
@@ -79,7 +90,7 @@ public record TelegramAccount(String username) implements ValueObject {
 	 * @param input the username to validate
 	 * @return true if valid, false otherwise
 	 */
-	public static boolean isValid(String input) {
+	public static boolean isValid(@Nullable String input) {
 		if (input == null || input.isBlank()) {
 			return false;
 		}
@@ -120,7 +131,7 @@ public record TelegramAccount(String username) implements ValueObject {
 	 * @return lowercase username
 	 */
 	public String normalized() {
-		return username.toLowerCase();
+		return username.toLowerCase(Locale.ROOT);
 	}
 
 	/**
@@ -158,18 +169,18 @@ public record TelegramAccount(String username) implements ValueObject {
 
 	private static String normalize(String input) {
 		if (input == null) {
-			throw new IllegalArgumentException("Telegram username cannot be null");
+			throw new ValueObjectException("Telegram username cannot be null");
 		}
 
 		String trimmed = input.trim();
 
 		// Handle full URL format
-		if (trimmed.toLowerCase().startsWith(TELEGRAM_URL_PREFIX.toLowerCase())) {
+		if (trimmed.toLowerCase(Locale.ROOT).startsWith(TELEGRAM_URL_PREFIX.toLowerCase(Locale.ROOT))) {
 			trimmed = trimmed.substring(TELEGRAM_URL_PREFIX.length());
 		}
 
 		// Handle tg:// deep link format
-		if (trimmed.toLowerCase().startsWith(TELEGRAM_APP_PREFIX.toLowerCase())) {
+		if (trimmed.toLowerCase(Locale.ROOT).startsWith(TELEGRAM_APP_PREFIX.toLowerCase(Locale.ROOT))) {
 			trimmed = trimmed.substring(TELEGRAM_APP_PREFIX.length());
 		}
 
@@ -194,43 +205,43 @@ public record TelegramAccount(String username) implements ValueObject {
 
 	private static void validate(String username) {
 		if (username == null || username.isBlank()) {
-			throw new IllegalArgumentException("Telegram username cannot be blank");
+			throw new ValueObjectException("Telegram username cannot be blank");
 		}
 
 		if (username.length() < MIN_LENGTH) {
-			throw new IllegalArgumentException(
-					String.format("Telegram username must be at least %d characters, got %d: '%s'",
+			throw new ValueObjectException(
+					String.format(Locale.ROOT, "Telegram username must be at least %d characters, got %d: '%s'",
 							MIN_LENGTH, username.length(), username)
 			);
 		}
 
 		if (username.length() > MAX_LENGTH) {
-			throw new IllegalArgumentException(
-					String.format("Telegram username cannot exceed %d characters, got %d: '%s'",
+			throw new ValueObjectException(
+					String.format(Locale.ROOT, "Telegram username cannot exceed %d characters, got %d: '%s'",
 							MAX_LENGTH, username.length(), username)
 			);
 		}
 
 		if (!Character.isLetter(username.charAt(0))) {
-			throw new IllegalArgumentException(
+			throw new ValueObjectException(
 					"Telegram username must start with a letter: '" + username + "'"
 			);
 		}
 
 		if (username.endsWith("_")) {
-			throw new IllegalArgumentException(
+			throw new ValueObjectException(
 					"Telegram username cannot end with an underscore: '" + username + "'"
 			);
 		}
 
 		if (CONSECUTIVE_UNDERSCORES.matcher(username).find()) {
-			throw new IllegalArgumentException(
+			throw new ValueObjectException(
 					"Telegram username cannot contain consecutive underscores: '" + username + "'"
 			);
 		}
 
 		if (!VALID_USERNAME_PATTERN.matcher(username).matches()) {
-			throw new IllegalArgumentException(
+			throw new ValueObjectException(
 					"Telegram username contains invalid characters (only a-z, A-Z, 0-9, _ allowed): '" + username + "'"
 			);
 		}
@@ -254,4 +265,15 @@ public record TelegramAccount(String username) implements ValueObject {
 		}
 		return VALID_USERNAME_PATTERN.matcher(username).matches();
 	}
+
+    /**
+     * Parses an account from any of the accepted forms, as {@link #tryParse(String)} does.
+     *
+     * @param text the username, {@code @username} or link
+     * @return the account
+     * @throws ValueObjectException if it is {@code null} or not a valid Telegram username
+     */
+    public static TelegramAccount parse(String text) {
+        return tryParse(text).orElseThrow(() -> new ValueObjectException("Not a TelegramAccount: '" + text + "'"));
+    }
 }

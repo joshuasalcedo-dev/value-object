@@ -39,31 +39,34 @@ public class Check<T extends ValueObject> {
         this.valid = new Rule<>("a valid " + valueObject, parser, v -> true);
     }
 
-    /** @return the value object this checks */
+    /** {@return the value object this checks} */
     public ValueObject.Type valueObject() {
         return valueObject;
     }
 
     /**
+     * {@return it parsed as this value object, or empty}
+     *
      * @param value anything
-     * @return it parsed as this value object, or empty
      */
     public Optional<T> parse(@Nullable Object value) {
         return parser.apply(value);
     }
 
     /**
+     * {@return whether it parses as this value object}
+     *
      * @param value anything
-     * @return whether it parses as this value object
      */
     public boolean isValid(@Nullable Object value) {
         return valid.test(value);
     }
 
     /**
+     * {@return a rule: parse, then test}
+     *
      * @param name what the rule checks, for messages
      * @param test the test on the parsed value
-     * @return a rule: parse, then test
      */
     public Rule<T> rule(String name, Predicate<T> test) {
         return new Rule<>(valueObject + " " + name, parser, test);

@@ -45,15 +45,30 @@ public interface MeasurementUnit<U extends MeasurementUnit<U>> extends ValueObje
     U baseUnit();
 
     /**
-     * Converts a value from this unit to the target unit.
+     * Converts a value from this unit to the target unit, through the base unit. The result is exact when it has
+     * a finite decimal expansion (kilometres to metres, mebibytes to bytes), else rounded half-even to 34
+     * significant digits ({@link java.math.MathContext#DECIMAL128}); trailing zeros are dropped.
      *
      * @param value the value in this unit
      * @param targetUnit the target unit
      * @return the value converted to the target unit
+     * @throws io.joshuasalcedo.valueobject.exception.ValueObjectException if either is {@code null}, or the
+     *         target unit's factor is zero
      */
     default BigDecimal convertTo(BigDecimal value, U targetUnit) {
-        // Convert to base unit first, then to target
+        if (value == null || targetUnit == null)
+            throw new io.joshuasalcedo.valueobject.exception.ValueObjectException("Value and target unit are required");
+        BigDecimal divisor = targetUnit.toBaseUnitFactor();
+        if (divisor.signum() == 0)
+            throw new io.joshuasalcedo.valueobject.exception.ValueObjectException("Cannot convert to " + targetUnit.unitName());
         BigDecimal inBase = value.multiply(toBaseUnitFactor());
-        return inBase.divide(targetUnit.toBaseUnitFactor(), 10, java.math.RoundingMode.HALF_EVEN);
+        BigDecimal out;
+        try {
+            out = inBase.divide(divisor);
+        } catch (ArithmeticException nonTerminating) {
+            out = inBase.divide(divisor, java.math.MathContext.DECIMAL128);
+        }
+        out = out.stripTrailingZeros();
+        return out.scale() < 0 ? out.setScale(0) : out;
     }
 }

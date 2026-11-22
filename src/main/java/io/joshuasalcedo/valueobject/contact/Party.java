@@ -24,7 +24,10 @@ public record Party(String name, Optional<Address> address, Optional<Email> emai
                     Optional<Link> website, Optional<TaxId> taxId, List<String> lines) implements ValueObject {
 
     /**
-     * @throws ValueObjectException if the name is blank
+     * Creates a party, stripping the name; {@code null} optionals become empty and {@code null} lines an empty
+     * list.
+     *
+     * @throws ValueObjectException if the name is {@code null} or blank
      */
     public Party {
         if (name == null || name.isBlank()) throw new ValueObjectException("A party needs a name");
@@ -38,23 +41,30 @@ public record Party(String name, Optional<Address> address, Optional<Email> emai
     }
 
     /**
+     * Creates a party with only a name; its lines are just the name.
+     *
      * @param name the name
      * @return a party with only a name
+     * @throws ValueObjectException if the name is {@code null} or blank
      */
     public static Party of(String name) {
+        if (name == null || name.isBlank()) throw new ValueObjectException("A party needs a name");
         return new Party(name, Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
                 List.of(name));
     }
 
     /**
+     * Reads the name as a person's name: when it {@link FullName#looksLikePerson(String) looks like one}, as
+     * {@link FullName#parse(String)} reads it.
+     *
      * @return the name as a person's name (first, middle, last), when it reads as one rather than a business's
      *         ({@code "Ms. Andrea Lim Bautista"} yes, {@code "Skyline Telecom, Inc."} no)
      */
     public Optional<FullName> person() {
-        return FullName.tryParse(name);
+        return FullName.looksLikePerson(name) ? FullName.tryParse(name) : Optional.empty();
     }
 
-    /** @return whether the name reads as a person's rather than a business's */
+    /** {@return whether the name reads as a person's rather than a business's} */
     public boolean isPerson() {
         return person().isPresent();
     }

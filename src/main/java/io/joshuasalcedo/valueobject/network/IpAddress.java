@@ -1,12 +1,13 @@
 package io.joshuasalcedo.valueobject.network;
 
+import io.joshuasalcedo.valueobject.exception.ValueObjectException;
+import java.util.Optional;
 import io.joshuasalcedo.valueobject.ValueObject;
 
 import org.jspecify.annotations.Nullable;
 
 /**
- * Sealed interface for IP addresses.
- * Permits IPv4Address and Ipv6Address implementations.
+ * An IP address: either an {@link Ipv4Address} or an {@link Ipv6Address}. IPv4 addresses sort before IPv6 ones.
  *
  * @author JoshuaSalcedo
  * @since 1/24/2026
@@ -64,50 +65,68 @@ public sealed interface IpAddress extends ValueObject, Comparable<IpAddress>
     boolean isMulticast();
 
     /**
-     * Parses an IP address string (IPv4 or IPv6).
+     * Reads an IP address, trying IPv4 first and then IPv6.
      *
-     * @param address the address string
-     * @return the IpAddress (IPv4 or IPv6)
+     * @param address the address string, e.g. {@code "10.0.0.1"} or {@code "2001:db8::1"}
+     * @return the address, an {@link Ipv4Address} or an {@link Ipv6Address}
+     * @throws ValueObjectException if it is {@code null}, blank, or neither kind of address
      */
     static IpAddress of(String address) {
         if (address == null || address.isBlank()) {
-            throw new IllegalArgumentException("IP address cannot be null or blank");
+            throw new ValueObjectException("IP address cannot be null or blank");
         }
 
         // Try IPv4 first
-        if (Ipv4Address.isValid(address)) {
-            return Ipv4Address.of(address);
+        Optional<Ipv4Address> ipv4 = Ipv4Address.tryParse(address);
+        if (ipv4.isPresent()) {
+            return ipv4.get();
         }
 
         // Try IPv6
-        if (Ipv6Address.isValid(address)) {
-            return Ipv6Address.of(address);
+        Optional<Ipv6Address> ipv6 = Ipv6Address.tryParse(address);
+        if (ipv6.isPresent()) {
+            return ipv6.get();
         }
 
-        throw new IllegalArgumentException("Invalid IP address: " + address);
+        throw new ValueObjectException("Invalid IP address: " + address);
+    }
+
+
+    /**
+     * Parses an IP address as {@link #of(String)} does.
+     *
+     * @param text an IPv4 or IPv6 address
+     * @return the address
+     * @throws ValueObjectException if it is {@code null}, blank, or neither kind of address
+     */
+    static IpAddress parse(String text) {
+        if (text == null) throw new ValueObjectException("An IP address is required");
+        return of(text);
     }
 
     /**
-     * Parses an IP address string, returning null if invalid.
+     * Checks whether a text is an IPv4 or an IPv6 address.
      *
-     * @param address the address string
-     * @return the IpAddress or null
+     * @param address the address string; may be {@code null}
+     * @return whether it is valid
      */
-    static @Nullable IpAddress parse(String address) {
-        try {
-            return of(address);
-        } catch (IllegalArgumentException e) {
-            return null;
-        }
-    }
-
-    /**
-     * Checks if a string is a valid IP address (v4 or v6).
-     *
-     * @param address the address string
-     * @return true if valid
-     */
-    static boolean isValid(String address) {
+    static boolean isValid(@Nullable String address) {
         return Ipv4Address.isValid(address) || Ipv6Address.isValid(address);
     }
+
+    /**
+     * Parses an IP address as {@link #parse(String)} does, without throwing.
+     *
+     * @param text any text
+     * @return it as an {@link IpAddress}, or empty when it is not one; never throws
+     */
+    public static Optional<IpAddress> tryParse(@Nullable String text) {
+        if (text == null) return Optional.empty();
+        try {
+            return Optional.of(parse(text));
+        } catch (RuntimeException e) {
+            return Optional.empty();
+        }
+    }
+
 }

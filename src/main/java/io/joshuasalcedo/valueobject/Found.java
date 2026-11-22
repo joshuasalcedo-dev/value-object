@@ -23,7 +23,12 @@ package io.joshuasalcedo.valueobject;
  */
 public record Found(ValueObject.Type type, ValueObject value, String text, int start, int end, String shape) {
 
-    /** @return the line it is on (0-based) in {@code whole}, the text it was found in */
+    /**
+     * The line it is on.
+     *
+     * @param whole the text it was found in
+     * @return its line in that text, from 0
+     */
     public int line(String whole) {
         int line = 0;
         for (int i = 0; i < Math.min(start, whole.length()); i++) if (whole.charAt(i) == '\n') line++;

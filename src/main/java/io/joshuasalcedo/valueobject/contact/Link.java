@@ -7,24 +7,37 @@ import org.jspecify.annotations.Nullable;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Objects;
+import io.joshuasalcedo.valueobject.network.Ipv6Address;
 import java.util.Optional;
 
 /**
- * Value object representing a URL.
- * Validates URL structure and provides convenient accessors for components.
+ * A URL: trimmed text that parses as a {@link URI} with a scheme ({@code https:}, {@code mailto:}, ...), with
+ * accessors for its parts.
  *
+ * <pre>{@code
+ * Link l = Link.https("northwind.example/billing?tab=2");
+ * l.host();      // "northwind.example"
+ * l.query();     // Optional["tab=2"]
+ * l.baseUrl();   // "https://northwind.example"
+ * }</pre>
+ *
+ * @param value the URL, trimmed
  * @author JoshuaSalcedo
  * @since 1/24/2026
  */
 public record Link(String value) implements ValueObject, Comparable<Link> {
 
-    /** Null object representing an absent Link. */
-    public static final Link NULL = new Link("");
 
+    /**
+     * Creates a link, trimming the text.
+     *
+     * @throws ValueObjectException if {@code value} is {@code null}, blank, not a valid URI, or has no scheme
+     */
     public Link {
-        Objects.requireNonNull(value, "URL cannot be null");
-        if (!value.isEmpty()) {
+        if (value == null) {
+            throw new ValueObjectException("URL cannot be null");
+        }
+        {
             value = value.trim();
             if (value.isBlank()) {
                 throw new ValueObjectException("URL cannot be blank");
@@ -42,76 +55,62 @@ public record Link(String value) implements ValueObject, Comparable<Link> {
     }
 
     
-    public boolean isNull() {
-        return value.isEmpty();
-    }
 
     /**
-     * Creates a Link from a string value.
+     * Creates a link; the same as the constructor.
      *
-     * @param url the URL string
-     * @return a new Link instance
+     * @param url the URL, with a scheme
+     * @return the link
+     * @throws ValueObjectException if it is {@code null}, blank, not a valid URI, or has no scheme
      */
     public static Link of(String url) {
         return new Link(url);
     }
 
     /**
-     * Creates a Link, adding https:// if no scheme is present.
+     * Creates a link, putting {@code https://} in front when the text has no {@code ://}.
      *
-     * @param url the URL string
-     * @return a new Link instance
+     * @param url the URL, e.g. {@code "northwind.example/billing"}
+     * @return the link
+     * @throws ValueObjectException if it is {@code null}, or not a valid URL even then
      */
     public static Link https(String url) {
+        if (url == null) {
+            throw new ValueObjectException("A Link is required");
+        }
+        url = url.trim();
         if (!url.contains("://")) {
             url = "https://" + url;
         }
         return new Link(url);
     }
 
+
     /**
-     * Parses a URL string, returning null for invalid URLs instead of throwing.
+     * Parses a link; the text must have a scheme.
      *
-     * @param url the URL string
-     * @return the Link or null if invalid
+     * @param text the text
+     * @return the link
+     * @throws ValueObjectException if it is {@code null}, blank, not a valid URI, or has no scheme
      */
-    public static @Nullable Link parse(String url) {
-        try {
-            return new Link(url);
-        } catch (ValueObjectException e) {
-            return null;
-        }
+    public static Link parse(String text) {
+        if (text == null) throw new ValueObjectException("A Link is required");
+        return of(text);
+    }
+
+
+    /**
+     * Checks whether a text, once trimmed, parses as a URI with a scheme.
+     *
+     * @param url the text to check; may be {@code null}
+     * @return whether it is a valid link
+     */
+    public static boolean isValid(@Nullable String url) {
+        return tryParse(url).isPresent();
     }
 
     /**
-     * Returns the null object representation of Link.
-     *
-     * @return the NULL link constant
-     */
-    public static Link nullValue() {
-        return NULL;
-    }
-
-    /**
-     * Checks if a string is a valid URL format.
-     *
-     * @param url the URL string to check
-     * @return true if valid format
-     */
-    public static boolean isValid(String url) {
-        if (url.isBlank()) {
-            return false;
-        }
-        try {
-            URI uri = new URI(url.trim());
-            return uri.getScheme() != null;
-        } catch (URISyntaxException e) {
-            return false;
-        }
-    }
-
-    /**
-     * Returns the URI representation.
+     * Returns the link as a {@link URI}.
      *
      * @return the URI
      */
@@ -124,7 +123,7 @@ public record Link(String value) implements ValueObject, Comparable<Link> {
     }
 
     /**
-     * Returns the scheme (protocol) of the URL (e.g., "https").
+     * Returns the scheme (protocol) of the URL, e.g. {@code "https"}.
      *
      * @return the scheme
      */
@@ -135,16 +134,17 @@ public record Link(String value) implements ValueObject, Comparable<Link> {
     /**
      * Returns the host of the URL.
      *
-     * @return the host
+     * @return the host, or {@code null} when it has none (e.g. a {@code mailto:} link); an IPv6 host keeps
+     *         its brackets, {@code "[::1]"}
      */
-    public String host() {
+    public @Nullable String host() {
         return toUri().getHost();
     }
 
     /**
-     * Returns the port if specified, or empty if using default.
+     * Returns the port when the URL gives one.
      *
-     * @return the port or empty
+     * @return the port, or empty when the URL has none
      */
     public Optional<Integer> port() {
         int port = toUri().getPort();
@@ -152,9 +152,9 @@ public record Link(String value) implements ValueObject, Comparable<Link> {
     }
 
     /**
-     * Returns the path of the URL.
+     * Returns the path of the URL, decoded.
      *
-     * @return the path or empty string
+     * @return the path, or an empty string when it has none
      */
     public String path() {
         String path = toUri().getPath();
@@ -162,68 +162,86 @@ public record Link(String value) implements ValueObject, Comparable<Link> {
     }
 
     /**
-     * Returns the query string if present.
+     * Returns the query string, decoded, without the {@code ?}.
      *
-     * @return the query or empty
+     * @return the query, or empty when there is none
      */
     public Optional<String> query() {
         return Optional.ofNullable(toUri().getQuery());
     }
 
     /**
-     * Returns the fragment (anchor) if present.
+     * Returns the fragment (anchor), decoded, without the {@code #}.
      *
-     * @return the fragment or empty
+     * @return the fragment, or empty when there is none
      */
     public Optional<String> fragment() {
         return Optional.ofNullable(toUri().getFragment());
     }
 
     /**
-     * Checks if this URL uses HTTPS.
+     * Checks whether the scheme is {@code https}, ignoring case.
      *
-     * @return true if HTTPS
+     * @return whether it uses HTTPS
      */
     public boolean isSecure() {
         return "https".equalsIgnoreCase(scheme());
     }
 
     /**
-     * Checks if this is a localhost URL.
+     * Checks whether the host is {@code localhost}, {@code 127.0.0.1} or the IPv6 loopback {@code [::1]}
+     * (in any spelling, such as {@code [0:0:0:0:0:0:0:1]}).
      *
-     * @return true if localhost
+     * @return whether it points to the local machine
      */
     public boolean isLocalhost() {
         String h = host();
-        return "localhost".equalsIgnoreCase(h) || "127.0.0.1".equals(h) || "::1".equals(h);
+        if (h == null) return false;
+        if (h.startsWith("[") && h.endsWith("]")) {
+            return Ipv6Address.tryParse(h.substring(1, h.length() - 1)).map(Ipv6Address::isLoopback).orElse(false);
+        }
+        return "localhost".equalsIgnoreCase(h) || "127.0.0.1".equals(h);
     }
 
     /**
-     * Returns the base URL (scheme + host + port if non-default).
+     * Returns the base URL: {@code scheme://host}, plus {@code :port} when the URL gives a port. A link with no
+     * host ({@code mailto:}, {@code tel:}) gives just {@code scheme:}.
      *
      * @return the base URL
      */
     public String baseUrl() {
         StringBuilder sb = new StringBuilder();
-        sb.append(scheme()).append("://").append(host());
+        String host = host();
+        if (host == null) return scheme() + ":";
+        sb.append(scheme()).append("://").append(host);
         port().ifPresent(p -> sb.append(":").append(p));
         return sb.toString();
     }
 
     /**
-     * Creates a new URL with an additional path segment.
+     * Returns a link with text appended to the path, putting exactly one {@code /} between them. Any query or
+     * fragment stays after it: {@code https://a.example/x?q=1} with {@code "y"} gives
+     * {@code https://a.example/x/y?q=1}.
      *
-     * @param segment the path segment to append
-     * @return a new Link with the appended path
+     * @param segment the path segment to append, e.g. {@code "invoices"}
+     * @return the new link
+     * @throws ValueObjectException if {@code segment} is {@code null} or the result is not a valid URL
      */
     public Link appendPath(String segment) {
-        String base = value;
+        if (segment == null) {
+            throw new ValueObjectException("A path segment is required");
+        }
+        int q = value.indexOf('?');
+        int f = value.indexOf('#');
+        int cut = q < 0 ? f : (f < 0 ? q : Math.min(q, f));
+        String base = cut < 0 ? value : value.substring(0, cut);
+        String tail = cut < 0 ? "" : value.substring(cut);
         if (!base.endsWith("/") && !segment.startsWith("/")) {
             base += "/";
         } else if (base.endsWith("/") && segment.startsWith("/")) {
             segment = segment.substring(1);
         }
-        return new Link(base + segment);
+        return new Link(base + segment + tail);
     }
 
     @Override
@@ -235,4 +253,20 @@ public record Link(String value) implements ValueObject, Comparable<Link> {
     public String toString() {
         return value;
     }
+
+    /**
+     * Parses a link as {@link #parse(String)} does, without throwing.
+     *
+     * @param text any text
+     * @return it as a {@link Link}, or empty when it is not one; never throws
+     */
+    public static Optional<Link> tryParse(@Nullable String text) {
+        if (text == null) return Optional.empty();
+        try {
+            return Optional.of(parse(text));
+        } catch (RuntimeException e) {
+            return Optional.empty();
+        }
+    }
+
 }

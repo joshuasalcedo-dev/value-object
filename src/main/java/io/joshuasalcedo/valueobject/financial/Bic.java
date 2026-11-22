@@ -1,5 +1,6 @@
 package io.joshuasalcedo.valueobject.financial;
 
+import java.util.Optional;
 import io.joshuasalcedo.valueobject.ValueObject;
 import io.joshuasalcedo.valueobject.exception.ValueObjectException;
 import io.joshuasalcedo.valueobject.geo.Country;
@@ -23,7 +24,10 @@ import org.jspecify.annotations.Nullable;
 public record Bic(String value) implements ValueObject, Comparable<Bic> {
 
     /**
-     * @throws ValueObjectException if it is not a BIC with a known country
+     * Checks the code after removing surrounding and inner spaces. Lower case is not accepted.
+     *
+     * @param value the code, 8 or 11 upper-case letters and digits, spaces allowed
+     * @throws ValueObjectException if it is {@code null}, or not a BIC with a known country
      */
     public Bic {
         if (value == null) throw new ValueObjectException("A BIC is required");
@@ -35,8 +39,10 @@ public record Bic(String value) implements ValueObject, Comparable<Bic> {
     }
 
     /**
+     * Reads a BIC, removing spaces.
+     *
      * @param text the code, e.g. {@code "BOPIPHMM"} or {@code "DEUTDEFF500"}
-     * @return it
+     * @return the BIC
      * @throws ValueObjectException if it is not a BIC
      */
     public static Bic parse(String text) {
@@ -44,6 +50,8 @@ public record Bic(String value) implements ValueObject, Comparable<Bic> {
     }
 
     /**
+     * Tells whether text is a BIC, as {@link #parse(String)} checks it.
+     *
      * @param text any text
      * @return whether it is a BIC
      */
@@ -57,27 +65,47 @@ public record Bic(String value) implements ValueObject, Comparable<Bic> {
         }
     }
 
-    /** @return the bank's code, e.g. {@code "DEUT"} */
+    /**
+     * Returns the first four letters: the bank (institution) code.
+     *
+     * @return the bank's code, e.g. {@code "DEUT"}
+     */
     public String bankCode() {
         return value.substring(0, 4);
     }
 
-    /** @return the country */
+    /**
+     * Returns the country of the fifth and sixth letters.
+     *
+     * @return the country, e.g. {@code Country.GERMANY} for {@code "DEUTDEFF"}
+     */
     public Country country() {
         return Country.fromCode(value.substring(4, 6));
     }
 
-    /** @return the location code */
+    /**
+     * Returns the seventh and eighth characters: the location code.
+     *
+     * @return the location code, e.g. {@code "FF"} for {@code "DEUTDEFF"}
+     */
     public String locationCode() {
         return value.substring(6, 8);
     }
 
-    /** @return the branch code, {@code "XXX"} for the head office or when none is given */
+    /**
+     * Returns the last three characters of an 11-character code: the branch code.
+     *
+     * @return the branch code, {@code "XXX"} for the head office or when none is given
+     */
     public String branchCode() {
         return value.length() == 11 ? value.substring(8) : "XXX";
     }
 
-    /** @return whether it names the head office */
+    /**
+     * Tells whether the code names the head office: an 8-character code, or a branch code of {@code "XXX"}.
+     *
+     * @return whether it names the head office
+     */
     public boolean isHeadOffice() {
         return branchCode().equals("XXX");
     }
@@ -91,4 +119,20 @@ public record Bic(String value) implements ValueObject, Comparable<Bic> {
     public String toString() {
         return value;
     }
+
+    /**
+     * Reads a BIC like {@link #parse(String)}, without throwing.
+     *
+     * @param text any text
+     * @return it as a {@link Bic}, or empty when it is not one; never throws
+     */
+    public static Optional<Bic> tryParse(@Nullable String text) {
+        if (text == null) return Optional.empty();
+        try {
+            return Optional.of(parse(text));
+        } catch (RuntimeException e) {
+            return Optional.empty();
+        }
+    }
+
 }

@@ -1,5 +1,6 @@
 package io.joshuasalcedo.valueobject.financial;
 
+import java.util.Optional;
 import io.joshuasalcedo.valueobject.ValueObject;
 import io.joshuasalcedo.valueobject.exception.ValueObjectException;
 import io.joshuasalcedo.valueobject.geo.Country;
@@ -42,7 +43,11 @@ public record Iban(String value) implements ValueObject, Comparable<Iban> {
             Map.entry("VG", 24), Map.entry("XK", 20));
 
     /**
-     * @throws ValueObjectException if it is not a valid IBAN
+     * Checks the IBAN after removing spaces and dashes and upper-casing it: two letters, two check digits and
+     * 11 to 30 letters or digits, the country's length when the country is listed, and the mod-97 check.
+     *
+     * @param value an IBAN, spaces and dashes allowed, any case
+     * @throws ValueObjectException if it is {@code null} or not a valid IBAN
      */
     public Iban {
         if (value == null) throw new ValueObjectException("An IBAN is required");
@@ -55,8 +60,10 @@ public record Iban(String value) implements ValueObject, Comparable<Iban> {
     }
 
     /**
+     * Reads an IBAN, removing spaces and dashes and upper-casing it.
+     *
      * @param text an IBAN, spaces allowed
-     * @return it
+     * @return the IBAN
      * @throws ValueObjectException if it is not a valid IBAN
      */
     public static Iban parse(String text) {
@@ -64,6 +71,8 @@ public record Iban(String value) implements ValueObject, Comparable<Iban> {
     }
 
     /**
+     * Tells whether text is a valid IBAN, as {@link #parse(String)} checks it.
+     *
      * @param text any text
      * @return whether it is a valid IBAN
      */
@@ -84,28 +93,48 @@ public record Iban(String value) implements ValueObject, Comparable<Iban> {
         return new BigInteger(digits.toString()).mod(BigInteger.valueOf(97)).intValue() == 1;
     }
 
-    /** @return its country code, e.g. {@code "GB"} */
+    /**
+     * Returns the first two letters: the ISO 3166 country code.
+     *
+     * @return its country code, e.g. {@code "GB"}
+     */
     public String countryCode() {
         return value.substring(0, 2);
     }
 
-    /** @return its country, or {@link Country#UNKNOWN} when not in {@link Country} */
+    /**
+     * Looks up the country of the country code.
+     *
+     * @return its country, or {@link Country#UNKNOWN} when not in {@link Country}
+     */
     public Country country() {
         Country c = Country.fromCode(countryCode());
         return c == null ? Country.UNKNOWN : c;
     }
 
-    /** @return its check digits */
+    /**
+     * Returns the two check digits after the country code.
+     *
+     * @return its check digits, e.g. {@code "82"}
+     */
     public String checkDigits() {
         return value.substring(2, 4);
     }
 
-    /** @return the national account number (BBAN): bank, branch and account */
+    /**
+     * Returns everything after the check digits: the Basic Bank Account Number.
+     *
+     * @return the national account number (BBAN): bank, branch and account
+     */
     public String bban() {
         return value.substring(4);
     }
 
-    /** @return it in groups of four, as printed: {@code "GB82 WEST 1234 5698 7654 32"} */
+    /**
+     * Returns the IBAN in groups of four from the left, the last group possibly shorter.
+     *
+     * @return it in groups of four, as printed: {@code "GB82 WEST 1234 5698 7654 32"}
+     */
     public String formatted() {
         return value.replaceAll("(.{4})(?=.)", "$1 ");
     }
@@ -115,8 +144,29 @@ public record Iban(String value) implements ValueObject, Comparable<Iban> {
         return value.compareTo(other.value);
     }
 
+    /**
+     * Returns the IBAN in printed groups of four, as {@link #formatted()}.
+     *
+     * @return the formatted IBAN
+     */
     @Override
     public String toString() {
         return formatted();
     }
+
+    /**
+     * Reads an IBAN like {@link #parse(String)}, without throwing.
+     *
+     * @param text any text
+     * @return it as a {@link Iban}, or empty when it is not one; never throws
+     */
+    public static Optional<Iban> tryParse(@Nullable String text) {
+        if (text == null) return Optional.empty();
+        try {
+            return Optional.of(parse(text));
+        } catch (RuntimeException e) {
+            return Optional.empty();
+        }
+    }
+
 }

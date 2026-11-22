@@ -36,8 +36,9 @@ public final class Csv {
     private Csv() {}
 
     /**
+     * {@return its column names, then its rows}
+     *
      * @param table a table
-     * @return its column names, then its rows
      */
     public static String of(Table table) {
         StringBuilder out = new StringBuilder();
@@ -47,16 +48,18 @@ public final class Csv {
     }
 
     /**
+     * {@return each as CSV, separated by a blank line}
+     *
      * @param tables tables
-     * @return each as CSV, separated by a blank line
      */
     public static String ofTables(List<Table> tables) {
         return tables.stream().map(Csv::of).collect(Collectors.joining(EOL));
     }
 
     /**
+     * {@return a header of their parts' names, then one row each}
+     *
      * @param rows records (line items, found values, ...) or maps (a table's records)
-     * @return a header of their parts' names, then one row each
      */
     public static String of(Collection<?> rows) {
         StringBuilder out = new StringBuilder();
@@ -82,8 +85,9 @@ public final class Csv {
     }
 
     /**
+     * {@return it as one CSV cell's text (not yet quoted)}
+     *
      * @param value anything
-     * @return it as one CSV cell's text (not yet quoted)
      */
     public static String cell(@Nullable Object value) {
         if (value == null) return "";
@@ -102,6 +106,130 @@ public final class Csv {
             return cell(part(r, r.getClass().getRecordComponents()[0]));
         }
         return value.toString();
+    }
+
+    // ── reading ───────────────────────────────────────────────────────────
+
+    /**
+     * Reads CSV (RFC 4180: commas, quotes doubled inside quoted cells, CRLF or LF line ends) into rows.
+     *
+     * @param csv the CSV, its first row the column names
+     * @return one map per row, column name to cell text, in column order; an empty cell is {@code ""}
+     * @throws io.joshuasalcedo.valueobject.exception.ValueObjectException if a quoted cell is not closed
+     */
+    public static List<Map<String, String>> read(String csv) {
+        List<List<String>> lines = cells(csv);
+        if (lines.isEmpty()) return List.of();
+        List<String> header = lines.getFirst();
+        List<Map<String, String>> out = new ArrayList<>();
+        for (List<String> line : lines.subList(1, lines.size())) {
+            Map<String, String> row = new java.util.LinkedHashMap<>();
+            for (int i = 0; i < header.size(); i++) row.put(header.get(i), i < line.size() ? line.get(i) : "");
+            out.add(row);
+        }
+        return out;
+    }
+
+    /**
+     * Reads CSV into records, a row each, matching column names to the record's parts. Cells are read as
+     * {@link #cell(Object)} writes them ({@code "42.50 USD"} for {@code Money}, {@code "2.5 kg"} for a quantity, a
+     * value object's text); an empty cell is an empty {@code Optional} or null.
+     *
+     * @param csv        the CSV, its first row the column names
+     * @param recordType the record each row is, e.g. {@code LineItem.class}
+     * @param <R>        that record
+     * @return the records, in order
+     * @throws io.joshuasalcedo.valueobject.exception.ValueObjectException if a cell is not what its part holds
+     */
+    public static <R extends Record> List<R> read(String csv, Class<R> recordType) {
+        List<R> out = new ArrayList<>();
+        for (Map<String, String> row : read(csv)) {
+            Map<String, Object> plain = new java.util.LinkedHashMap<>();
+            row.forEach((k, v) -> plain.put(k, v.isEmpty() ? null : v));
+            out.add(recordType.cast(Values.convert(plain, recordType)));
+        }
+        return out;
+    }
+
+    /**
+     * Reads CSV into a {@link Table}: its first row names the columns, and each column is typed by the value objects
+     * most of its cells are, as tables found in text are.
+     *
+     * @param csv the CSV
+     * @return the table
+     * @throws io.joshuasalcedo.valueobject.exception.ValueObjectException if it has no header row
+     */
+    public static Table readTable(String csv) {
+        List<List<String>> lines = cells(csv);
+        if (lines.isEmpty()) throw new io.joshuasalcedo.valueobject.exception.ValueObjectException("CSV with no rows");
+        List<String> header = lines.getFirst();
+        List<List<String>> rows = new ArrayList<>();
+        for (List<String> line : lines.subList(1, lines.size())) {
+            List<String> row = new ArrayList<>(line);
+            while (row.size() < header.size()) row.add("");
+            rows.add(row.subList(0, header.size()));
+        }
+        List<Table.Column> columns = new ArrayList<>();
+        for (int c = 0; c < header.size(); c++) {
+            int col = c;
+            List<String> cells = rows.stream().map(r -> r.get(col)).filter(s -> !s.isBlank()).toList();
+            Map<ValueObject.Type, Long> votes = cells.stream().map(ValueObject::identify).flatMap(Optional::stream)
+                    .collect(Collectors.groupingBy(t -> t, Collectors.counting()));
+            Optional<ValueObject.Type> type = votes.entrySet().stream().max(Map.Entry.comparingByValue())
+                    .filter(e -> e.getValue() >= cells.size() * 0.6).map(Map.Entry::getKey);
+            boolean numeric = !cells.isEmpty() && cells.stream().filter(s -> s.strip().matches("[-+(]?[$€£¥₱]?\\d[\\d,]*(\\.\\d+)?\\)?%?")).count()
+                    >= cells.size() * 0.6;
+            columns.add(new Table.Column(c, header.get(c), type, numeric));
+        }
+        return new Table(1, 0, lines.size() - 1, true, columns, rows, csv);
+    }
+
+    /** The cells of every line, quotes resolved. */
+    private static List<List<String>> cells(String csv) {
+        if (csv == null) throw new io.joshuasalcedo.valueobject.exception.ValueObjectException("CSV is required");
+        List<List<String>> lines = new ArrayList<>();
+        List<String> line = new ArrayList<>();
+        StringBuilder cell = new StringBuilder();
+        boolean quoted = false;
+        boolean any = false;
+        for (int i = 0; i < csv.length(); i++) {
+            char c = csv.charAt(i);
+            if (quoted) {
+                if (c == '"' && i + 1 < csv.length() && csv.charAt(i + 1) == '"') {
+                    cell.append('"');
+                    i++;
+                } else if (c == '"') {
+                    quoted = false;
+                } else {
+                    cell.append(c);
+                }
+            } else if (c == '"') {
+                quoted = true;
+                any = true;
+            } else if (c == ',') {
+                line.add(cell.toString());
+                cell.setLength(0);
+                any = true;
+            } else if (c == '\n' || c == '\r') {
+                if (c == '\r' && i + 1 < csv.length() && csv.charAt(i + 1) == '\n') i++;
+                if (any || !cell.isEmpty()) {
+                    line.add(cell.toString());
+                    lines.add(line);
+                }
+                line = new ArrayList<>();
+                cell.setLength(0);
+                any = false;
+            } else {
+                cell.append(c);
+                any = true;
+            }
+        }
+        if (quoted) throw new io.joshuasalcedo.valueobject.exception.ValueObjectException("A quoted CSV cell is not closed");
+        if (any || !cell.isEmpty()) {
+            line.add(cell.toString());
+            lines.add(line);
+        }
+        return lines;
     }
 
     private static void row(List<String> cells, StringBuilder out) {

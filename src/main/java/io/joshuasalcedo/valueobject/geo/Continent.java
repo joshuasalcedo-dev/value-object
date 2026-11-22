@@ -1,5 +1,6 @@
 package io.joshuasalcedo.valueobject.geo;
 
+import io.joshuasalcedo.valueobject.exception.ValueObjectException;
 import io.joshuasalcedo.valueobject.ValueObject;
 
 import org.jspecify.annotations.Nullable;
@@ -20,20 +21,26 @@ import java.util.Optional;
  */
 public enum Continent implements ValueObject {
 
+    /** Africa ({@code AF}). */
     AFRICA("AF", "Africa", -34.83, 37.35, -17.62, 51.42),
+    /** Antarctica ({@code AN}). */
     ANTARCTICA("AN", "Antarctica", -90.0, -60.0, -180.0, 180.0),
+    /** Asia ({@code AS}). */
     ASIA("AS", "Asia", -11.0, 77.72, 26.04, 180.0),
+    /** Europe ({@code EU}). */
     EUROPE("EU", "Europe", 34.80, 71.19, -25.27, 69.03),
+    /** North America ({@code NA}). */
     NORTH_AMERICA("NA", "North America", 7.20, 83.11, -168.13, -52.23),
+    /** Oceania ({@code OC}). */
     OCEANIA("OC", "Oceania", -47.29, -0.53, 110.95, 180.0),
+    /** South America ({@code SA}). */
     SOUTH_AMERICA("SA", "South America", -55.98, 12.46, -81.33, -34.79),
 
+    /** Not known, or not one of the others. */
     UNKNOWN("XX", "Unknown", 0.0, 0.0, 0.0, 0.0);
 
-    /**
-     * @return whether this is {@link #UNKNOWN}
-     */
-    public boolean isNull() {
+    /** {@return whether this is {@link #UNKNOWN}} */
+    public boolean isUnknown() {
         return this == UNKNOWN;
     }
 
@@ -244,17 +251,49 @@ public enum Continent implements ValueObject {
         return this.displayName.compareToIgnoreCase(other.displayName);
     }
 
-    /**
-     * Returns the null object representation of Continent.
-     *
-     * @return the UNKNOWN continent constant
-     */
-    public static Continent nullValue() {
-        return UNKNOWN;
-    }
 
     @Override
     public String toString() {
         return displayName;
     }
+
+    /**
+     * Parses a continent from its code, display name or enum name, ignoring case and surrounding whitespace.
+     *
+     * @param text the code or name, e.g. {@code "AS"}, {@code "South America"}
+     * @return the continent
+     * @throws ValueObjectException if it is {@code null} or names no continent other than {@link #UNKNOWN}
+     */
+    public static Continent parse(String text) {
+        if (text == null) throw new ValueObjectException("A Continent is required");
+        Continent c = fromAny(text);
+        if (c == null || c == UNKNOWN) throw new ValueObjectException("Not a continent: '" + text + "'");
+        return c;
+    }
+
+    /**
+     * Parses a continent as {@link #parse(String)} does, without throwing.
+     *
+     * @param text any text
+     * @return it as a {@link Continent}, or empty when it is not one; never throws
+     */
+    public static Optional<Continent> tryParse(@Nullable String text) {
+        if (text == null) return Optional.empty();
+        try {
+            return Optional.of(parse(text));
+        } catch (RuntimeException e) {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * Tells whether a text names a continent, as {@link #parse(String)} reads it.
+     *
+     * @param text any text
+     * @return whether it is a {@link Continent}
+     */
+    public static boolean isValid(@Nullable String text) {
+        return tryParse(text).isPresent();
+    }
+
 }

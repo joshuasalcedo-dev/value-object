@@ -1,5 +1,7 @@
 package io.joshuasalcedo.valueobject.contact;
 
+import java.util.Locale;
+import java.util.Optional;
 import io.joshuasalcedo.valueobject.ValueObject;
 
 import io.joshuasalcedo.valueobject.exception.ValueObjectException;
@@ -7,6 +9,21 @@ import org.jspecify.annotations.Nullable;
 
 import java.util.regex.Pattern;
 
+/**
+ * A person's name: a first name and an optional middle and last name. Each part is trimmed with runs of
+ * whitespace collapsed to one space, and must be 1 to 50 characters of letters, spaces, hyphens and apostrophes,
+ * starting with a letter. Blank middle and last names become {@code null}.
+ *
+ * <pre>{@code
+ * FullName n = FullName.parse("Ms. Andrea Lim Bautista");
+ * n.formalName();   // "Bautista, Andrea Lim"
+ * n.initials();     // "ALB"
+ * }</pre>
+ *
+ * @param firstName  the first (given) name
+ * @param middleName the middle name or names, or {@code null}
+ * @param lastName   the last name (surname), or {@code null}
+ */
 public record FullName(
 		String firstName,
 
@@ -22,15 +39,22 @@ public record FullName(
 	private static final int MIN_LENGTH = 1;
 	private static final int MAX_LENGTH = 50;
 
-	/** Null object representing an absent FullName. */
-	public static final FullName NULL = new FullName("", null, null);
 
+	/**
+	 * Creates a name, normalizing the whitespace in each part.
+	 *
+	 * @throws ValueObjectException if the first name is {@code null} or blank, or a part is longer than 50 characters or has
+	 *                              characters other than letters, spaces, hyphens and apostrophes
+	 */
 	public FullName {
+		if (firstName == null) {
+			throw new ValueObjectException("First name is required");
+		}
 		firstName = normalize(firstName);
 		middleName = normalizeNullable(middleName);
 		lastName = normalizeNullable(lastName);
 
-		if (!firstName.isEmpty()) {
+		{
 			validateRequired(firstName);
 			validateName(firstName, "First name");
 
@@ -44,9 +68,6 @@ public record FullName(
 	}
 
 	
-	public boolean isNull() {
-		return firstName.isEmpty();
-	}
 
 	private static final Pattern TITLE = Pattern.compile(
 			"(?i)^(mr|mrs|ms|miss|mx|dr|engr|atty|prof|sir|madam|hon|rev|fr|sr\\.? ?nun)\\.?\\s+");
@@ -63,15 +84,25 @@ public record FullName(
 	/**
 	 * Reads a person's name as printed: titles ("Ms.", "Engr.") and suffixes ("Jr.", "III") are dropped,
 	 * {@code "Bautista, Andrea Lim"} puts the surname first, and surname particles stay with the surname
-	 * ({@code "Juan dela Cruz"} -> first Juan, last dela Cruz).
+	 * ({@code "Juan dela Cruz"} -> first Juan, last dela Cruz). A single word ({@code "Cher"}) is a first name
+	 * only.
+	 *
+	 * <p>Text with a business word ("Inc", "Bank", "Cafe", "Cloud", "Co", ...; see
+	 * {@link #looksLikePerson(String)}) is rejected unless it starts with a title, so {@code "Northwind Cloud"}
+	 * is not read as a person. That also rejects the rare surname that is such a word ({@code "Jose Co"}): build
+	 * those with the constructor.
 	 *
 	 * @param name e.g. {@code "Ms. Andrea Lim Bautista"}
 	 * @return first Andrea, middle Lim, last Bautista
-	 * @throws ValueObjectException if it is not a person's name
+	 * @throws ValueObjectException if it is {@code null}, blank, has a business word, has no given name
+	 *                              ({@code "Bautista,"}), or a part is not a valid name part
 	 */
 	public static FullName parse(String name) {
 		if (name == null || name.isBlank()) throw new ValueObjectException("A name is required");
 		String n = name.strip().replaceAll("\\s+", " ");
+		if (!TITLE.matcher(n).find() && BUSINESS.matcher(n).find()) {
+			throw new ValueObjectException("Reads as a business, not a person's name: " + name);
+		}
 		n = TITLE.matcher(n).replaceFirst("");
 		n = SUFFIX.matcher(n).replaceFirst("");
 		String first;
@@ -80,7 +111,12 @@ public record FullName(
 		if (n.contains(",")) {
 			String[] parts = n.split(",", 2);
 			last = parts[0].strip();
-			String[] given = parts[1].strip().split(" ");
+			if (last.isEmpty()) last = null;
+			String givenText = parts[1].strip();
+			if (givenText.isEmpty()) {
+				throw new ValueObjectException("A name needs a given name after the comma: " + name);
+			}
+			String[] given = givenText.split(" ");
 			first = given[0];
 			if (given.length > 1) middle = String.join(" ", java.util.Arrays.asList(given).subList(1, given.length));
 		} else {
@@ -90,9 +126,9 @@ public record FullName(
 				int lastStart = words.length - 1;
 				// "dela Cruz", "de los Santos": take the particles into the surname
 				while (lastStart - 1 > 0) {
-					String two = lastStart - 2 > 0 ? (words[lastStart - 2] + " " + words[lastStart - 1]).toLowerCase() : null;
+					String two = lastStart - 2 > 0 ? (words[lastStart - 2] + " " + words[lastStart - 1]).toLowerCase(Locale.ROOT) : null;
 					if (two != null && PARTICLES.contains(two)) lastStart -= 2;
-					else if (PARTICLES.contains(words[lastStart - 1].toLowerCase())) lastStart -= 1;
+					else if (PARTICLES.contains(words[lastStart - 1].toLowerCase(Locale.ROOT))) lastStart -= 1;
 					else break;
 				}
 				last = String.join(" ", java.util.Arrays.asList(words).subList(lastStart, words.length));
@@ -103,22 +139,29 @@ public record FullName(
 	}
 
 	/**
+	 * Parses a person's name as {@link #parse(String)} does, without throwing: it accepts exactly what
+	 * {@code parse} accepts, single-word names such as {@code "Cher"} included. For the stricter test that a
+	 * text reads as a person's full name, use {@link #looksLikePerson(String)}.
+	 *
 	 * @param name any text
-	 * @return its name, or empty when it is not a person's name
+	 * @return its name, or empty when {@code parse} would throw; never throws
 	 */
-	public static java.util.Optional<FullName> tryParse(@Nullable String name) {
-		if (!looksLikePerson(name)) return java.util.Optional.empty();
+	public static Optional<FullName> tryParse(@Nullable String name) {
+		if (name == null) return Optional.empty();
 		try {
-			return java.util.Optional.of(parse(name));
-		} catch (ValueObjectException e) {
-			return java.util.Optional.empty();
+			return Optional.of(parse(name));
+		} catch (RuntimeException e) {
+			return Optional.empty();
 		}
 	}
 
 	/**
+	 * Tells whether a text reads as a person's name rather than a business or something else.
+	 *
 	 * @param text any text
-	 * @return whether it reads as a person's name: two to five words of letters, no digits, no business words
-	 *         ("Inc", "Bank", "Cafe", ...); a title ("Ms.") makes it one
+	 * @return whether it reads as a person's name: at most 60 characters, two to five words of letters, no
+	 *         digits, no {@code @}, no business words ("Inc", "Bank", "Cafe", ...); a leading title ("Ms.") makes
+	 *         it one
 	 */
 	public static boolean looksLikePerson(@Nullable String text) {
 		if (text == null || text.isBlank() || text.length() > 60) return false;
@@ -136,10 +179,11 @@ public record FullName(
 	private static String capitalize(String s) {
 		StringBuilder out = new StringBuilder();
 		for (String w : s.split(" ")) {
+			if (w.isEmpty()) continue;
 			if (!out.isEmpty()) out.append(' ');
-			if (PARTICLES.contains(w.toLowerCase())) out.append(w.toLowerCase());
-			else if (w.equals(w.toUpperCase()) || w.equals(w.toLowerCase()))
-				out.append(Character.toUpperCase(w.charAt(0))).append(w.substring(1).toLowerCase());
+			if (PARTICLES.contains(w.toLowerCase(Locale.ROOT))) out.append(w.toLowerCase(Locale.ROOT));
+			else if (w.equals(w.toUpperCase(Locale.ROOT)) || w.equals(w.toLowerCase(Locale.ROOT)))
+				out.append(Character.toUpperCase(w.charAt(0))).append(w.substring(1).toLowerCase(Locale.ROOT));
 			else out.append(w);
 		}
 		return out.toString().replace(".", "");
@@ -174,6 +218,7 @@ public record FullName(
 		return value.trim().replaceAll("\\s+", " ");
 	}
 
+	/** {@return the parts that are set, joined by spaces: first, middle, last} */
 	public String fullName() {
 		StringBuilder sb = new StringBuilder(firstName);
 		if (middleName != null) {
@@ -185,6 +230,7 @@ public record FullName(
 		return sb.toString();
 	}
 
+	/** {@return the upper-case first letters of the first, middle and last name, e.g. {@code "ALB"}} */
 	public String initials() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(Character.toUpperCase(firstName.charAt(0)));
@@ -197,6 +243,10 @@ public record FullName(
 		return sb.toString();
 	}
 
+	/**
+	 * {@return the name surname first, {@code "Last, First Middle"}, or the {@link #fullName() full name} when
+	 * there is no last name}
+	 */
 	public String formalName() {
 		if (lastName != null) {
 			return lastName + ", " + firstName + (middleName != null ? " " + middleName : "");
@@ -204,14 +254,6 @@ public record FullName(
 		return fullName();
 	}
 
-	/**
-	 * Returns the null object representation of FullName.
-	 *
-	 * @return the NULL full name constant
-	 */
-	public static FullName nullValue() {
-		return NULL;
-	}
 
 	@Override
 	public String toString() {
@@ -219,10 +261,10 @@ public record FullName(
 	}
 
 	/**
-	 * Compares this FullName to another FullName.
-	 * Comparison order: lastName, firstName, middleName (nulls last).
+	 * Compares names by last name, then first name, then middle name, ignoring case; a missing last or middle
+	 * name sorts after a present one.
 	 *
-	 * @param other the FullName to compare to
+	 * @param other the name to compare to
 	 * @return negative if this comes before, zero if equal, positive if after
 	 */
 	@Override
@@ -245,4 +287,16 @@ public record FullName(
 		if (b == null) return -1;
 		return a.compareToIgnoreCase(b);
 	}
+
+
+    /**
+     * Tells whether {@link #parse(String)} reads a name from a text; a single word ({@code "Cher"}) is enough.
+     *
+     * @param text any text
+     * @return whether it is a {@link FullName}
+     */
+    public static boolean isValid(@Nullable String text) {
+        return tryParse(text).isPresent();
+    }
+
 }
