@@ -1,6 +1,6 @@
 package io.joshuasalcedo.valueobject.financial;
 
-import io.joshuasalcedo.valueobject.exception.ValueObjectException;
+import io.joshuasalcedo.valueobject.core.ValueObjectException;
 import org.jspecify.annotations.Nullable;
 import java.time.LocalDate;
 import java.util.Optional;

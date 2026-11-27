@@ -2,7 +2,7 @@ package io.joshuasalcedo.valueobject.demo;
 
 import atlantafx.base.controls.Card;
 import atlantafx.base.theme.Styles;
-import io.joshuasalcedo.valueobject.Found;
+import io.joshuasalcedo.valueobject.core.Found;
 import io.joshuasalcedo.valueobject.financial.BillingDocument;
 import io.joshuasalcedo.valueobject.financial.Money;
 import javafx.geometry.Insets;

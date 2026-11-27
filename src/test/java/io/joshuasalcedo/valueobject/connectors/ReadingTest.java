@@ -1,10 +1,10 @@
 package io.joshuasalcedo.valueobject.connectors;
 
-import io.joshuasalcedo.valueobject.Found;
-import io.joshuasalcedo.valueobject.ValueObject;
+import io.joshuasalcedo.valueobject.core.Found;
+import io.joshuasalcedo.valueobject.core.ValueObject;
 import io.joshuasalcedo.valueobject.contact.Email;
 import io.joshuasalcedo.valueobject.contact.Party;
-import io.joshuasalcedo.valueobject.exception.ValueObjectException;
+import io.joshuasalcedo.valueobject.core.ValueObjectException;
 import io.joshuasalcedo.valueobject.financial.BillingDocument;
 import io.joshuasalcedo.valueobject.financial.Currency;
 import io.joshuasalcedo.valueobject.financial.FiatCurrency;
@@ -16,8 +16,8 @@ import io.joshuasalcedo.valueobject.format.Csv;
 import io.joshuasalcedo.valueobject.format.Json;
 import io.joshuasalcedo.valueobject.measurement.Quantity;
 import io.joshuasalcedo.valueobject.measurement.UnitOfMeasure;
-import io.joshuasalcedo.valueobject.ocr.Ocr;
-import io.joshuasalcedo.valueobject.pdf.Pdf;
+import io.joshuasalcedo.valueobject.extract.Ocr;
+import io.joshuasalcedo.valueobject.extract.Pdf;
 import io.joshuasalcedo.valueobject.table.Table;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

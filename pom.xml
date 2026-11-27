@@ -12,7 +12,7 @@
          A release sets the version from the tag v1.2.3: mvn versions:set -DnewVersion=1.2.3 -->
     <groupId>io.joshuasalcedo</groupId>
     <artifactId>value-object</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.2.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>value-object</name>
@@ -56,7 +56,7 @@
             <version>1.0.0</version>
         </dependency>
         <!-- OCR in the JVM (Tesseract through JavaCPP: native libraries for Windows, Linux and macOS are in the
-             jars; no install, no Docker). Optional: only io.joshuasalcedo.valueobject.ocr needs it, so a project
+             jars; no install, no Docker). Optional: only io.joshuasalcedo.valueobject.extract needs it, so a project
              that wants OCR adds this dependency itself. Language data (eng.traineddata) is found through
              TESSDATA_PREFIX or the usual install folders, or given to Ocr.open. -->
         <dependency>
@@ -65,7 +65,7 @@
             <version>5.5.0-1.5.11</version>
             <optional>true</optional>
         </dependency>
-        <!-- PDFs: optional; only io.joshuasalcedo.valueobject.pdf needs it -->
+        <!-- PDFs: optional; only io.joshuasalcedo.valueobject.extract needs it -->
         <dependency>
             <groupId>org.apache.pdfbox</groupId>
             <artifactId>pdfbox</artifactId>

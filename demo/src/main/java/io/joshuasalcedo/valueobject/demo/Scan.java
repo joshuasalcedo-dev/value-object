@@ -1,13 +1,13 @@
 package io.joshuasalcedo.valueobject.demo;
 
-import io.joshuasalcedo.valueobject.Found;
-import io.joshuasalcedo.valueobject.ValueObject;
+import io.joshuasalcedo.valueobject.core.Found;
+import io.joshuasalcedo.valueobject.core.ValueObject;
 import io.joshuasalcedo.valueobject.financial.Bill;
 import io.joshuasalcedo.valueobject.financial.BillingDocument;
 import io.joshuasalcedo.valueobject.financial.Invoice;
 import io.joshuasalcedo.valueobject.financial.Receipt;
-import io.joshuasalcedo.valueobject.ocr.Ocr;
-import io.joshuasalcedo.valueobject.pdf.Pdf;
+import io.joshuasalcedo.valueobject.extract.Ocr;
+import io.joshuasalcedo.valueobject.extract.Pdf;
 import io.joshuasalcedo.valueobject.table.Layout;
 import io.joshuasalcedo.valueobject.table.Table;
 

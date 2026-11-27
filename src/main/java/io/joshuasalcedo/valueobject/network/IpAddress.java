@@ -1,8 +1,8 @@
 package io.joshuasalcedo.valueobject.network;
 
-import io.joshuasalcedo.valueobject.exception.ValueObjectException;
+import io.joshuasalcedo.valueobject.core.ValueObjectException;
 import java.util.Optional;
-import io.joshuasalcedo.valueobject.ValueObject;
+import io.joshuasalcedo.valueobject.core.ValueObject;
 
 import org.jspecify.annotations.Nullable;
 

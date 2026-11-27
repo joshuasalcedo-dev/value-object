@@ -1,6 +1,6 @@
 package io.joshuasalcedo.valueobject.identifier;
 
-import io.joshuasalcedo.valueobject.exception.ValueObjectException;
+import io.joshuasalcedo.valueobject.core.ValueObjectException;
 import io.joshuasalcedo.valueobject.geo.Country;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

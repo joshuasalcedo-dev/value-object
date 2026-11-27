@@ -1,7 +1,7 @@
 package io.joshuasalcedo.valueobject.identifier;
 
-import io.joshuasalcedo.valueobject.ValueObject;
-import io.joshuasalcedo.valueobject.exception.ValueObjectException;
+import io.joshuasalcedo.valueobject.core.ValueObject;
+import io.joshuasalcedo.valueobject.core.ValueObjectException;
 import org.jspecify.annotations.Nullable;
 
 import java.util.Optional;

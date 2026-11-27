@@ -1,6 +1,6 @@
 package io.joshuasalcedo.valueobject.format;
 
-import io.joshuasalcedo.valueobject.ValueObject;
+import io.joshuasalcedo.valueobject.core.ValueObject;
 import io.joshuasalcedo.valueobject.financial.BillingDocument;
 import io.joshuasalcedo.valueobject.financial.Currency;
 import io.joshuasalcedo.valueobject.financial.Money;
@@ -122,10 +122,10 @@ public final class Json {
      * @param json any JSON
      * @return a {@code Map<String, Object>} for an object, a {@code List<Object>} for an array, a {@code String},
      *         a {@code BigDecimal} for a number, a {@code Boolean}, or null
-     * @throws io.joshuasalcedo.valueobject.exception.ValueObjectException if it is not valid JSON
+     * @throws io.joshuasalcedo.valueobject.core.ValueObjectException if it is not valid JSON
      */
     public static @Nullable Object parse(String json) {
-        if (json == null) throw new io.joshuasalcedo.valueobject.exception.ValueObjectException("JSON is required");
+        if (json == null) throw new io.joshuasalcedo.valueobject.core.ValueObjectException("JSON is required");
         Reader r = new Reader(json);
         Object v = r.value();
         r.space();
@@ -142,7 +142,7 @@ public final class Json {
      * @param type the type wanted, e.g. {@code Email.class}, {@code LineItem.class}
      * @param <T>  that type
      * @return the value
-     * @throws io.joshuasalcedo.valueobject.exception.ValueObjectException if it is not valid JSON, or not a {@code T}
+     * @throws io.joshuasalcedo.valueobject.core.ValueObjectException if it is not valid JSON, or not a {@code T}
      */
     public static <T> T read(String json, Class<T> type) {
         return type.cast(Values.convert(parse(json), type));
@@ -155,7 +155,7 @@ public final class Json {
      * @param plain a plain value, as {@link #parse(String)} gives
      * @param type  the type wanted, possibly generic ({@code List<Email>})
      * @return the value, of that type; null for null
-     * @throws io.joshuasalcedo.valueobject.exception.ValueObjectException if it cannot be one
+     * @throws io.joshuasalcedo.valueobject.core.ValueObjectException if it cannot be one
      */
     public static @Nullable Object fromPlain(@Nullable Object plain, java.lang.reflect.Type type) {
         return Values.convert(plain, type);
@@ -168,12 +168,12 @@ public final class Json {
      * @param elementType the type of each element, e.g. {@code Found.class}
      * @param <T>         that type
      * @return the elements, in order
-     * @throws io.joshuasalcedo.valueobject.exception.ValueObjectException if it is not a JSON array of {@code T}
+     * @throws io.joshuasalcedo.valueobject.core.ValueObjectException if it is not a JSON array of {@code T}
      */
     public static <T> java.util.List<T> readList(String json, Class<T> elementType) {
         Object plain = parse(json);
         if (!(plain instanceof java.util.List<?> list)) {
-            throw new io.joshuasalcedo.valueobject.exception.ValueObjectException("Expected a JSON array");
+            throw new io.joshuasalcedo.valueobject.core.ValueObjectException("Expected a JSON array");
         }
         java.util.List<T> out = new java.util.ArrayList<>();
         for (Object o : list) out.add(elementType.cast(Values.convert(o, elementType)));
@@ -189,8 +189,8 @@ public final class Json {
             this.s = s;
         }
 
-        io.joshuasalcedo.valueobject.exception.ValueObjectException fail(String what) {
-            return new io.joshuasalcedo.valueobject.exception.ValueObjectException("Not valid JSON at " + at + ": " + what);
+        io.joshuasalcedo.valueobject.core.ValueObjectException fail(String what) {
+            return new io.joshuasalcedo.valueobject.core.ValueObjectException("Not valid JSON at " + at + ": " + what);
         }
 
         void space() {

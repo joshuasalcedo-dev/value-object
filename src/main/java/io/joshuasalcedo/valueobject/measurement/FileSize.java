@@ -1,9 +1,9 @@
 package io.joshuasalcedo.valueobject.measurement;
 
 import org.jspecify.annotations.Nullable;
-import io.joshuasalcedo.valueobject.ValueObject;
+import io.joshuasalcedo.valueobject.core.ValueObject;
 
-import io.joshuasalcedo.valueobject.exception.ValueObjectException;
+import io.joshuasalcedo.valueobject.core.ValueObjectException;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

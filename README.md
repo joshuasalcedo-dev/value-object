@@ -17,6 +17,7 @@ email address, to the tables in a page of OCR, to a whole bill, invoice or recei
 
 | Package | Value objects |
 |---|---|
+| `core` | `ValueObject` (the contract, and one way into every value object), `ValueObjectException`, `Found`, `Count`, `Rule`, `Check` |
 | `contact` | `Email`, `PhoneNumber`, `Link`, `Address`, `FullName` (parses printed names: titles, suffixes, *dela Cruz*), `Party` |
 | `financial` | `Money`, `Currency` (`FiatCurrency` ISO 4217, `CryptoCoin`), `Percentage`, `PaymentTerms` (Net 30, EOM, 2/10 Net 30, MFI, COD), `CardNumber` (Luhn, masked), `MaskedCard`, `Iban` (mod-97), `Bic`, `Bill`, `Invoice`, `Receipt`, `LineItem` |
 | `measurement` | `UnitOfMeasure` (UN/ECE Rec 20 codes), `Quantity`, `Weight`, `Distance`, `FileSize` |
@@ -24,6 +25,7 @@ email address, to the tables in a page of OCR, to a whole bill, invoice or recei
 | `geo` | `Country` (all 249 ISO 3166-1), `Continent`, `Language` (ISO 639-1), `Demonym`, `PostalCode`, `Coordinates` |
 | `identifier` | `UniqueId`, `Slug`, `Username`, `DisplayName`, `JwtToken`, `TaxId` (PH TIN, EU VAT, US EIN), `Gtin` (EAN/UPC) |
 | `network` | `IpAddress` (v4, v6; literals only, never a DNS lookup), `MacAddress`, `Port`, `DomainName`, `OperatingSystem` |
+| `extract` | `Pdf`, `Ocr`: text out of PDFs and images, laid out as on the page (optional dependencies) |
 | `file`, `table`, `visual`, … | `FileType`, `Table`, `Color`, `SemanticVersion`, `Gender`, … |
 
 Every one implements `ValueObject`, validates itself when made (`ValueObjectException` when it is wrong), and is equal

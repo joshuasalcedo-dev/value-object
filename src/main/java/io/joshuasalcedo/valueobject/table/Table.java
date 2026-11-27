@@ -1,8 +1,8 @@
 package io.joshuasalcedo.valueobject.table;
 
 import org.jspecify.annotations.Nullable;
-import io.joshuasalcedo.valueobject.ValueObject;
-import io.joshuasalcedo.valueobject.exception.ValueObjectException;
+import io.joshuasalcedo.valueobject.core.ValueObject;
+import io.joshuasalcedo.valueobject.core.ValueObjectException;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

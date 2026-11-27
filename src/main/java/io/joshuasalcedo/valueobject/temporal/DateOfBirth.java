@@ -1,10 +1,10 @@
 package io.joshuasalcedo.valueobject.temporal;
 
-import io.joshuasalcedo.valueobject.exception.ValueObjectException;
+import io.joshuasalcedo.valueobject.core.ValueObjectException;
 import org.jspecify.annotations.Nullable;
 import java.util.Locale;
 import java.util.Optional;
-import io.joshuasalcedo.valueobject.ValueObject;
+import io.joshuasalcedo.valueobject.core.ValueObject;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;

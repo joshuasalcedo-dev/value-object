@@ -1,6 +1,6 @@
 package io.joshuasalcedo.valueobject.measurement;
 
-import io.joshuasalcedo.valueobject.ValueObject;
+import io.joshuasalcedo.valueobject.core.ValueObject;
 
 
 import java.math.BigDecimal;

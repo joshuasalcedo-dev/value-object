@@ -1,4 +1,4 @@
-import io.joshuasalcedo.valueobject.ocr.Ocr;
+import io.joshuasalcedo.valueobject.extract.Ocr;
 
 import java.nio.file.Files;
 import java.nio.file.Path;

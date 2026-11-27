@@ -1,8 +1,8 @@
 package io.joshuasalcedo.valueobject.network;
 
 import java.util.Optional;
-import io.joshuasalcedo.valueobject.ValueObject;
-import io.joshuasalcedo.valueobject.exception.ValueObjectException;
+import io.joshuasalcedo.valueobject.core.ValueObject;
+import io.joshuasalcedo.valueobject.core.ValueObjectException;
 import org.jspecify.annotations.Nullable;
 
 import java.net.IDN;
@@ -117,10 +117,10 @@ public record DomainName(String value) implements ValueObject, Comparable<Domain
      *
      * @param parent another domain
      * @return whether this is it or under it
-     * @throws io.joshuasalcedo.valueobject.exception.ValueObjectException if {@code parent} is null
+     * @throws io.joshuasalcedo.valueobject.core.ValueObjectException if {@code parent} is null
      */
     public boolean isSubdomainOf(DomainName parent) {
-        if (parent == null) throw new io.joshuasalcedo.valueobject.exception.ValueObjectException("A parent domain is required");
+        if (parent == null) throw new io.joshuasalcedo.valueobject.core.ValueObjectException("A parent domain is required");
         return value.equals(parent.value) || value.endsWith("." + parent.value);
     }
 

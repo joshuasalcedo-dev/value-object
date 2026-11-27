@@ -12,7 +12,7 @@ import atlantafx.base.theme.PrimerDark;
 import atlantafx.base.theme.PrimerLight;
 import atlantafx.base.theme.Styles;
 import atlantafx.base.theme.Theme;
-import io.joshuasalcedo.valueobject.Found;
+import io.joshuasalcedo.valueobject.core.Found;
 import io.joshuasalcedo.valueobject.financial.Bill;
 import io.joshuasalcedo.valueobject.financial.BillingDocument;
 import io.joshuasalcedo.valueobject.financial.Invoice;

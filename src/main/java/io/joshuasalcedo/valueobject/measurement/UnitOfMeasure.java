@@ -1,6 +1,6 @@
 package io.joshuasalcedo.valueobject.measurement;
 
-import io.joshuasalcedo.valueobject.exception.ValueObjectException;
+import io.joshuasalcedo.valueobject.core.ValueObjectException;
 import org.jspecify.annotations.Nullable;
 
 import java.math.BigDecimal;

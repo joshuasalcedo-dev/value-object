@@ -1,6 +1,6 @@
 package io.joshuasalcedo.valueobject.financial;
 
-import io.joshuasalcedo.valueobject.ValueObject;
+import io.joshuasalcedo.valueobject.core.ValueObject;
 import io.joshuasalcedo.valueobject.contact.FullName;
 import io.joshuasalcedo.valueobject.geo.Country;
 import org.junit.jupiter.api.Test;

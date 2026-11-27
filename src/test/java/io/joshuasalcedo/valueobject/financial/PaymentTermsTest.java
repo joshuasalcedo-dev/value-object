@@ -1,6 +1,6 @@
 package io.joshuasalcedo.valueobject.financial;
 
-import io.joshuasalcedo.valueobject.exception.ValueObjectException;
+import io.joshuasalcedo.valueobject.core.ValueObjectException;
 import io.joshuasalcedo.valueobject.financial.PaymentTerms.Basis;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

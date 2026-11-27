@@ -1,8 +1,8 @@
 package io.joshuasalcedo.valueobject.file;
 
 import java.util.Locale;
-import io.joshuasalcedo.valueobject.ValueObject;
-import io.joshuasalcedo.valueobject.exception.ValueObjectException;
+import io.joshuasalcedo.valueobject.core.ValueObject;
+import io.joshuasalcedo.valueobject.core.ValueObjectException;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

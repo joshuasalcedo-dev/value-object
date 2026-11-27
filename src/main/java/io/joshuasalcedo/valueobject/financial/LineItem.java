@@ -1,7 +1,7 @@
 package io.joshuasalcedo.valueobject.financial;
 
-import io.joshuasalcedo.valueobject.ValueObject;
-import io.joshuasalcedo.valueobject.exception.ValueObjectException;
+import io.joshuasalcedo.valueobject.core.ValueObject;
+import io.joshuasalcedo.valueobject.core.ValueObjectException;
 
 import io.joshuasalcedo.valueobject.measurement.Quantity;
 import java.util.LinkedHashMap;

@@ -1,9 +1,9 @@
 package io.joshuasalcedo.valueobject.social;
 
 import java.util.Locale;
-import io.joshuasalcedo.valueobject.exception.ValueObjectException;
+import io.joshuasalcedo.valueobject.core.ValueObjectException;
 import org.jspecify.annotations.Nullable;
-import io.joshuasalcedo.valueobject.ValueObject;
+import io.joshuasalcedo.valueobject.core.ValueObject;
 
 import java.util.Objects;
 import java.util.Optional;

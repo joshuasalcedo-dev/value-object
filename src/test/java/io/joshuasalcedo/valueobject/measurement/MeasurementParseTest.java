@@ -1,9 +1,9 @@
 package io.joshuasalcedo.valueobject.measurement;
 
-import io.joshuasalcedo.valueobject.Count;
-import io.joshuasalcedo.valueobject.ValueObject;
+import io.joshuasalcedo.valueobject.core.Count;
+import io.joshuasalcedo.valueobject.core.ValueObject;
 import io.joshuasalcedo.valueobject.contact.Link;
-import io.joshuasalcedo.valueobject.exception.ValueObjectException;
+import io.joshuasalcedo.valueobject.core.ValueObjectException;
 import io.joshuasalcedo.valueobject.network.DomainName;
 import org.junit.jupiter.api.Test;
 

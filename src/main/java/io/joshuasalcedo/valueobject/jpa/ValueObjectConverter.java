@@ -1,7 +1,7 @@
 package io.joshuasalcedo.valueobject.jpa;
 
-import io.joshuasalcedo.valueobject.ValueObject;
-import io.joshuasalcedo.valueobject.exception.ValueObjectException;
+import io.joshuasalcedo.valueobject.core.ValueObject;
+import io.joshuasalcedo.valueobject.core.ValueObjectException;
 import io.joshuasalcedo.valueobject.format.Csv;
 import jakarta.persistence.AttributeConverter;
 import org.jspecify.annotations.Nullable;

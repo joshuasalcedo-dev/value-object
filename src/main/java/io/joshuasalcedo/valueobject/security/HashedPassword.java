@@ -1,9 +1,9 @@
 package io.joshuasalcedo.valueobject.security;
 
 import java.util.Optional;
-import io.joshuasalcedo.valueobject.ValueObject;
+import io.joshuasalcedo.valueobject.core.ValueObject;
 
-import io.joshuasalcedo.valueobject.exception.ValueObjectException;
+import io.joshuasalcedo.valueobject.core.ValueObjectException;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 

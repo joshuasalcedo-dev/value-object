@@ -1,6 +1,6 @@
 package io.joshuasalcedo.valueobject.connectors;
 
-import io.joshuasalcedo.valueobject.ValueObject;
+import io.joshuasalcedo.valueobject.core.ValueObject;
 import io.joshuasalcedo.valueobject.contact.Email;
 import io.joshuasalcedo.valueobject.financial.FiatCurrency;
 import io.joshuasalcedo.valueobject.financial.LineItem;

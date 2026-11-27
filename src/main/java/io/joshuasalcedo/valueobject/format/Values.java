@@ -1,7 +1,7 @@
 package io.joshuasalcedo.valueobject.format;
 
-import io.joshuasalcedo.valueobject.ValueObject;
-import io.joshuasalcedo.valueobject.exception.ValueObjectException;
+import io.joshuasalcedo.valueobject.core.ValueObject;
+import io.joshuasalcedo.valueobject.core.ValueObjectException;
 import io.joshuasalcedo.valueobject.financial.Currency;
 import io.joshuasalcedo.valueobject.financial.Money;
 import io.joshuasalcedo.valueobject.measurement.UnitOfMeasure;

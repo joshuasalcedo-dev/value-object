@@ -1,8 +1,8 @@
 package io.joshuasalcedo.valueobject.identifier;
 
 import java.util.Optional;
-import io.joshuasalcedo.valueobject.ValueObject;
-import io.joshuasalcedo.valueobject.exception.ValueObjectException;
+import io.joshuasalcedo.valueobject.core.ValueObject;
+import io.joshuasalcedo.valueobject.core.ValueObjectException;
 import io.joshuasalcedo.valueobject.geo.Country;
 import org.jspecify.annotations.Nullable;
 

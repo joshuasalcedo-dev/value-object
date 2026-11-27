@@ -1,0 +1,3707 @@
+item,alpha2,field,value
+Q228,AD,alpha3,AND
+Q228,AD,calling_code,+376
+Q228,AD,capital,Andorra la Vella
+Q228,AD,continent,Europe
+Q228,AD,coordinates,Point(1.6 42.5425)
+Q228,AD,currency,EUR
+Q228,AD,demonym,Andorran
+Q228,AD,driving_side,right
+Q228,AD,label,Andorra
+Q228,AD,language,ca
+Q228,AD,numeric,020
+Q228,AD,population,89752.0
+Q228,AD,tld,.ad
+Q878,AE,alpha3,ARE
+Q878,AE,calling_code,+971
+Q878,AE,capital,Abu Dhabi
+Q878,AE,continent,Asia
+Q878,AE,coordinates,Point(54.3 24.4)
+Q878,AE,currency,AED
+Q878,AE,demonym,Emirati
+Q878,AE,demonym,Emiri
+Q878,AE,demonym,Emirian
+Q878,AE,driving_side,right
+Q878,AE,label,United Arab Emirates
+Q878,AE,language,ar
+Q878,AE,numeric,784
+Q878,AE,population,9890400.0
+Q878,AE,tld,.ae
+Q878,AE,tld,.امارات
+Q889,AF,alpha3,AFG
+Q889,AF,calling_code,+93
+Q889,AF,capital,Kabul
+Q889,AF,continent,Asia
+Q889,AF,coordinates,Point(66.0 33.0)
+Q889,AF,currency,AFN
+Q889,AF,demonym,Afghan
+Q889,AF,driving_side,right
+Q889,AF,label,Afghanistan
+Q889,AF,language,ar
+Q889,AF,language,ps
+Q889,AF,language,tk
+Q889,AF,language,uz
+Q889,AF,numeric,004
+Q889,AF,official_name,Islamic Emirate of Afghanistan
+Q889,AF,population,41454761.0
+Q889,AF,tld,.af
+Q781,AG,alpha3,ATG
+Q781,AG,calling_code,+1268
+Q781,AG,capital,St. John's
+Q781,AG,continent,North America
+Q781,AG,coordinates,Point(-61.85 17.116666666)
+Q781,AG,currency,XCD
+Q781,AG,demonym,Antigua and Barbuda
+Q781,AG,demonym,Antiguan
+Q781,AG,demonym,Barbudan
+Q781,AG,driving_side,left
+Q781,AG,label,Antigua and Barbuda
+Q781,AG,language,en
+Q781,AG,language,es
+Q781,AG,numeric,028
+Q781,AG,official_name,Antigua and Barbuda
+Q781,AG,population,101489.0
+Q781,AG,tld,.ag
+Q25228,AI,alpha3,AIA
+Q25228,AI,calling_code,+1264
+Q25228,AI,capital,The Valley
+Q25228,AI,continent,North America
+Q25228,AI,coordinates,Point(-63.048888888 18.227222222)
+Q25228,AI,currency,XCD
+Q25228,AI,demonym,Anguillan
+Q25228,AI,driving_side,left
+Q25228,AI,label,Anguilla
+Q25228,AI,language,en
+Q25228,AI,numeric,660
+Q25228,AI,official_name,Anguilla
+Q25228,AI,population,11561.0
+Q25228,AI,population,13572.0
+Q25228,AI,population,15701.0
+Q25228,AI,population,16293.0
+Q25228,AI,population,5810.0
+Q25228,AI,population,6519.0
+Q25228,AI,population,6653.0
+Q25228,AI,population,8960.0
+Q25228,AI,tld,.ai
+Q222,AL,alpha3,ALB
+Q222,AL,calling_code,+355
+Q222,AL,capital,Tirana
+Q222,AL,continent,Europe
+Q222,AL,coordinates,Point(20.0 41.0)
+Q222,AL,currency,ALL
+Q222,AL,demonym,Albanian
+Q222,AL,demonym,Albanians
+Q222,AL,driving_side,right
+Q222,AL,label,Albania
+Q222,AL,language,sq
+Q222,AL,numeric,008
+Q222,AL,population,2811655.0
+Q222,AL,tld,.al
+Q399,AM,alpha3,ARM
+Q399,AM,calling_code,+374
+Q399,AM,capital,Yerevan
+Q399,AM,continent,Asia
+Q399,AM,coordinates,Point(44.95 40.383333)
+Q399,AM,currency,AMD
+Q399,AM,demonym,Armenian
+Q399,AM,driving_side,right
+Q399,AM,label,Armenia
+Q399,AM,language,hy
+Q399,AM,numeric,051
+Q399,AM,official_name,Republic of Armenia
+Q399,AM,population,2930450.0
+Q399,AM,tld,.am
+Q399,AM,tld,.հայ
+Q916,AO,alpha3,AGO
+Q916,AO,calling_code,+244
+Q916,AO,capital,Luanda
+Q916,AO,continent,Africa
+Q916,AO,coordinates,Point(17.35 -12.35)
+Q916,AO,currency,AOA
+Q916,AO,demonym,Angolan
+Q916,AO,driving_side,right
+Q916,AO,label,Angola
+Q916,AO,language,pt
+Q916,AO,numeric,024
+Q916,AO,official_name,People's Republic of Angola
+Q916,AO,official_name,Republic of Angola
+Q916,AO,population,36749906.0
+Q916,AO,tld,.ao
+Q51,AQ,alpha3,ATA
+Q51,AQ,calling_code,+672
+Q51,AQ,coordinates,Point(0.0 -90.0)
+Q51,AQ,demonym,Antarctican
+Q51,AQ,label,Antarctica
+Q51,AQ,population,5000.0
+Q51,AQ,tld,.aq
+Q414,AR,alpha3,ARG
+Q414,AR,calling_code,+54
+Q414,AR,capital,Buenos Aires
+Q414,AR,continent,South America
+Q414,AR,coordinates,Point(-64.0 -34.0)
+Q414,AR,currency,ARS
+Q414,AR,demonym,Argentine
+Q414,AR,demonym,Argentinian
+Q414,AR,driving_side,left
+Q414,AR,driving_side,right
+Q414,AR,label,Argentina
+Q414,AR,language,es
+Q414,AR,numeric,032
+Q414,AR,population,47327407.0
+Q414,AR,tld,.ar
+Q16641,AS,alpha3,ASM
+Q16641,AS,calling_code,+1684
+Q16641,AS,capital,Pago Pago
+Q16641,AS,continent,Insular Oceania
+Q16641,AS,coordinates,Point(-170.7075 -14.295833)
+Q16641,AS,currency,USD
+Q16641,AS,demonym,American Samoan
+Q16641,AS,driving_side,right
+Q16641,AS,label,American Samoa
+Q16641,AS,language,en
+Q16641,AS,language,sm
+Q16641,AS,numeric,016
+Q16641,AS,official_name,American Samoa
+Q16641,AS,population,49710.0
+Q16641,AS,tld,.as
+Q40,AT,alpha3,AUT
+Q40,AT,calling_code,+43
+Q40,AT,capital,Vienna
+Q40,AT,continent,Europe
+Q40,AT,coordinates,Point(14.0 48.0)
+Q40,AT,currency,EUR
+Q40,AT,demonym,Austrian
+Q40,AT,driving_side,right
+Q40,AT,label,Austria
+Q40,AT,language,de
+Q40,AT,numeric,040
+Q40,AT,population,8979894.0
+Q40,AT,tld,.at
+Q408,AU,alpha3,AUS
+Q408,AU,calling_code,+61
+Q408,AU,capital,Canberra
+Q408,AU,continent,Oceania
+Q408,AU,coordinates,Point(133.0 -25.0)
+Q408,AU,currency,AUD
+Q408,AU,demonym,Aussie
+Q408,AU,demonym,Aussies
+Q408,AU,demonym,Australian
+Q408,AU,demonym,Australians
+Q408,AU,driving_side,left
+Q408,AU,label,Australia
+Q408,AU,language,en
+Q408,AU,numeric,036
+Q408,AU,population,27614411.0
+Q408,AU,tld,.au
+Q21203,AW,alpha3,ABW
+Q21203,AW,calling_code,+297
+Q21203,AW,capital,Oranjestad
+Q21203,AW,continent,North America
+Q21203,AW,coordinates,Point(-69.975 12.515)
+Q21203,AW,currency,AWG
+Q21203,AW,demonym,Aruban
+Q21203,AW,driving_side,right
+Q21203,AW,label,Aruba
+Q21203,AW,language,nl
+Q21203,AW,numeric,533
+Q21203,AW,population,106739.0
+Q21203,AW,tld,.aw
+Q5689,AX,alpha3,ALA
+Q5689,AX,capital,Mariehamn
+Q5689,AX,coordinates,Point(20.0 60.25)
+Q5689,AX,currency,EUR
+Q5689,AX,driving_side,right
+Q5689,AX,label,Åland
+Q5689,AX,language,sv
+Q5689,AX,numeric,248
+Q5689,AX,population,30836.0
+Q5689,AX,tld,.ax
+Q227,AZ,alpha3,AZE
+Q227,AZ,calling_code,+994
+Q227,AZ,capital,Baku
+Q227,AZ,continent,Asia
+Q227,AZ,coordinates,Point(47.7 40.3)
+Q227,AZ,currency,AZN
+Q227,AZ,demonym,Azerbaijani
+Q227,AZ,demonym,Azerbaijanis
+Q227,AZ,demonym,Azeri
+Q227,AZ,demonym,Azeris
+Q227,AZ,driving_side,right
+Q227,AZ,label,Azerbaijan
+Q227,AZ,language,az
+Q227,AZ,numeric,031
+Q227,AZ,population,10180770.0
+Q227,AZ,tld,.az
+Q225,BA,alpha3,BIH
+Q225,BA,calling_code,+387
+Q225,BA,capital,Sarajevo
+Q225,BA,continent,Europe
+Q225,BA,coordinates,Point(18.0 44.0)
+Q225,BA,currency,BAD
+Q225,BA,currency,BAM
+Q225,BA,demonym,Bosnian
+Q225,BA,demonym,Herzegovinian
+Q225,BA,driving_side,right
+Q225,BA,label,Bosnia and Herzegovina
+Q225,BA,language,bs
+Q225,BA,language,hr
+Q225,BA,language,sr
+Q225,BA,numeric,070
+Q225,BA,official_name,Bosnia and Herzegovina
+Q225,BA,population,3816459.0
+Q225,BA,tld,.ba
+Q244,BB,alpha3,BRB
+Q244,BB,calling_code,+1246
+Q244,BB,capital,Bridgetown
+Q244,BB,continent,North America
+Q244,BB,coordinates,Point(-59.5525 13.17)
+Q244,BB,currency,BBD
+Q244,BB,demonym,Barbadian
+Q244,BB,driving_side,left
+Q244,BB,label,Barbados
+Q244,BB,language,en
+Q244,BB,numeric,052
+Q244,BB,official_name,Barbados
+Q244,BB,population,303431.0
+Q244,BB,tld,.bb
+Q902,BD,alpha3,BGD
+Q902,BD,calling_code,+880
+Q902,BD,capital,Dhaka
+Q902,BD,continent,Asia
+Q902,BD,coordinates,Point(89.866666666 24.016666666)
+Q902,BD,currency,BDT
+Q902,BD,demonym,Bangladeshi
+Q902,BD,driving_side,left
+Q902,BD,label,Bangladesh
+Q902,BD,language,bn
+Q902,BD,numeric,050
+Q902,BD,population,171466990.0
+Q902,BD,tld,.bd
+Q902,BD,tld,.বাংলা
+Q31,BE,alpha3,BEL
+Q31,BE,calling_code,+32
+Q31,BE,capital,Brussels
+Q31,BE,continent,Europe
+Q31,BE,coordinates,Point(4.668055555 50.641111111)
+Q31,BE,currency,EUR
+Q31,BE,demonym,Belgian
+Q31,BE,driving_side,right
+Q31,BE,label,Belgium
+Q31,BE,language,de
+Q31,BE,language,fr
+Q31,BE,language,nl
+Q31,BE,numeric,056
+Q31,BE,population,11825551.0
+Q31,BE,tld,.be
+Q965,BF,alpha3,BFA
+Q965,BF,calling_code,+226
+Q965,BF,capital,Ouagadougou
+Q965,BF,continent,Africa
+Q965,BF,coordinates,Point(-2.066667 12.266667)
+Q965,BF,currency,XOF
+Q965,BF,demonym,Burkinabe
+Q965,BF,demonym,Burkinabè
+Q965,BF,demonym,Burkinabé
+Q965,BF,driving_side,right
+Q965,BF,label,Burkina Faso
+Q965,BF,numeric,854
+Q965,BF,official_name,Burkina Faso
+Q965,BF,population,23025776.0
+Q965,BF,tld,.bf
+Q219,BG,alpha3,BGR
+Q219,BG,calling_code,+359
+Q219,BG,capital,Sofia
+Q219,BG,continent,Europe
+Q219,BG,coordinates,Point(25.5 42.75)
+Q219,BG,currency,EUR
+Q219,BG,demonym,Bulgarian
+Q219,BG,driving_side,right
+Q219,BG,label,Bulgaria
+Q219,BG,language,bg
+Q219,BG,numeric,100
+Q219,BG,official_name,Republic of Bulgaria
+Q219,BG,population,6423207.0
+Q219,BG,tld,.bg
+Q219,BG,tld,.бг
+Q398,BH,alpha3,BHR
+Q398,BH,calling_code,+973
+Q398,BH,capital,Manama
+Q398,BH,continent,Asia
+Q398,BH,coordinates,Point(50.551111 26.0675)
+Q398,BH,currency,BHD
+Q398,BH,demonym,Bahraini
+Q398,BH,driving_side,right
+Q398,BH,label,Bahrain
+Q398,BH,language,ar
+Q398,BH,numeric,048
+Q398,BH,official_name,Kingdom of Bahrain
+Q398,BH,population,1569666.0
+Q398,BH,tld,.bh
+Q967,BI,alpha3,BDI
+Q967,BI,calling_code,+257
+Q967,BI,capital,Gitega
+Q967,BI,continent,Africa
+Q967,BI,coordinates,Point(29.816667 -3.666667)
+Q967,BI,currency,BIF
+Q967,BI,demonym,Burundian
+Q967,BI,driving_side,right
+Q967,BI,label,Burundi
+Q967,BI,language,en
+Q967,BI,language,fr
+Q967,BI,language,rn
+Q967,BI,numeric,108
+Q967,BI,official_name,Republic of Burundi
+Q967,BI,population,13689450.0
+Q967,BI,tld,.bi
+Q962,BJ,alpha3,BEN
+Q962,BJ,calling_code,+229
+Q962,BJ,capital,Porto-Novo
+Q962,BJ,continent,Africa
+Q962,BJ,coordinates,Point(2.183333333 8.833333333)
+Q962,BJ,currency,XOF
+Q962,BJ,demonym,Beninese
+Q962,BJ,driving_side,right
+Q962,BJ,label,Benin
+Q962,BJ,language,fr
+Q962,BJ,numeric,204
+Q962,BJ,official_name,Republic of Benin
+Q962,BJ,population,14111034.0
+Q962,BJ,tld,.bj
+Q25362,BL,alpha3,BLM
+Q25362,BL,calling_code,+590
+Q25362,BL,capital,Gustavia
+Q25362,BL,continent,North America
+Q25362,BL,coordinates,Point(-62.8342438 17.897728)
+Q25362,BL,currency,EUR
+Q25362,BL,driving_side,right
+Q25362,BL,label,Saint Barthélemy
+Q25362,BL,language,fr
+Q25362,BL,numeric,652
+Q25362,BL,population,10124.0
+Q25362,BL,tld,.bl
+Q23635,BM,alpha3,BMU
+Q23635,BM,calling_code,+1441
+Q23635,BM,capital,Hamilton
+Q23635,BM,continent,North America
+Q23635,BM,coordinates,Point(-64.74 32.32)
+Q23635,BM,currency,BMD
+Q23635,BM,demonym,Bermudan
+Q23635,BM,demonym,Bermudian
+Q23635,BM,driving_side,left
+Q23635,BM,label,Bermuda
+Q23635,BM,language,en
+Q23635,BM,numeric,060
+Q23635,BM,official_name,Bermuda
+Q23635,BM,population,44400.0
+Q23635,BM,population,45500.0
+Q23635,BM,population,46600.0
+Q23635,BM,population,47700.0
+Q23635,BM,population,48900.0
+Q23635,BM,population,50100.0
+Q23635,BM,population,51000.0
+Q23635,BM,population,52000.0
+Q23635,BM,population,53000.0
+Q23635,BM,population,53200.0
+Q23635,BM,population,53400.0
+Q23635,BM,population,53600.0
+Q23635,BM,population,53800.0
+Q23635,BM,population,54000.0
+Q23635,BM,population,54200.0
+Q23635,BM,population,54600.0
+Q23635,BM,population,54670.0
+Q23635,BM,population,55000.0
+Q23635,BM,population,55050.0
+Q23635,BM,population,55449.0
+Q23635,BM,population,55930.0
+Q23635,BM,population,56423.0
+Q23635,BM,population,56898.0
+Q23635,BM,population,57382.0
+Q23635,BM,population,57849.0
+Q23635,BM,population,58347.0
+Q23635,BM,population,58595.0
+Q23635,BM,population,58841.0
+Q23635,BM,population,58910.0
+Q23635,BM,population,59021.0
+Q23635,BM,population,59320.0
+Q23635,BM,population,59326.0
+Q23635,BM,population,59746.0
+Q23635,BM,population,60129.0
+Q23635,BM,population,60497.0
+Q23635,BM,population,60943.0
+Q23635,BM,population,61285.0
+Q23635,BM,population,61833.0
+Q23635,BM,population,62504.0
+Q23635,BM,population,62912.0
+Q23635,BM,population,63179.0
+Q23635,BM,population,63325.0
+Q23635,BM,population,63740.0
+Q23635,BM,population,64154.0
+Q23635,BM,population,64523.0
+Q23635,BM,population,64564.0
+Q23635,BM,population,64798.0
+Q23635,BM,population,64888.0
+Q23635,BM,population,65024.0
+Q23635,BM,population,65124.0
+Q23635,BM,population,65273.0
+Q23635,BM,population,65636.0
+Q23635,BM,tld,.bm
+Q921,BN,alpha3,BRN
+Q921,BN,calling_code,+673
+Q921,BN,capital,Bandar Seri Begawan
+Q921,BN,continent,Asia
+Q921,BN,coordinates,Point(114.566667 4.4)
+Q921,BN,currency,BND
+Q921,BN,driving_side,left
+Q921,BN,label,Brunei
+Q921,BN,language,ms
+Q921,BN,numeric,096
+Q921,BN,population,458949.0
+Q921,BN,tld,.bn
+Q750,BO,alpha3,BOL
+Q750,BO,calling_code,+591
+Q750,BO,capital,La Paz
+Q750,BO,capital,Sucre
+Q750,BO,continent,South America
+Q750,BO,coordinates,Point(-64.991228611 -17.056869611)
+Q750,BO,currency,BOB
+Q750,BO,demonym,Bolivian
+Q750,BO,driving_side,right
+Q750,BO,label,Bolivia
+Q750,BO,language,ay
+Q750,BO,language,es
+Q750,BO,language,gn
+Q750,BO,language,qu
+Q750,BO,numeric,068
+Q750,BO,official_name,Plurinational State of Bolivia
+Q750,BO,population,12244159.0
+Q750,BO,tld,.bo
+Q27561,BQ,alpha3,BES
+Q27561,BQ,calling_code,+599
+Q27561,BQ,continent,North America
+Q27561,BQ,coordinates,Point(-68.233333333 12.183333333)
+Q27561,BQ,currency,USD
+Q27561,BQ,driving_side,right
+Q27561,BQ,label,Caribbean Netherlands
+Q27561,BQ,language,en
+Q27561,BQ,language,nl
+Q27561,BQ,numeric,535
+Q27561,BQ,population,29418.0
+Q27561,BQ,tld,.bq
+Q27561,BQ,tld,.nl
+Q155,BR,alpha3,BRA
+Q155,BR,calling_code,+55
+Q155,BR,capital,Brasília
+Q155,BR,continent,South America
+Q155,BR,coordinates,Point(-53.0 -14.0)
+Q155,BR,currency,BRL
+Q155,BR,demonym,Brazilian
+Q155,BR,demonym,Brazilians
+Q155,BR,driving_side,right
+Q155,BR,label,Brazil
+Q155,BR,language,pt
+Q155,BR,numeric,076
+Q155,BR,population,214211951.0
+Q155,BR,tld,.br
+Q778,BS,alpha3,BHS
+Q778,BS,calling_code,+1242
+Q778,BS,capital,Nassau
+Q778,BS,continent,North America
+Q778,BS,coordinates,Point(-77.4 25.0)
+Q778,BS,currency,BSD
+Q778,BS,demonym,Bahamian
+Q778,BS,driving_side,left
+Q778,BS,label,The Bahamas
+Q778,BS,language,en
+Q778,BS,numeric,044
+Q778,BS,official_name,Commonwealth of the Bahamas
+Q778,BS,population,399440.0
+Q778,BS,tld,.bs
+Q917,BT,alpha3,BTN
+Q917,BT,calling_code,+975
+Q917,BT,capital,Thimphu
+Q917,BT,continent,Asia
+Q917,BT,coordinates,Point(90.5 27.45)
+Q917,BT,currency,BTN
+Q917,BT,demonym,Bhutanese
+Q917,BT,driving_side,left
+Q917,BT,label,Bhutan
+Q917,BT,language,dz
+Q917,BT,numeric,064
+Q917,BT,official_name,Kingdom of Bhutan
+Q917,BT,population,787424.0
+Q917,BT,tld,.bt
+Q23408,BV,alpha3,BVT
+Q23408,BV,continent,Antarctica
+Q23408,BV,coordinates,Point(3.36 -54.42)
+Q23408,BV,label,Bouvet Island
+Q23408,BV,numeric,074
+Q23408,BV,population,0.0
+Q23408,BV,tld,.bv
+Q963,BW,alpha3,BWA
+Q963,BW,calling_code,+267
+Q963,BW,capital,Gaborone
+Q963,BW,continent,Africa
+Q963,BW,coordinates,Point(23.7 -22.2)
+Q963,BW,currency,BWP
+Q963,BW,demonym,Batswana
+Q963,BW,demonym,Botswanan
+Q963,BW,demonym,Botswanans
+Q963,BW,demonym,Motswana
+Q963,BW,driving_side,left
+Q963,BW,label,Botswana
+Q963,BW,language,en
+Q963,BW,numeric,072
+Q963,BW,official_name,Republic of Botswana
+Q963,BW,population,2480244.0
+Q963,BW,tld,.bw
+Q184,BY,alpha3,BLR
+Q184,BY,calling_code,+375
+Q184,BY,capital,Minsk
+Q184,BY,continent,Europe
+Q184,BY,coordinates,Point(28.046666666 53.528333333)
+Q184,BY,currency,BYN
+Q184,BY,demonym,Belarusian
+Q184,BY,driving_side,right
+Q184,BY,label,Belarus
+Q184,BY,language,be
+Q184,BY,language,ru
+Q184,BY,numeric,112
+Q184,BY,population,9056080.0
+Q184,BY,tld,.by
+Q184,BY,tld,.бел
+Q242,BZ,alpha3,BLZ
+Q242,BZ,calling_code,+501
+Q242,BZ,capital,Belmopan
+Q242,BZ,continent,North America
+Q242,BZ,coordinates,Point(-88.7 17.066666666)
+Q242,BZ,currency,BZD
+Q242,BZ,demonym,Belizean
+Q242,BZ,driving_side,right
+Q242,BZ,label,Belize
+Q242,BZ,language,en
+Q242,BZ,numeric,084
+Q242,BZ,official_name,Belize
+Q242,BZ,population,411106.0
+Q242,BZ,tld,.bz
+Q16,CA,alpha3,CAN
+Q16,CA,calling_code,+1
+Q16,CA,capital,Ottawa
+Q16,CA,continent,North America
+Q16,CA,coordinates,Point(-109.0 56.0)
+Q16,CA,currency,CAD
+Q16,CA,demonym,Canadian
+Q16,CA,demonym,Canadians
+Q16,CA,driving_side,right
+Q16,CA,label,Canada
+Q16,CA,language,en
+Q16,CA,language,fr
+Q16,CA,numeric,124
+Q16,CA,official_name,Canada
+Q16,CA,population,36991981.0
+Q16,CA,tld,.ca
+Q36004,CC,alpha3,CCK
+Q36004,CC,calling_code,+61891
+Q36004,CC,capital,West Island
+Q36004,CC,continent,Oceania
+Q36004,CC,coordinates,Point(96.895 -12.1175)
+Q36004,CC,currency,AUD
+Q36004,CC,driving_side,left
+Q36004,CC,label,Cocos (Keeling) Islands
+Q36004,CC,language,en
+Q36004,CC,numeric,166
+Q36004,CC,official_name,Cocos Islands
+Q36004,CC,population,602.0
+Q36004,CC,tld,.cc
+Q974,CD,alpha3,COD
+Q974,CD,calling_code,+243
+Q974,CD,capital,Kinshasa
+Q974,CD,continent,Africa
+Q974,CD,coordinates,Point(23.656111111 -2.88)
+Q974,CD,currency,CDF
+Q974,CD,demonym,Congolese
+Q974,CD,driving_side,right
+Q974,CD,label,Democratic Republic of the Congo
+Q974,CD,language,fr
+Q974,CD,numeric,180
+Q974,CD,population,105789731.0
+Q974,CD,tld,.cd
+Q929,CF,alpha3,CAF
+Q929,CF,calling_code,+236
+Q929,CF,capital,Bangui
+Q929,CF,continent,Africa
+Q929,CF,coordinates,Point(20.9 6.7)
+Q929,CF,currency,XAF
+Q929,CF,demonym,Central African
+Q929,CF,driving_side,right
+Q929,CF,label,Central African Republic
+Q929,CF,language,fr
+Q929,CF,language,sg
+Q929,CF,numeric,140
+Q929,CF,official_name,Central African Republic
+Q929,CF,population,5152421.0
+Q929,CF,tld,.cf
+Q971,CG,alpha3,COG
+Q971,CG,calling_code,+242
+Q971,CG,capital,Brazzaville
+Q971,CG,continent,Africa
+Q971,CG,coordinates,Point(15.383330555 -0.75)
+Q971,CG,currency,XAF
+Q971,CG,demonym,Congolese
+Q971,CG,driving_side,right
+Q971,CG,label,Republic of the Congo
+Q971,CG,language,fr
+Q971,CG,numeric,178
+Q971,CG,official_name,Republic of the Congo
+Q971,CG,population,6142180.0
+Q971,CG,tld,.cg
+Q39,CH,alpha3,CHE
+Q39,CH,calling_code,+41
+Q39,CH,capital,Bern
+Q39,CH,continent,Europe
+Q39,CH,coordinates,Point(8.231973 46.798562)
+Q39,CH,currency,CHF
+Q39,CH,demonym,Swiss
+Q39,CH,driving_side,right
+Q39,CH,label,Switzerland
+Q39,CH,language,de
+Q39,CH,language,fr
+Q39,CH,language,it
+Q39,CH,language,rm
+Q39,CH,numeric,756
+Q39,CH,official_name,Swiss Confederation
+Q39,CH,population,9104063.0
+Q39,CH,tld,.ch
+Q39,CH,tld,.swiss
+Q1008,CI,alpha3,CIV
+Q1008,CI,calling_code,+225
+Q1008,CI,capital,Yamoussoukro
+Q1008,CI,continent,Africa
+Q1008,CI,coordinates,Point(-6.0 8.0)
+Q1008,CI,currency,XOF
+Q1008,CI,demonym,Ivoirian
+Q1008,CI,demonym,Ivorian
+Q1008,CI,driving_side,right
+Q1008,CI,label,Ivory Coast
+Q1008,CI,language,fr
+Q1008,CI,numeric,384
+Q1008,CI,official_name,Republic of Côte d’Ivoire
+Q1008,CI,population,31165654.0
+Q1008,CI,tld,.ci
+Q26988,CK,alpha3,COK
+Q26988,CK,calling_code,+682
+Q26988,CK,capital,Avarua
+Q26988,CK,continent,Insular Oceania
+Q26988,CK,coordinates,Point(-159.8 -21.2)
+Q26988,CK,currency,NZD
+Q26988,CK,demonym,Cook Islander
+Q26988,CK,driving_side,left
+Q26988,CK,label,Cook Islands
+Q26988,CK,language,en
+Q26988,CK,numeric,184
+Q26988,CK,official_name,Cook Islands
+Q26988,CK,population,14222.0
+Q26988,CK,tld,.ck
+Q298,CL,alpha3,CHL
+Q298,CL,calling_code,+56
+Q298,CL,capital,Santiago
+Q298,CL,continent,South America
+Q298,CL,coordinates,Point(-71.0 -33.0)
+Q298,CL,currency,CLP
+Q298,CL,demonym,Chilean
+Q298,CL,driving_side,right
+Q298,CL,label,Chile
+Q298,CL,language,es
+Q298,CL,numeric,152
+Q298,CL,official_name,Republic of Chile
+Q298,CL,population,19458000.0
+Q298,CL,tld,.cl
+Q1009,CM,alpha3,CMR
+Q1009,CM,calling_code,+237
+Q1009,CM,capital,Yaoundé
+Q1009,CM,continent,Africa
+Q1009,CM,coordinates,Point(12.65 5.133333333)
+Q1009,CM,currency,XAF
+Q1009,CM,demonym,Cameroonian
+Q1009,CM,driving_side,right
+Q1009,CM,label,Cameroon
+Q1009,CM,language,en
+Q1009,CM,language,fr
+Q1009,CM,numeric,120
+Q1009,CM,official_name,Republic of Cameroon
+Q1009,CM,population,28372687.0
+Q1009,CM,tld,.cm
+Q148,CN,alpha3,CHN
+Q148,CN,calling_code,+86
+Q148,CN,capital,Beijing
+Q148,CN,continent,Asia
+Q148,CN,coordinates,Point(103.451944444 35.844722222)
+Q148,CN,currency,CNY
+Q148,CN,demonym,Chinese
+Q148,CN,driving_side,right
+Q148,CN,label,People's Republic of China
+Q148,CN,numeric,156
+Q148,CN,population,1404890000.0
+Q148,CN,tld,.cn
+Q148,CN,tld,.中国
+Q148,CN,tld,.中國
+Q148,CN,tld,.公司
+Q739,CO,alpha3,COL
+Q739,CO,calling_code,+57
+Q739,CO,capital,Bogotá
+Q739,CO,continent,South America
+Q739,CO,coordinates,Point(-73.25 4.0)
+Q739,CO,currency,COP
+Q739,CO,demonym,Colombian
+Q739,CO,driving_side,right
+Q739,CO,label,Colombia
+Q739,CO,language,es
+Q739,CO,numeric,170
+Q739,CO,official_name,Republic of Colombia
+Q739,CO,population,52321152.0
+Q739,CO,tld,.co
+Q800,CR,alpha3,CRI
+Q800,CR,calling_code,+506
+Q800,CR,capital,San José
+Q800,CR,continent,North America
+Q800,CR,coordinates,Point(-84.0 10.0)
+Q800,CR,currency,CRC
+Q800,CR,demonym,Costa Rican
+Q800,CR,demonym,Costa Ricans
+Q800,CR,driving_side,right
+Q800,CR,label,Costa Rica
+Q800,CR,language,es
+Q800,CR,numeric,188
+Q800,CR,official_name,Republic of Costa Rica
+Q800,CR,population,5265575.0
+Q800,CR,tld,.cr
+Q241,CU,alpha3,CUB
+Q241,CU,calling_code,+53
+Q241,CU,capital,Havana
+Q241,CU,continent,North America
+Q241,CU,coordinates,Point(-79.5 22.0)
+Q241,CU,currency,CUP
+Q241,CU,demonym,Cuban
+Q241,CU,driving_side,right
+Q241,CU,label,Cuba
+Q241,CU,language,es
+Q241,CU,numeric,192
+Q241,CU,official_name,Republic of Cuba
+Q241,CU,population,10985974.0
+Q241,CU,tld,.cu
+Q1011,CV,alpha3,CPV
+Q1011,CV,calling_code,+238
+Q1011,CV,capital,Praia
+Q1011,CV,continent,Africa
+Q1011,CV,coordinates,Point(-23.7 15.3)
+Q1011,CV,currency,CVE
+Q1011,CV,demonym,Cabo Verdean
+Q1011,CV,demonym,Cape Verdean
+Q1011,CV,driving_side,right
+Q1011,CV,label,Cape Verde
+Q1011,CV,language,pt
+Q1011,CV,numeric,132
+Q1011,CV,population,555988.0
+Q1011,CV,tld,.cv
+Q25279,CW,alpha3,CUW
+Q25279,CW,calling_code,+5999
+Q25279,CW,capital,Willemstad
+Q25279,CW,continent,North America
+Q25279,CW,coordinates,Point(-69.0 12.2)
+Q25279,CW,currency,XCG
+Q25279,CW,demonym,Curaçaoan
+Q25279,CW,driving_side,right
+Q25279,CW,label,Curaçao
+Q25279,CW,language,en
+Q25279,CW,language,nl
+Q25279,CW,numeric,531
+Q25279,CW,official_name,Curaçao
+Q25279,CW,population,152849.0
+Q25279,CW,tld,.cw
+Q31063,CX,alpha3,CXR
+Q31063,CX,capital,Flying Fish Cove
+Q31063,CX,continent,Asia
+Q31063,CX,coordinates,Point(105.6275 -10.49)
+Q31063,CX,currency,AUD
+Q31063,CX,demonym,Christmas Islander
+Q31063,CX,demonym,Christmas Islanders
+Q31063,CX,driving_side,left
+Q31063,CX,label,Christmas Island
+Q31063,CX,language,en
+Q31063,CX,numeric,162
+Q31063,CX,population,1692.0
+Q31063,CX,tld,.cx
+Q229,CY,alpha3,CYP
+Q229,CY,calling_code,+357
+Q229,CY,capital,Nicosia
+Q229,CY,continent,Europe
+Q229,CY,coordinates,Point(33.0 35.0)
+Q229,CY,currency,EUR
+Q229,CY,demonym,Cypriot
+Q229,CY,driving_side,left
+Q229,CY,label,Cyprus
+Q229,CY,language,el
+Q229,CY,language,tr
+Q229,CY,numeric,196
+Q229,CY,official_name,Republic of Cyprus
+Q229,CY,population,1344976.0
+Q229,CY,tld,.cy
+Q213,CZ,alpha3,CZE
+Q213,CZ,calling_code,+420
+Q213,CZ,capital,Prague
+Q213,CZ,continent,Europe
+Q213,CZ,coordinates,Point(15.0 50.0)
+Q213,CZ,currency,203
+Q213,CZ,currency,CZK
+Q213,CZ,demonym,Czech
+Q213,CZ,driving_side,right
+Q213,CZ,label,Czech Republic
+Q213,CZ,language,cs
+Q213,CZ,numeric,203
+Q213,CZ,official_name,Czech Republic
+Q213,CZ,population,10909500.0
+Q213,CZ,tld,.cz
+Q183,DE,alpha3,DEU
+Q183,DE,calling_code,+49
+Q183,DE,capital,Berlin
+Q183,DE,continent,Europe
+Q183,DE,coordinates,Point(10.0 51.0)
+Q183,DE,currency,EUR
+Q183,DE,demonym,German
+Q183,DE,driving_side,right
+Q183,DE,label,Germany
+Q183,DE,language,de
+Q183,DE,numeric,276
+Q183,DE,population,83467117.0
+Q183,DE,tld,.de
+Q977,DJ,alpha3,DJI
+Q977,DJ,calling_code,+253
+Q977,DJ,capital,Djibouti
+Q977,DJ,continent,Africa
+Q977,DJ,coordinates,Point(42.433333 11.8)
+Q977,DJ,currency,DJF
+Q977,DJ,demonym,Djiboutian
+Q977,DJ,driving_side,right
+Q977,DJ,label,Djibouti
+Q977,DJ,language,ar
+Q977,DJ,language,fr
+Q977,DJ,numeric,262
+Q977,DJ,population,1152944.0
+Q977,DJ,tld,.dj
+Q35,DK,alpha3,DNK
+Q35,DK,calling_code,+45
+Q35,DK,capital,Copenhagen
+Q35,DK,continent,Europe
+Q35,DK,coordinates,Point(10.0 56.0)
+Q35,DK,currency,DKK
+Q35,DK,demonym,Dane
+Q35,DK,demonym,Danish
+Q35,DK,driving_side,right
+Q35,DK,label,Denmark
+Q35,DK,language,da
+Q35,DK,numeric,208
+Q35,DK,population,5822863.0
+Q35,DK,tld,.dk
+Q784,DM,alpha3,DMA
+Q784,DM,calling_code,+1767
+Q784,DM,capital,Roseau
+Q784,DM,continent,North America
+Q784,DM,coordinates,Point(-61.333333 15.416667)
+Q784,DM,currency,XCD
+Q784,DM,demonym,Dominican
+Q784,DM,driving_side,left
+Q784,DM,label,Dominica
+Q784,DM,language,en
+Q784,DM,numeric,212
+Q784,DM,official_name,Commonwealth of Dominica
+Q784,DM,official_name,Dominica
+Q784,DM,population,74656.0
+Q784,DM,tld,.dm
+Q786,DO,alpha3,DOM
+Q786,DO,calling_code,+1809
+Q786,DO,calling_code,+1829
+Q786,DO,calling_code,+1849
+Q786,DO,capital,Santo Domingo
+Q786,DO,continent,North America
+Q786,DO,coordinates,Point(-70.2 18.8)
+Q786,DO,currency,DOP
+Q786,DO,demonym,Dominican
+Q786,DO,driving_side,right
+Q786,DO,label,Dominican Republic
+Q786,DO,language,es
+Q786,DO,numeric,214
+Q786,DO,population,10760028.0
+Q786,DO,tld,.do
+Q262,DZ,alpha3,DZA
+Q262,DZ,calling_code,+213
+Q262,DZ,capital,Algiers
+Q262,DZ,continent,Africa
+Q262,DZ,coordinates,Point(1.0 28.0)
+Q262,DZ,currency,DZD
+Q262,DZ,demonym,Algerian
+Q262,DZ,driving_side,right
+Q262,DZ,label,Algeria
+Q262,DZ,language,ar
+Q262,DZ,numeric,012
+Q262,DZ,population,46164219.0
+Q262,DZ,tld,.dz
+Q736,EC,alpha3,ECU
+Q736,EC,calling_code,+593
+Q736,EC,capital,Quito
+Q736,EC,continent,South America
+Q736,EC,coordinates,Point(-78.0 -1.0)
+Q736,EC,currency,USD
+Q736,EC,demonym,Ecuadoran
+Q736,EC,demonym,Ecuadorian
+Q736,EC,driving_side,right
+Q736,EC,label,Ecuador
+Q736,EC,language,es
+Q736,EC,numeric,218
+Q736,EC,population,16938986.0
+Q736,EC,tld,.ec
+Q191,EE,alpha3,EST
+Q191,EE,calling_code,+372
+Q191,EE,capital,Tallinn
+Q191,EE,continent,Europe
+Q191,EE,coordinates,Point(26.0 59.0)
+Q191,EE,currency,EUR
+Q191,EE,demonym,Estonian
+Q191,EE,driving_side,right
+Q191,EE,label,Estonia
+Q191,EE,language,et
+Q191,EE,numeric,233
+Q191,EE,population,1369995.0
+Q191,EE,tld,.ee
+Q79,EG,alpha3,EGY
+Q79,EG,calling_code,+20
+Q79,EG,capital,Cairo
+Q79,EG,continent,Africa
+Q79,EG,coordinates,Point(29.0 27.0)
+Q79,EG,currency,EGP
+Q79,EG,demonym,Egyptian
+Q79,EG,driving_side,right
+Q79,EG,label,Egypt
+Q79,EG,language,ar
+Q79,EG,numeric,818
+Q79,EG,population,114535772.0
+Q79,EG,tld,.eg
+Q79,EG,tld,.مصر
+Q6250,EH,alpha3,ESH
+Q6250,EH,calling_code,+212
+Q6250,EH,continent,Africa
+Q6250,EH,coordinates,Point(-13.0 25.0)
+Q6250,EH,currency,MAD
+Q6250,EH,driving_side,right
+Q6250,EH,label,Western Sahara
+Q6250,EH,language,ar
+Q6250,EH,numeric,732
+Q6250,EH,official_name,Western Sahara
+Q6250,EH,population,612000.0
+Q986,ER,alpha3,ERI
+Q986,ER,calling_code,+291
+Q986,ER,capital,Asmara
+Q986,ER,continent,Africa
+Q986,ER,coordinates,Point(38.25 15.483333)
+Q986,ER,currency,ERN
+Q986,ER,demonym,Eritrean
+Q986,ER,driving_side,right
+Q986,ER,label,Eritrea
+Q986,ER,language,ar
+Q986,ER,language,en
+Q986,ER,language,ti
+Q986,ER,numeric,232
+Q986,ER,population,3497000.0
+Q986,ER,tld,.er
+Q29,ES,alpha3,ESP
+Q29,ES,calling_code,+34
+Q29,ES,capital,Madrid
+Q29,ES,continent,Europe
+Q29,ES,coordinates,Point(-3.5 40.2)
+Q29,ES,currency,EUR
+Q29,ES,demonym,Spaniard
+Q29,ES,demonym,Spanish
+Q29,ES,driving_side,right
+Q29,ES,label,Spain
+Q29,ES,language,es
+Q29,ES,numeric,724
+Q29,ES,population,48592909.0
+Q29,ES,tld,.es
+Q115,ET,alpha3,ETH
+Q115,ET,calling_code,+251
+Q115,ET,capital,Addis Ababa
+Q115,ET,continent,Africa
+Q115,ET,coordinates,Point(40.0 9.0)
+Q115,ET,currency,ETB
+Q115,ET,demonym,Ethiopian
+Q115,ET,driving_side,right
+Q115,ET,label,Ethiopia
+Q115,ET,language,am
+Q115,ET,numeric,231
+Q115,ET,population,128691692.0
+Q115,ET,tld,.et
+Q33,FI,alpha3,FIN
+Q33,FI,calling_code,+358
+Q33,FI,capital,Helsinki
+Q33,FI,continent,Europe
+Q33,FI,coordinates,Point(27.0 65.0)
+Q33,FI,currency,EUR
+Q33,FI,demonym,Finn
+Q33,FI,demonym,Finnish
+Q33,FI,driving_side,right
+Q33,FI,label,Finland
+Q33,FI,language,fi
+Q33,FI,language,sv
+Q33,FI,numeric,246
+Q33,FI,population,5652881.0
+Q33,FI,tld,.fi
+Q712,FJ,alpha3,FJI
+Q712,FJ,calling_code,+679
+Q712,FJ,capital,Suva
+Q712,FJ,continent,Insular Oceania
+Q712,FJ,coordinates,Point(178.0 -18.0)
+Q712,FJ,currency,FJD
+Q712,FJ,demonym,Fijian
+Q712,FJ,driving_side,left
+Q712,FJ,label,Fiji
+Q712,FJ,language,en
+Q712,FJ,language,fj
+Q712,FJ,numeric,242
+Q712,FJ,official_name,Fiji
+Q712,FJ,official_name,Republic of Fiji
+Q712,FJ,population,926276.0
+Q712,FJ,tld,.fj
+Q9648,FK,alpha3,FLK
+Q9648,FK,calling_code,+500
+Q9648,FK,capital,Stanley
+Q9648,FK,continent,South America
+Q9648,FK,coordinates,Point(-59.22 -51.73)
+Q9648,FK,currency,FKP
+Q9648,FK,driving_side,left
+Q9648,FK,label,Falkland Islands
+Q9648,FK,numeric,238
+Q9648,FK,population,1510.0
+Q9648,FK,population,1789.0
+Q9648,FK,population,1813.0
+Q9648,FK,population,1916.0
+Q9648,FK,population,1957.0
+Q9648,FK,population,2043.0
+Q9648,FK,population,2094.0
+Q9648,FK,population,2169.0
+Q9648,FK,population,2172.0
+Q9648,FK,population,2230.0
+Q9648,FK,population,2239.0
+Q9648,FK,population,2272.0
+Q9648,FK,population,2392.0
+Q9648,FK,population,2704.0
+Q9648,FK,population,287.0
+Q9648,FK,population,2931.0
+Q9648,FK,population,3025.0
+Q9648,FK,population,3039.0
+Q9648,FK,population,3398.0
+Q9648,FK,population,3662.0
+Q9648,FK,population,541.0
+Q9648,FK,population,811.0
+Q9648,FK,tld,.fk
+Q702,FM,alpha3,FSM
+Q702,FM,calling_code,+691
+Q702,FM,capital,Palikir
+Q702,FM,continent,Oceania
+Q702,FM,coordinates,Point(158.183333333 6.916666666)
+Q702,FM,currency,USD
+Q702,FM,demonym,Micronesian
+Q702,FM,driving_side,right
+Q702,FM,label,Federated States of Micronesia
+Q702,FM,language,en
+Q702,FM,numeric,583
+Q702,FM,population,75817.0
+Q702,FM,tld,.fm
+Q4628,FO,alpha3,FRO
+Q4628,FO,calling_code,+298
+Q4628,FO,capital,Tórshavn
+Q4628,FO,continent,Europe
+Q4628,FO,coordinates,Point(-6.844480555 61.969944444)
+Q4628,FO,driving_side,right
+Q4628,FO,label,Faroe Islands
+Q4628,FO,language,da
+Q4628,FO,language,fo
+Q4628,FO,numeric,234
+Q4628,FO,population,54149.0
+Q4628,FO,tld,.fo
+Q142,FR,alpha3,FRA
+Q142,FR,calling_code,+33
+Q142,FR,capital,Paris
+Q142,FR,continent,Europe
+Q142,FR,coordinates,Point(2.0 47.0)
+Q142,FR,currency,EUR
+Q142,FR,currency,XPF
+Q142,FR,demonym,French
+Q142,FR,driving_side,right
+Q142,FR,label,France
+Q142,FR,language,fr
+Q142,FR,numeric,250
+Q142,FR,population,68605616.0
+Q142,FR,tld,.fr
+Q1000,GA,alpha3,GAB
+Q1000,GA,calling_code,+241
+Q1000,GA,capital,Libreville
+Q1000,GA,continent,Africa
+Q1000,GA,coordinates,Point(11.5 -0.683330555)
+Q1000,GA,currency,XAF
+Q1000,GA,demonym,Gabonese
+Q1000,GA,driving_side,right
+Q1000,GA,label,Gabon
+Q1000,GA,language,fr
+Q1000,GA,numeric,266
+Q1000,GA,population,2025137.0
+Q1000,GA,tld,.ga
+Q145,GB,alpha3,GBR
+Q145,GB,calling_code,+44
+Q145,GB,capital,London
+Q145,GB,continent,Europe
+Q145,GB,coordinates,Point(-2.0 54.6)
+Q145,GB,currency,GBP
+Q145,GB,demonym,British
+Q145,GB,demonym,Briton
+Q145,GB,driving_side,left
+Q145,GB,label,United Kingdom
+Q145,GB,language,en
+Q145,GB,numeric,826
+Q145,GB,official_name,United Kingdom of Great Britain and Northern Ireland
+Q145,GB,population,67326569.0
+Q145,GB,tld,.uk
+Q769,GD,alpha3,GRD
+Q769,GD,calling_code,+1473
+Q769,GD,capital,St. George's
+Q769,GD,continent,North America
+Q769,GD,coordinates,Point(-61.7 12.1)
+Q769,GD,currency,XCD
+Q769,GD,demonym,Grenadian
+Q769,GD,driving_side,left
+Q769,GD,label,Grenada
+Q769,GD,language,en
+Q769,GD,numeric,308
+Q769,GD,official_name,Grenada
+Q769,GD,population,114299.0
+Q769,GD,tld,.gd
+Q230,GE,alpha3,GEO
+Q230,GE,calling_code,+995
+Q230,GE,capital,Tbilisi
+Q230,GE,continent,Europe
+Q230,GE,coordinates,Point(44.0 42.0)
+Q230,GE,currency,GEL
+Q230,GE,demonym,Georgian
+Q230,GE,driving_side,right
+Q230,GE,label,Georgia
+Q230,GE,language,ka
+Q230,GE,numeric,268
+Q230,GE,official_name,Georgia
+Q230,GE,population,3929581.0
+Q230,GE,tld,.ge
+Q3769,GF,alpha3,GUF
+Q3769,GF,calling_code,+594
+Q3769,GF,capital,Cayenne
+Q3769,GF,continent,South America
+Q3769,GF,coordinates,Point(-53.0 4.0)
+Q3769,GF,currency,EUR
+Q3769,GF,demonym,French Guianese
+Q3769,GF,demonym,Guianese
+Q3769,GF,driving_side,right
+Q3769,GF,label,French Guiana
+Q3769,GF,language,fr
+Q3769,GF,numeric,254
+Q3769,GF,population,293996.0
+Q3769,GF,tld,.gf
+Q25230,GG,alpha3,GGY
+Q25230,GG,calling_code,+44
+Q25230,GG,capital,Saint Peter Port
+Q25230,GG,continent,Europe
+Q25230,GG,coordinates,Point(-2.583333333 49.45)
+Q25230,GG,currency,GBP
+Q25230,GG,driving_side,left
+Q25230,GG,label,Guernsey
+Q25230,GG,language,en
+Q25230,GG,language,fr
+Q25230,GG,numeric,831
+Q25230,GG,official_name,Bailiwick of Guernsey
+Q25230,GG,population,67787.0
+Q25230,GG,tld,.gg
+Q117,GH,alpha3,GHA
+Q117,GH,calling_code,+233
+Q117,GH,capital,Accra
+Q117,GH,continent,Africa
+Q117,GH,coordinates,Point(-1.0232 7.9465)
+Q117,GH,currency,GHS
+Q117,GH,demonym,Ghanaian
+Q117,GH,driving_side,right
+Q117,GH,label,Ghana
+Q117,GH,language,en
+Q117,GH,numeric,288
+Q117,GH,official_name,Ghana
+Q117,GH,population,32833031.0
+Q117,GH,tld,.gh
+Q1410,GI,alpha3,GIB
+Q1410,GI,calling_code,+350
+Q1410,GI,capital,Gibraltar
+Q1410,GI,continent,Europe
+Q1410,GI,coordinates,Point(-5.35 36.14)
+Q1410,GI,currency,GIP
+Q1410,GI,demonym,Gibraltarian
+Q1410,GI,driving_side,right
+Q1410,GI,label,Gibraltar
+Q1410,GI,numeric,292
+Q1410,GI,official_name,Gibraltar
+Q1410,GI,population,34003.0
+Q1410,GI,tld,.gi
+Q223,GL,alpha3,GRL
+Q223,GL,calling_code,+299
+Q223,GL,capital,Nuuk
+Q223,GL,continent,North America
+Q223,GL,coordinates,Point(-40.0 72.0)
+Q223,GL,currency,DKK
+Q223,GL,demonym,Greenlandic
+Q223,GL,driving_side,right
+Q223,GL,label,Greenland
+Q223,GL,language,kl
+Q223,GL,numeric,304
+Q223,GL,population,56609.0
+Q223,GL,tld,.gl
+Q1005,GM,alpha3,GMB
+Q1005,GM,calling_code,+220
+Q1005,GM,capital,Banjul
+Q1005,GM,continent,Africa
+Q1005,GM,coordinates,Point(-15.5 13.5)
+Q1005,GM,currency,GMD
+Q1005,GM,demonym,Gambian
+Q1005,GM,driving_side,right
+Q1005,GM,label,The Gambia
+Q1005,GM,language,en
+Q1005,GM,numeric,270
+Q1005,GM,official_name,Republic of The Gambia
+Q1005,GM,population,2639916.0
+Q1005,GM,tld,.gm
+Q1006,GN,alpha3,GIN
+Q1006,GN,calling_code,+224
+Q1006,GN,capital,Conakry
+Q1006,GN,continent,Africa
+Q1006,GN,coordinates,Point(-11.0 10.0)
+Q1006,GN,currency,GNF
+Q1006,GN,demonym,Guinean
+Q1006,GN,driving_side,right
+Q1006,GN,label,Guinea
+Q1006,GN,language,fr
+Q1006,GN,numeric,324
+Q1006,GN,population,17521167.0
+Q1006,GN,tld,.gn
+Q17012,GP,alpha3,GLP
+Q17012,GP,calling_code,+590
+Q17012,GP,capital,Basse-Terre
+Q17012,GP,continent,North America
+Q17012,GP,coordinates,Point(-61.5 16.25)
+Q17012,GP,currency,EUR
+Q17012,GP,demonym,Guadeloupean
+Q17012,GP,driving_side,right
+Q17012,GP,label,Guadeloupe
+Q17012,GP,numeric,312
+Q17012,GP,population,384160.0
+Q17012,GP,tld,.gp
+Q983,GQ,alpha3,GNQ
+Q983,GQ,calling_code,+240
+Q983,GQ,capital,Ciudad de la Paz
+Q983,GQ,continent,Africa
+Q983,GQ,coordinates,Point(10.0 1.5)
+Q983,GQ,currency,XAF
+Q983,GQ,demonym,Equatoguinean
+Q983,GQ,demonym,Equatorial Guinean
+Q983,GQ,driving_side,right
+Q983,GQ,label,Equatorial Guinea
+Q983,GQ,language,es
+Q983,GQ,language,fr
+Q983,GQ,language,pt
+Q983,GQ,numeric,226
+Q983,GQ,population,1847549.0
+Q983,GQ,tld,.gq
+Q41,GR,alpha3,GRC
+Q41,GR,calling_code,+30
+Q41,GR,capital,Athens
+Q41,GR,continent,Europe
+Q41,GR,coordinates,Point(23.0 38.5)
+Q41,GR,currency,EUR
+Q41,GR,demonym,Greek
+Q41,GR,driving_side,right
+Q41,GR,label,Greece
+Q41,GR,numeric,300
+Q41,GR,official_name,Hellenic Republic
+Q41,GR,population,10482487.0
+Q41,GR,tld,.gr
+Q41,GR,tld,.ελ
+Q35086,GS,alpha3,SGS
+Q35086,GS,calling_code,+500
+Q35086,GS,capital,King Edward Point
+Q35086,GS,continent,South America
+Q35086,GS,coordinates,Point(-36.75 -54.25)
+Q35086,GS,currency,GBP
+Q35086,GS,demonym,South Georgian
+Q35086,GS,demonym,South Sandwich Islander
+Q35086,GS,driving_side,left
+Q35086,GS,label,South Georgia and the South Sandwich Islands
+Q35086,GS,language,en
+Q35086,GS,numeric,239
+Q35086,GS,official_name,South Georgia and the South Sandwich Islands
+Q35086,GS,population,35.0
+Q35086,GS,tld,.gs
+Q774,GT,alpha3,GTM
+Q774,GT,calling_code,+502
+Q774,GT,capital,Guatemala City
+Q774,GT,continent,North America
+Q774,GT,coordinates,Point(-90.25 15.5)
+Q774,GT,currency,GTQ
+Q774,GT,demonym,Guatemalan
+Q774,GT,driving_side,right
+Q774,GT,label,Guatemala
+Q774,GT,language,es
+Q774,GT,numeric,320
+Q774,GT,population,17263239.0
+Q774,GT,tld,.gt
+Q16635,GU,alpha3,GUM
+Q16635,GU,calling_code,+1671
+Q16635,GU,capital,Hagåtña
+Q16635,GU,continent,Oceania
+Q16635,GU,coordinates,Point(144.8 13.5)
+Q16635,GU,currency,USD
+Q16635,GU,demonym,Guamanian
+Q16635,GU,demonym,Guamanians
+Q16635,GU,driving_side,right
+Q16635,GU,label,Guam
+Q16635,GU,language,ch
+Q16635,GU,language,en
+Q16635,GU,numeric,316
+Q16635,GU,official_name,Guam
+Q16635,GU,population,153836.0
+Q16635,GU,tld,.gu
+Q1007,GW,alpha3,GNB
+Q1007,GW,calling_code,+245
+Q1007,GW,capital,Bissau
+Q1007,GW,continent,Africa
+Q1007,GW,coordinates,Point(-15.0 12.0)
+Q1007,GW,currency,XOF
+Q1007,GW,demonym,Bissau-Guinean
+Q1007,GW,demonym,Guinea-Bissauan
+Q1007,GW,driving_side,right
+Q1007,GW,label,Guinea-Bissau
+Q1007,GW,language,pt
+Q1007,GW,numeric,624
+Q1007,GW,population,1861283.0
+Q1007,GW,tld,.gw
+Q734,GY,alpha3,GUY
+Q734,GY,calling_code,+592
+Q734,GY,capital,Georgetown
+Q734,GY,continent,South America
+Q734,GY,coordinates,Point(-59.316667 5.733333)
+Q734,GY,currency,GYD
+Q734,GY,demonym,Guyanese
+Q734,GY,driving_side,left
+Q734,GY,label,Guyana
+Q734,GY,language,en
+Q734,GY,numeric,328
+Q734,GY,official_name,Co-operative Republic of Guyana
+Q734,GY,official_name,Guyana
+Q734,GY,population,878674.0
+Q734,GY,tld,.gy
+Q8646,HK,alpha3,HKG
+Q8646,HK,calling_code,+852
+Q8646,HK,continent,Asia
+Q8646,HK,coordinates,Point(114.158611111 22.278333333)
+Q8646,HK,currency,HKD
+Q8646,HK,demonym,Hong Kong
+Q8646,HK,demonym,Hong Kong people
+Q8646,HK,demonym,Hongkonger
+Q8646,HK,driving_side,left
+Q8646,HK,label,Hong Kong
+Q8646,HK,numeric,344
+Q8646,HK,official_name,Hong Kong
+Q8646,HK,official_name,Hong Kong Special Administrative Region of the People's Republic of China
+Q8646,HK,population,7413070.0
+Q8646,HK,tld,.hk
+Q131198,HM,alpha3,HMD
+Q131198,HM,continent,Antarctica
+Q131198,HM,coordinates,Point(73.5075 -53.078333333)
+Q131198,HM,demonym,Heard and McDonald Islander
+Q131198,HM,label,Heard Island and McDonald Islands
+Q131198,HM,language,en
+Q131198,HM,numeric,334
+Q131198,HM,population,0.0
+Q131198,HM,tld,.hm
+Q783,HN,alpha3,HND
+Q783,HN,calling_code,+504
+Q783,HN,capital,Tegucigalpa
+Q783,HN,continent,North America
+Q783,HN,coordinates,Point(-86.816667 14.633333)
+Q783,HN,currency,HNL
+Q783,HN,demonym,Honduran
+Q783,HN,driving_side,right
+Q783,HN,label,Honduras
+Q783,HN,language,es
+Q783,HN,numeric,340
+Q783,HN,population,8303771.0
+Q783,HN,tld,.hn
+Q224,HR,alpha3,HRV
+Q224,HR,calling_code,+385
+Q224,HR,capital,Zagreb
+Q224,HR,continent,Europe
+Q224,HR,coordinates,Point(15.466667 45.25)
+Q224,HR,currency,EUR
+Q224,HR,demonym,Croatian
+Q224,HR,driving_side,right
+Q224,HR,label,Croatia
+Q224,HR,language,hr
+Q224,HR,numeric,191
+Q224,HR,population,3871833.0
+Q224,HR,tld,.hr
+Q790,HT,alpha3,HTI
+Q790,HT,calling_code,+509
+Q790,HT,capital,Port-au-Prince
+Q790,HT,continent,North America
+Q790,HT,coordinates,Point(-72.8 19.0)
+Q790,HT,currency,HTG
+Q790,HT,demonym,Haitian
+Q790,HT,driving_side,right
+Q790,HT,label,Haiti
+Q790,HT,language,fr
+Q790,HT,language,ht
+Q790,HT,numeric,332
+Q790,HT,population,10981229.0
+Q790,HT,tld,.ht
+Q28,HU,alpha3,HUN
+Q28,HU,calling_code,+36
+Q28,HU,capital,Budapest
+Q28,HU,continent,Europe
+Q28,HU,coordinates,Point(19.0 47.0)
+Q28,HU,currency,HUF
+Q28,HU,demonym,Hungarian
+Q28,HU,driving_side,right
+Q28,HU,label,Hungary
+Q28,HU,language,hu
+Q28,HU,numeric,348
+Q28,HU,population,9603634.0
+Q28,HU,tld,.hu
+Q252,ID,alpha3,IDN
+Q252,ID,calling_code,+62
+Q252,ID,capital,Jakarta
+Q252,ID,continent,Asia
+Q252,ID,coordinates,Point(118.0 -2.0)
+Q252,ID,currency,IDR
+Q252,ID,demonym,Indonesian
+Q252,ID,driving_side,left
+Q252,ID,label,Indonesia
+Q252,ID,language,id
+Q252,ID,numeric,360
+Q252,ID,population,275439000.0
+Q252,ID,tld,.id
+Q27,IE,alpha3,IRL
+Q27,IE,calling_code,+353
+Q27,IE,capital,Dublin
+Q27,IE,continent,Europe
+Q27,IE,coordinates,Point(-8.0 53.0)
+Q27,IE,currency,EUR
+Q27,IE,demonym,Irish
+Q27,IE,driving_side,left
+Q27,IE,label,Ireland
+Q27,IE,language,en
+Q27,IE,language,ga
+Q27,IE,numeric,372
+Q27,IE,official_name,Ireland
+Q27,IE,population,5149139.0
+Q27,IE,tld,.ie
+Q801,IL,alpha3,ISR
+Q801,IL,calling_code,+972
+Q801,IL,capital,Jerusalem
+Q801,IL,continent,Asia
+Q801,IL,coordinates,Point(35.0 31.0)
+Q801,IL,currency,ILS
+Q801,IL,demonym,Israeli
+Q801,IL,demonym,Israelis
+Q801,IL,driving_side,right
+Q801,IL,label,Israel
+Q801,IL,language,he
+Q801,IL,numeric,376
+Q801,IL,population,9840000.0
+Q801,IL,tld,.il
+Q801,IL,tld,ישראל.
+Q9676,IM,alpha3,IMN
+Q9676,IM,calling_code,+44
+Q9676,IM,capital,Douglas
+Q9676,IM,continent,Europe
+Q9676,IM,coordinates,Point(-4.525 54.235)
+Q9676,IM,demonym,Manx
+Q9676,IM,driving_side,left
+Q9676,IM,label,Isle of Man
+Q9676,IM,language,en
+Q9676,IM,language,gv
+Q9676,IM,numeric,833
+Q9676,IM,official_name,Isle of Man
+Q9676,IM,population,84523.0
+Q9676,IM,tld,.im
+Q668,IN,alpha3,IND
+Q668,IN,calling_code,+91
+Q668,IN,capital,New Delhi
+Q668,IN,continent,Asia
+Q668,IN,coordinates,Point(83.0 22.8)
+Q668,IN,currency,INR
+Q668,IN,demonym,Indian
+Q668,IN,driving_side,left
+Q668,IN,label,India
+Q668,IN,language,en
+Q668,IN,language,hi
+Q668,IN,numeric,356
+Q668,IN,official_name,Republic of India
+Q668,IN,population,1326093247.0
+Q668,IN,tld,.in
+Q668,IN,tld,.بھارت
+Q668,IN,tld,.भारत
+Q668,IN,tld,.ভারত
+Q668,IN,tld,.ভাৰত
+Q668,IN,tld,.ਭਾਰਤ
+Q668,IN,tld,.ભારત
+Q668,IN,tld,.ଭାରତ
+Q668,IN,tld,.இந்தியா
+Q668,IN,tld,.భారత్
+Q668,IN,tld,.ಭಾರತ
+Q668,IN,tld,.ഭാരതം
+Q43448,IO,alpha3,IOT
+Q43448,IO,calling_code,+246
+Q43448,IO,capital,Diego Garcia
+Q43448,IO,continent,Africa
+Q43448,IO,coordinates,Point(71.5 -6.0)
+Q43448,IO,currency,GBP
+Q43448,IO,currency,USD
+Q43448,IO,demonym,British
+Q43448,IO,driving_side,right
+Q43448,IO,label,British Indian Ocean Territory
+Q43448,IO,language,en
+Q43448,IO,numeric,086
+Q43448,IO,official_name,British Indian Ocean Territory
+Q43448,IO,population,3000.0
+Q43448,IO,tld,.io
+Q796,IQ,alpha3,IRQ
+Q796,IQ,calling_code,+964
+Q796,IQ,capital,Baghdad
+Q796,IQ,continent,Asia
+Q796,IQ,coordinates,Point(43.0 33.0)
+Q796,IQ,currency,IQD
+Q796,IQ,demonym,Iraqi
+Q796,IQ,driving_side,right
+Q796,IQ,label,Iraq
+Q796,IQ,language,ar
+Q796,IQ,language,ku
+Q796,IQ,numeric,368
+Q796,IQ,official_name,Republic of Iraq
+Q796,IQ,population,38274618.0
+Q796,IQ,tld,.iq
+Q794,IR,alpha3,IRN
+Q794,IR,calling_code,+98
+Q794,IR,capital,Tehran
+Q794,IR,continent,Asia
+Q794,IR,coordinates,Point(53.0 32.0)
+Q794,IR,currency,IRR
+Q794,IR,demonym,Iranian
+Q794,IR,demonym,Persian
+Q794,IR,driving_side,right
+Q794,IR,label,Iran
+Q794,IR,language,fa
+Q794,IR,numeric,364
+Q794,IR,population,92417700.0
+Q794,IR,tld,.ir
+Q794,IR,tld,ایران.
+Q189,IS,alpha3,ISL
+Q189,IS,calling_code,+354
+Q189,IS,capital,Reykjavík
+Q189,IS,continent,Europe
+Q189,IS,coordinates,Point(-19.0 65.0)
+Q189,IS,currency,ISK
+Q189,IS,driving_side,right
+Q189,IS,label,Iceland
+Q189,IS,language,is
+Q189,IS,numeric,352
+Q189,IS,population,364260.0
+Q189,IS,tld,.is
+Q38,IT,alpha3,ITA
+Q38,IT,calling_code,+39
+Q38,IT,capital,Rome
+Q38,IT,continent,Europe
+Q38,IT,coordinates,Point(12.5 42.5)
+Q38,IT,currency,EUR
+Q38,IT,demonym,Italian
+Q38,IT,driving_side,right
+Q38,IT,label,Italy
+Q38,IT,language,it
+Q38,IT,numeric,380
+Q38,IT,population,58850717.0
+Q38,IT,tld,.it
+Q785,JE,alpha3,JEY
+Q785,JE,calling_code,+44
+Q785,JE,capital,Saint Helier
+Q785,JE,continent,Europe
+Q785,JE,coordinates,Point(-2.11 49.19)
+Q785,JE,currency,GBP
+Q785,JE,demonym,Islander
+Q785,JE,demonym,Jersey bean
+Q785,JE,demonym,Jerseyman
+Q785,JE,demonym,Jerseywoman
+Q785,JE,driving_side,left
+Q785,JE,label,Jersey
+Q785,JE,language,en
+Q785,JE,numeric,832
+Q785,JE,official_name,Jersey
+Q785,JE,population,103267.0
+Q785,JE,tld,.je
+Q766,JM,alpha3,JAM
+Q766,JM,calling_code,+1876
+Q766,JM,capital,Kingston
+Q766,JM,continent,North America
+Q766,JM,coordinates,Point(-77.4 18.18)
+Q766,JM,currency,JMD
+Q766,JM,demonym,Jamaican
+Q766,JM,driving_side,left
+Q766,JM,label,Jamaica
+Q766,JM,language,en
+Q766,JM,numeric,388
+Q766,JM,official_name,Jamaica
+Q766,JM,population,2697983.0
+Q766,JM,tld,.jm
+Q810,JO,alpha3,JOR
+Q810,JO,calling_code,+962
+Q810,JO,capital,Amman
+Q810,JO,continent,Asia
+Q810,JO,coordinates,Point(36.5 31.2)
+Q810,JO,currency,JOD
+Q810,JO,demonym,Jordanian
+Q810,JO,driving_side,right
+Q810,JO,label,Jordan
+Q810,JO,language,ar
+Q810,JO,numeric,400
+Q810,JO,population,10428241.0
+Q810,JO,tld,.jo
+Q810,JO,tld,.الاردن
+Q17,JP,alpha3,JPN
+Q17,JP,calling_code,+81
+Q17,JP,capital,Tokyo
+Q17,JP,continent,Asia
+Q17,JP,coordinates,Point(136.0 35.0)
+Q17,JP,currency,JPY
+Q17,JP,demonym,Japanese
+Q17,JP,driving_side,left
+Q17,JP,label,Japan
+Q17,JP,language,ja
+Q17,JP,numeric,392
+Q17,JP,population,123802000.0
+Q17,JP,tld,.jp
+Q114,KE,alpha3,KEN
+Q114,KE,calling_code,+254
+Q114,KE,capital,Nairobi
+Q114,KE,continent,Africa
+Q114,KE,coordinates,Point(38.0 0.1)
+Q114,KE,currency,KES
+Q114,KE,demonym,Kenyan
+Q114,KE,driving_side,left
+Q114,KE,label,Kenya
+Q114,KE,language,en
+Q114,KE,language,sw
+Q114,KE,numeric,404
+Q114,KE,official_name,Republic of Kenya
+Q114,KE,population,48468138.0
+Q114,KE,tld,.ke
+Q813,KG,alpha3,KGZ
+Q813,KG,calling_code,+996
+Q813,KG,capital,Bishkek
+Q813,KG,continent,Asia
+Q813,KG,coordinates,Point(75.0 41.0)
+Q813,KG,currency,KGS
+Q813,KG,demonym,Kyrgyz
+Q813,KG,demonym,Kyrgyzstani
+Q813,KG,driving_side,right
+Q813,KG,label,Kyrgyzstan
+Q813,KG,language,ky
+Q813,KG,numeric,417
+Q813,KG,population,7281800.0
+Q813,KG,tld,.kg
+Q424,KH,alpha3,KHM
+Q424,KH,calling_code,+855
+Q424,KH,capital,Phnom Penh
+Q424,KH,continent,Asia
+Q424,KH,coordinates,Point(105.0 12.5)
+Q424,KH,currency,KHR
+Q424,KH,demonym,Cambodian
+Q424,KH,driving_side,right
+Q424,KH,label,Cambodia
+Q424,KH,language,km
+Q424,KH,numeric,116
+Q424,KH,official_name,Kingdom of Cambodia
+Q424,KH,population,17423880.0
+Q424,KH,tld,.kh
+Q710,KI,alpha3,KIR
+Q710,KI,calling_code,+686
+Q710,KI,capital,South Tarawa
+Q710,KI,continent,Insular Oceania
+Q710,KI,continent,Oceania
+Q710,KI,coordinates,Point(173.033333333 1.466666666)
+Q710,KI,currency,AUD
+Q710,KI,demonym,I-Kiribati
+Q710,KI,driving_side,left
+Q710,KI,label,Kiribati
+Q710,KI,language,en
+Q710,KI,numeric,296
+Q710,KI,official_name,Republic of Kiribati
+Q710,KI,population,134518.0
+Q710,KI,tld,.ki
+Q970,KM,alpha3,COM
+Q970,KM,calling_code,+269
+Q970,KM,capital,Moroni
+Q970,KM,continent,Africa
+Q970,KM,coordinates,Point(43.7 -12.3)
+Q970,KM,currency,KMF
+Q970,KM,demonym,Comoran
+Q970,KM,demonym,Comorans
+Q970,KM,demonym,Comorian
+Q970,KM,demonym,Comorians
+Q970,KM,driving_side,right
+Q970,KM,label,Comoros
+Q970,KM,language,ar
+Q970,KM,language,fr
+Q970,KM,numeric,174
+Q970,KM,official_name,Union of the Comoros
+Q970,KM,population,902348.0
+Q970,KM,tld,.km
+Q763,KN,alpha3,KNA
+Q763,KN,calling_code,+1869
+Q763,KN,capital,Basseterre
+Q763,KN,continent,North America
+Q763,KN,coordinates,Point(-62.666669444 17.271666666)
+Q763,KN,currency,XCD
+Q763,KN,demonym,Kittitian
+Q763,KN,demonym,Nevisian
+Q763,KN,driving_side,left
+Q763,KN,label,Saint Kitts and Nevis
+Q763,KN,language,en
+Q763,KN,numeric,659
+Q763,KN,official_name,Saint Kitts and Nevis
+Q763,KN,population,46922.0
+Q763,KN,tld,.kn
+Q423,KP,alpha3,PRK
+Q423,KP,calling_code,+850
+Q423,KP,capital,Pyongyang
+Q423,KP,continent,Asia
+Q423,KP,coordinates,Point(127.0 40.0)
+Q423,KP,currency,KPW
+Q423,KP,demonym,North Korean
+Q423,KP,driving_side,right
+Q423,KP,label,North Korea
+Q423,KP,language,ko
+Q423,KP,numeric,408
+Q423,KP,population,26418204.0
+Q423,KP,tld,.kp
+Q884,KR,alpha3,KOR
+Q884,KR,calling_code,+82
+Q884,KR,capital,Seoul
+Q884,KR,continent,Asia
+Q884,KR,coordinates,Point(128.0 36.0)
+Q884,KR,currency,KRW
+Q884,KR,demonym,South Korean
+Q884,KR,driving_side,right
+Q884,KR,label,South Korea
+Q884,KR,language,ko
+Q884,KR,numeric,410
+Q884,KR,official_name,Republic of Korea
+Q884,KR,population,51466201.0
+Q884,KR,tld,.kr
+Q884,KR,tld,.한국
+Q817,KW,alpha3,KWT
+Q817,KW,calling_code,+965
+Q817,KW,capital,Kuwait City
+Q817,KW,continent,Asia
+Q817,KW,coordinates,Point(47.6 29.166667)
+Q817,KW,currency,KWD
+Q817,KW,demonym,Kuwaiti
+Q817,KW,driving_side,right
+Q817,KW,label,Kuwait
+Q817,KW,language,ar
+Q817,KW,numeric,414
+Q817,KW,population,4464000.0
+Q817,KW,tld,.kw
+Q5785,KY,alpha3,CYM
+Q5785,KY,calling_code,+1345
+Q5785,KY,capital,George Town
+Q5785,KY,continent,North America
+Q5785,KY,coordinates,Point(-80.5 19.5)
+Q5785,KY,currency,KYD
+Q5785,KY,demonym,Caymanian
+Q5785,KY,driving_side,left
+Q5785,KY,label,Cayman Islands
+Q5785,KY,language,en
+Q5785,KY,numeric,136
+Q5785,KY,official_name,Cayman Islands
+Q5785,KY,population,88833.0
+Q5785,KY,tld,.ky
+Q232,KZ,alpha3,KAZ
+Q232,KZ,calling_code,+7
+Q232,KZ,capital,Astana
+Q232,KZ,continent,Asia
+Q232,KZ,continent,Europe
+Q232,KZ,coordinates,Point(68.0 48.0)
+Q232,KZ,currency,KZT
+Q232,KZ,demonym,Kazakh
+Q232,KZ,demonym,Kazakhstani
+Q232,KZ,driving_side,right
+Q232,KZ,label,Kazakhstan
+Q232,KZ,language,kk
+Q232,KZ,language,ru
+Q232,KZ,numeric,398
+Q232,KZ,population,20139914.0
+Q232,KZ,tld,.kz
+Q232,KZ,tld,.қаз
+Q819,LA,alpha3,LAO
+Q819,LA,calling_code,+856
+Q819,LA,capital,Vientiane
+Q819,LA,continent,Asia
+Q819,LA,coordinates,Point(104.1 18.2)
+Q819,LA,currency,LAK
+Q819,LA,demonym,Lao
+Q819,LA,demonym,Laos
+Q819,LA,demonym,Laotian
+Q819,LA,demonym,Laotians
+Q819,LA,driving_side,right
+Q819,LA,label,Laos
+Q819,LA,language,lo
+Q819,LA,numeric,418
+Q819,LA,population,6858160.0
+Q819,LA,tld,.la
+Q822,LB,alpha3,LBN
+Q822,LB,calling_code,+961
+Q822,LB,capital,Beirut
+Q822,LB,continent,Asia
+Q822,LB,coordinates,Point(35.766667 33.833333)
+Q822,LB,currency,LBP
+Q822,LB,demonym,Lebanese
+Q822,LB,driving_side,right
+Q822,LB,label,Lebanon
+Q822,LB,language,ar
+Q822,LB,numeric,422
+Q822,LB,official_name,Lebanese Republic
+Q822,LB,official_name,Lebanon
+Q822,LB,population,6100075.0
+Q822,LB,tld,.lb
+Q760,LC,alpha3,LCA
+Q760,LC,calling_code,+1758
+Q760,LC,capital,Castries
+Q760,LC,continent,North America
+Q760,LC,coordinates,Point(-60.966666666 13.883333333)
+Q760,LC,currency,XCD
+Q760,LC,demonym,Saint Lucian
+Q760,LC,driving_side,left
+Q760,LC,label,Saint Lucia
+Q760,LC,language,en
+Q760,LC,numeric,662
+Q760,LC,official_name,Saint Lucia
+Q760,LC,population,167591.0
+Q760,LC,tld,.lc
+Q347,LI,alpha3,LIE
+Q347,LI,calling_code,+423
+Q347,LI,capital,Vaduz
+Q347,LI,continent,Europe
+Q347,LI,coordinates,Point(9.553889 47.145)
+Q347,LI,currency,CHF
+Q347,LI,demonym,Liechtensteiner
+Q347,LI,driving_side,right
+Q347,LI,label,Liechtenstein
+Q347,LI,language,de
+Q347,LI,numeric,438
+Q347,LI,population,37922.0
+Q347,LI,tld,.li
+Q854,LK,alpha3,LKA
+Q854,LK,calling_code,+94
+Q854,LK,capital,Colombo
+Q854,LK,capital,Sri Jayawardenepura Kotte
+Q854,LK,continent,Asia
+Q854,LK,coordinates,Point(81.0 7.0)
+Q854,LK,currency,LKR
+Q854,LK,demonym,Sri Lankan
+Q854,LK,driving_side,left
+Q854,LK,label,Sri Lanka
+Q854,LK,language,si
+Q854,LK,language,ta
+Q854,LK,numeric,144
+Q854,LK,population,21444000.0
+Q854,LK,tld,.lk
+Q854,LK,tld,.இலங்கை
+Q1014,LR,alpha3,LBR
+Q1014,LR,calling_code,+231
+Q1014,LR,capital,Monrovia
+Q1014,LR,continent,Africa
+Q1014,LR,coordinates,Point(-9.75 6.533333)
+Q1014,LR,currency,LRD
+Q1014,LR,demonym,Liberian
+Q1014,LR,driving_side,right
+Q1014,LR,label,Liberia
+Q1014,LR,language,en
+Q1014,LR,numeric,430
+Q1014,LR,official_name,Liberia
+Q1014,LR,population,5214030.0
+Q1014,LR,tld,.lr
+Q1013,LS,alpha3,LSO
+Q1013,LS,calling_code,+266
+Q1013,LS,capital,Maseru
+Q1013,LS,continent,Africa
+Q1013,LS,coordinates,Point(28.25 -29.55)
+Q1013,LS,currency,LSL
+Q1013,LS,currency,ZAR
+Q1013,LS,demonym,Basotho
+Q1013,LS,demonym,Mosotho
+Q1013,LS,driving_side,left
+Q1013,LS,label,Lesotho
+Q1013,LS,language,en
+Q1013,LS,language,st
+Q1013,LS,numeric,426
+Q1013,LS,official_name,Kingdom of Lesotho
+Q1013,LS,official_name,Lesotho
+Q1013,LS,population,2007201.0
+Q1013,LS,tld,.ls
+Q37,LT,alpha3,LTU
+Q37,LT,calling_code,+370
+Q37,LT,capital,Vilnius
+Q37,LT,continent,Europe
+Q37,LT,coordinates,Point(24.0 55.2)
+Q37,LT,currency,EUR
+Q37,LT,demonym,Lithuanian
+Q37,LT,driving_side,right
+Q37,LT,label,Lithuania
+Q37,LT,language,lt
+Q37,LT,numeric,440
+Q37,LT,population,2860002.0
+Q37,LT,tld,.lt
+Q32,LU,alpha3,LUX
+Q32,LU,calling_code,+352
+Q32,LU,capital,Luxembourg
+Q32,LU,continent,Europe
+Q32,LU,coordinates,Point(6.13 49.77)
+Q32,LU,currency,EUR
+Q32,LU,demonym,Luxembourgian
+Q32,LU,demonym,Luxembourgish
+Q32,LU,driving_side,right
+Q32,LU,label,Luxembourg
+Q32,LU,language,de
+Q32,LU,language,fr
+Q32,LU,language,lb
+Q32,LU,numeric,442
+Q32,LU,official_name,Grand Duchy of Luxembourg
+Q32,LU,population,690959.0
+Q32,LU,tld,.lu
+Q211,LV,alpha3,LVA
+Q211,LV,calling_code,+371
+Q211,LV,capital,Riga
+Q211,LV,continent,Europe
+Q211,LV,coordinates,Point(25.0 57.0)
+Q211,LV,currency,EUR
+Q211,LV,demonym,Latvian
+Q211,LV,demonym,Latvians
+Q211,LV,driving_side,right
+Q211,LV,label,Latvia
+Q211,LV,language,lv
+Q211,LV,numeric,428
+Q211,LV,population,1845096.0
+Q211,LV,tld,.lv
+Q1016,LY,alpha3,LBY
+Q1016,LY,calling_code,+218
+Q1016,LY,capital,Tripoli
+Q1016,LY,continent,Africa
+Q1016,LY,coordinates,Point(17.0 27.0)
+Q1016,LY,currency,LYD
+Q1016,LY,demonym,Libyan
+Q1016,LY,driving_side,right
+Q1016,LY,label,Libya
+Q1016,LY,language,ar
+Q1016,LY,numeric,434
+Q1016,LY,official_name,State of Libya
+Q1016,LY,population,7381023.0
+Q1016,LY,tld,.ly
+Q1028,MA,alpha3,MAR
+Q1028,MA,calling_code,+212
+Q1028,MA,capital,Rabat
+Q1028,MA,continent,Africa
+Q1028,MA,coordinates,Point(-6.0 32.0)
+Q1028,MA,currency,MAD
+Q1028,MA,demonym,Moroccan
+Q1028,MA,driving_side,right
+Q1028,MA,label,Morocco
+Q1028,MA,language,ar
+Q1028,MA,numeric,504
+Q1028,MA,official_name,Kingdom of Morocco
+Q1028,MA,official_name,Morocco
+Q1028,MA,population,36828330.0
+Q1028,MA,tld,.ma
+Q235,MC,alpha3,MCO
+Q235,MC,calling_code,+377
+Q235,MC,capital,Monaco
+Q235,MC,continent,Europe
+Q235,MC,coordinates,Point(7.42 43.731111111)
+Q235,MC,currency,EUR
+Q235,MC,demonym,Monacan
+Q235,MC,demonym,Monegasque
+Q235,MC,demonym,Monégasque
+Q235,MC,driving_side,right
+Q235,MC,label,Monaco
+Q235,MC,language,fr
+Q235,MC,numeric,492
+Q235,MC,population,38857.0
+Q235,MC,tld,.mc
+Q217,MD,alpha3,MDA
+Q217,MD,calling_code,+373
+Q217,MD,capital,Chișinău
+Q217,MD,continent,Europe
+Q217,MD,coordinates,Point(28.516667 47.25)
+Q217,MD,currency,MDL
+Q217,MD,demonym,Moldavian
+Q217,MD,demonym,Moldovan
+Q217,MD,driving_side,right
+Q217,MD,label,Moldova
+Q217,MD,language,ro
+Q217,MD,numeric,498
+Q217,MD,population,2409207.0
+Q217,MD,tld,.md
+Q236,ME,alpha3,MNE
+Q236,ME,calling_code,+382
+Q236,ME,capital,Podgorica
+Q236,ME,continent,Europe
+Q236,ME,coordinates,Point(19.216667 42.766667)
+Q236,ME,currency,EUR
+Q236,ME,demonym,Montenegrin
+Q236,ME,driving_side,right
+Q236,ME,label,Montenegro
+Q236,ME,numeric,499
+Q236,ME,population,617213.0
+Q236,ME,tld,.me
+Q126125,MF,alpha3,MAF
+Q126125,MF,calling_code,+590
+Q126125,MF,capital,Marigot
+Q126125,MF,continent,North America
+Q126125,MF,coordinates,Point(-63.06 18.075277777)
+Q126125,MF,currency,EUR
+Q126125,MF,demonym,Saint-Martinois
+Q126125,MF,driving_side,right
+Q126125,MF,label,Saint-Martin
+Q126125,MF,language,fr
+Q126125,MF,numeric,663
+Q126125,MF,population,32358.0
+Q126125,MF,tld,.mf
+Q1019,MG,alpha3,MDG
+Q1019,MG,calling_code,+261
+Q1019,MG,capital,Antananarivo
+Q1019,MG,continent,Africa
+Q1019,MG,coordinates,Point(47.0 -20.0)
+Q1019,MG,currency,MGA
+Q1019,MG,demonym,Malagasy
+Q1019,MG,driving_side,right
+Q1019,MG,label,Madagascar
+Q1019,MG,language,fr
+Q1019,MG,language,mg
+Q1019,MG,numeric,450
+Q1019,MG,population,31964956.0
+Q1019,MG,tld,.mg
+Q709,MH,alpha3,MHL
+Q709,MH,calling_code,+692
+Q709,MH,capital,Majuro
+Q709,MH,continent,Oceania
+Q709,MH,coordinates,Point(169.29 9.82)
+Q709,MH,currency,USD
+Q709,MH,demonym,Marshallese
+Q709,MH,driving_side,right
+Q709,MH,label,Marshall Islands
+Q709,MH,language,en
+Q709,MH,language,mh
+Q709,MH,numeric,584
+Q709,MH,official_name,Marshall Islands
+Q709,MH,population,53127.0
+Q709,MH,tld,.mh
+Q221,MK,alpha3,MKD
+Q221,MK,calling_code,+389
+Q221,MK,capital,Skopje
+Q221,MK,continent,Europe
+Q221,MK,coordinates,Point(21.716667 41.65)
+Q221,MK,currency,MKD
+Q221,MK,demonym,Macedonian
+Q221,MK,driving_side,right
+Q221,MK,label,North Macedonia
+Q221,MK,language,mk
+Q221,MK,language,sq
+Q221,MK,numeric,807
+Q221,MK,population,1836713.0
+Q221,MK,tld,.mk
+Q912,ML,alpha3,MLI
+Q912,ML,calling_code,+223
+Q912,ML,capital,Bamako
+Q912,ML,continent,Africa
+Q912,ML,coordinates,Point(-4.0 17.0)
+Q912,ML,currency,XOF
+Q912,ML,demonym,Malian
+Q912,ML,driving_side,right
+Q912,ML,label,Mali
+Q912,ML,language,bm
+Q912,ML,language,ff
+Q912,ML,numeric,466
+Q912,ML,population,22395489.0
+Q912,ML,tld,.ml
+Q836,MM,alpha3,MMR
+Q836,MM,calling_code,+95
+Q836,MM,capital,Naypyidaw
+Q836,MM,continent,Asia
+Q836,MM,coordinates,Point(96.0 22.0)
+Q836,MM,currency,MMK
+Q836,MM,demonym,Burmese
+Q836,MM,demonym,Myanma
+Q836,MM,driving_side,right
+Q836,MM,label,Myanmar
+Q836,MM,language,my
+Q836,MM,numeric,104
+Q836,MM,official_name,Republic of the Union of Myanmar
+Q836,MM,official_name,Socialist Republic of the Union of Burma
+Q836,MM,official_name,Union of Burma
+Q836,MM,official_name,Union of Myanmar
+Q836,MM,population,53370609.0
+Q836,MM,tld,.mm
+Q711,MN,alpha3,MNG
+Q711,MN,calling_code,+976
+Q711,MN,capital,Ulaanbaatar
+Q711,MN,continent,Asia
+Q711,MN,coordinates,Point(105.0 46.0)
+Q711,MN,currency,MNT
+Q711,MN,demonym,Mongol
+Q711,MN,demonym,Mongolian
+Q711,MN,driving_side,right
+Q711,MN,label,Mongolia
+Q711,MN,language,mn
+Q711,MN,numeric,496
+Q711,MN,official_name,Mongolia
+Q711,MN,population,3409939.0
+Q711,MN,tld,.mn
+Q14773,MO,alpha3,MAC
+Q14773,MO,calling_code,+853
+Q14773,MO,continent,Asia
+Q14773,MO,coordinates,Point(113.538055555 22.19)
+Q14773,MO,currency,HKD
+Q14773,MO,currency,MOP
+Q14773,MO,driving_side,left
+Q14773,MO,label,Macau
+Q14773,MO,language,pt
+Q14773,MO,numeric,446
+Q14773,MO,population,682100.0
+Q14773,MO,tld,.mo
+Q16644,MP,alpha3,MNP
+Q16644,MP,calling_code,+1670
+Q16644,MP,capital,Saipan
+Q16644,MP,continent,Insular Oceania
+Q16644,MP,coordinates,Point(145.78 16.705)
+Q16644,MP,currency,USD
+Q16644,MP,demonym,Chamorro
+Q16644,MP,demonym,Chamorros
+Q16644,MP,demonym,Northern Mariana Islander
+Q16644,MP,demonym,Northern Mariana Islanders
+Q16644,MP,demonym,Northern Marianan
+Q16644,MP,demonym,Northern Marianans
+Q16644,MP,driving_side,right
+Q16644,MP,label,Northern Mariana Islands
+Q16644,MP,language,ch
+Q16644,MP,language,en
+Q16644,MP,numeric,580
+Q16644,MP,official_name,Commonwealth of the Northern Mariana Islands
+Q16644,MP,population,47329.0
+Q16644,MP,tld,.mp
+Q17054,MQ,alpha3,MTQ
+Q17054,MQ,calling_code,+596
+Q17054,MQ,capital,Fort-de-France
+Q17054,MQ,continent,North America
+Q17054,MQ,coordinates,Point(-61.015 14.65)
+Q17054,MQ,currency,EUR
+Q17054,MQ,driving_side,right
+Q17054,MQ,label,Martinique
+Q17054,MQ,numeric,474
+Q17054,MQ,population,360630.0
+Q17054,MQ,tld,.mq
+Q1025,MR,alpha3,MRT
+Q1025,MR,calling_code,+222
+Q1025,MR,capital,Nouakchott
+Q1025,MR,continent,Africa
+Q1025,MR,coordinates,Point(-11.0 21.0)
+Q1025,MR,currency,MRU
+Q1025,MR,demonym,Mauritanian
+Q1025,MR,driving_side,right
+Q1025,MR,label,Mauritania
+Q1025,MR,language,ar
+Q1025,MR,language,fr
+Q1025,MR,numeric,478
+Q1025,MR,population,4736139.0
+Q1025,MR,tld,.mr
+Q13353,MS,alpha3,MSR
+Q13353,MS,calling_code,+1664
+Q13353,MS,capital,Brades
+Q13353,MS,capital,Plymouth
+Q13353,MS,continent,North America
+Q13353,MS,coordinates,Point(-62.2 16.75)
+Q13353,MS,currency,XCD
+Q13353,MS,demonym,Montserratian
+Q13353,MS,driving_side,left
+Q13353,MS,label,Montserrat
+Q13353,MS,language,en
+Q13353,MS,numeric,500
+Q13353,MS,official_name,Montserrat
+Q13353,MS,population,5440.0
+Q13353,MS,tld,.ms
+Q233,MT,alpha3,MLT
+Q233,MT,calling_code,+356
+Q233,MT,capital,Valletta
+Q233,MT,continent,Europe
+Q233,MT,coordinates,Point(14.4 35.9)
+Q233,MT,currency,EUR
+Q233,MT,demonym,Maltese
+Q233,MT,driving_side,left
+Q233,MT,label,Malta
+Q233,MT,language,en
+Q233,MT,language,mt
+Q233,MT,numeric,470
+Q233,MT,population,553214.0
+Q233,MT,tld,.mt
+Q1027,MU,alpha3,MUS
+Q1027,MU,calling_code,+230
+Q1027,MU,capital,Port Louis
+Q1027,MU,continent,Africa
+Q1027,MU,coordinates,Point(57.5 -20.2)
+Q1027,MU,currency,MUR
+Q1027,MU,demonym,Mauritian
+Q1027,MU,driving_side,left
+Q1027,MU,label,Mauritius
+Q1027,MU,language,en
+Q1027,MU,language,fr
+Q1027,MU,numeric,480
+Q1027,MU,official_name,Mauritius
+Q1027,MU,population,1264613.0
+Q1027,MU,tld,.mu
+Q826,MV,alpha3,MDV
+Q826,MV,calling_code,+960
+Q826,MV,capital,Malé
+Q826,MV,continent,Asia
+Q826,MV,coordinates,Point(73.51 4.18)
+Q826,MV,currency,MVR
+Q826,MV,demonym,Maldivian
+Q826,MV,driving_side,left
+Q826,MV,label,Maldives
+Q826,MV,language,dv
+Q826,MV,numeric,462
+Q826,MV,population,436330.0
+Q826,MV,tld,.mv
+Q1020,MW,alpha3,MWI
+Q1020,MW,calling_code,+265
+Q1020,MW,capital,Lilongwe
+Q1020,MW,continent,Africa
+Q1020,MW,coordinates,Point(34.0 -13.0)
+Q1020,MW,currency,MWK
+Q1020,MW,demonym,Malawian
+Q1020,MW,driving_side,left
+Q1020,MW,label,Malawi
+Q1020,MW,language,en
+Q1020,MW,language,ny
+Q1020,MW,numeric,454
+Q1020,MW,official_name,Malawi
+Q1020,MW,population,17563749.0
+Q1020,MW,tld,.mw
+Q96,MX,alpha3,MEX
+Q96,MX,calling_code,+52
+Q96,MX,capital,Mexico City
+Q96,MX,continent,North America
+Q96,MX,coordinates,Point(-102.0 23.0)
+Q96,MX,currency,MXN
+Q96,MX,demonym,Mexican
+Q96,MX,demonym,Mexicans
+Q96,MX,driving_side,right
+Q96,MX,label,Mexico
+Q96,MX,language,es
+Q96,MX,numeric,484
+Q96,MX,official_name,United Mexican States
+Q96,MX,population,132274416.0
+Q96,MX,tld,.mx
+Q833,MY,alpha3,MYS
+Q833,MY,calling_code,+60
+Q833,MY,capital,Kuala Lumpur
+Q833,MY,continent,Asia
+Q833,MY,coordinates,Point(102.314361666 3.7805111)
+Q833,MY,currency,MYR
+Q833,MY,demonym,Malaysian
+Q833,MY,driving_side,left
+Q833,MY,label,Malaysia
+Q833,MY,language,ms
+Q833,MY,numeric,458
+Q833,MY,population,34231700.0
+Q833,MY,tld,.my
+Q1029,MZ,alpha3,MOZ
+Q1029,MZ,calling_code,+258
+Q1029,MZ,capital,Maputo
+Q1029,MZ,continent,Africa
+Q1029,MZ,coordinates,Point(35.0 -19.0)
+Q1029,MZ,currency,MZN
+Q1029,MZ,demonym,Mozambican
+Q1029,MZ,driving_side,left
+Q1029,MZ,label,Mozambique
+Q1029,MZ,language,pt
+Q1029,MZ,numeric,508
+Q1029,MZ,population,29668834.0
+Q1029,MZ,tld,.mz
+Q1030,NA,alpha3,NAM
+Q1030,NA,calling_code,+264
+Q1030,NA,capital,Windhoek
+Q1030,NA,continent,Africa
+Q1030,NA,coordinates,Point(17.0 -23.0)
+Q1030,NA,currency,NAD
+Q1030,NA,currency,ZAR
+Q1030,NA,demonym,Namibian
+Q1030,NA,driving_side,left
+Q1030,NA,label,Namibia
+Q1030,NA,language,en
+Q1030,NA,numeric,516
+Q1030,NA,official_name,Namibia
+Q1030,NA,population,2533794.0
+Q1030,NA,tld,.na
+Q33788,NC,alpha3,NCL
+Q33788,NC,calling_code,+687
+Q33788,NC,capital,Nouméa
+Q33788,NC,continent,Insular Oceania
+Q33788,NC,coordinates,Point(165.3 -21.25)
+Q33788,NC,currency,XPF
+Q33788,NC,demonym,New Caledonian
+Q33788,NC,demonym,New Caledonians
+Q33788,NC,driving_side,right
+Q33788,NC,label,New Caledonia
+Q33788,NC,language,fr
+Q33788,NC,numeric,540
+Q33788,NC,population,278500.0
+Q33788,NC,tld,.nc
+Q1032,NE,alpha3,NER
+Q1032,NE,calling_code,+227
+Q1032,NE,capital,Niamey
+Q1032,NE,continent,Africa
+Q1032,NE,coordinates,Point(10.0 17.0)
+Q1032,NE,currency,XOF
+Q1032,NE,demonym,Nigerien
+Q1032,NE,driving_side,right
+Q1032,NE,label,Niger
+Q1032,NE,language,ha
+Q1032,NE,numeric,562
+Q1032,NE,population,21477348.0
+Q1032,NE,tld,.ne
+Q31057,NF,alpha3,NFK
+Q31057,NF,calling_code,+6723
+Q31057,NF,capital,Kingston
+Q31057,NF,continent,Insular Oceania
+Q31057,NF,coordinates,Point(167.949722222 -29.033333333)
+Q31057,NF,currency,AUD
+Q31057,NF,demonym,Norfolk Islander
+Q31057,NF,demonym,Norfolk Islanders
+Q31057,NF,driving_side,left
+Q31057,NF,label,Norfolk Island
+Q31057,NF,language,en
+Q31057,NF,numeric,574
+Q31057,NF,official_name,Territory of Norfolk Island
+Q31057,NF,population,2188.0
+Q31057,NF,tld,.nf
+Q1033,NG,alpha3,NGA
+Q1033,NG,calling_code,+234
+Q1033,NG,capital,Abuja
+Q1033,NG,continent,Africa
+Q1033,NG,coordinates,Point(8.0 9.0)
+Q1033,NG,currency,NGN
+Q1033,NG,demonym,Nigerian
+Q1033,NG,demonym,Nigerians
+Q1033,NG,driving_side,right
+Q1033,NG,label,Nigeria
+Q1033,NG,language,en
+Q1033,NG,numeric,566
+Q1033,NG,official_name,Federal Republic of Nigeria
+Q1033,NG,official_name,Nigeria
+Q1033,NG,population,211400708.0
+Q1033,NG,tld,.ng
+Q811,NI,alpha3,NIC
+Q811,NI,calling_code,+505
+Q811,NI,capital,Managua
+Q811,NI,continent,North America
+Q811,NI,coordinates,Point(-85.0 13.0)
+Q811,NI,currency,NIO
+Q811,NI,demonym,Nicaraguan
+Q811,NI,driving_side,right
+Q811,NI,label,Nicaragua
+Q811,NI,language,es
+Q811,NI,numeric,558
+Q811,NI,population,5142098.0
+Q811,NI,tld,.ni
+Q29999,NL,alpha3,NLD
+Q29999,NL,calling_code,+31
+Q29999,NL,capital,Amsterdam
+Q29999,NL,continent,Europe
+Q29999,NL,coordinates,Point(4.883333333 52.366666666)
+Q29999,NL,currency,AWG
+Q29999,NL,currency,EUR
+Q29999,NL,currency,USD
+Q29999,NL,currency,XCG
+Q29999,NL,demonym,Dutch
+Q29999,NL,driving_side,right
+Q29999,NL,label,Kingdom of the Netherlands
+Q29999,NL,language,nl
+Q29999,NL,numeric,528
+Q29999,NL,population,17100715.0
+Q29999,NL,tld,.nl
+Q20,NO,alpha3,NOR
+Q20,NO,calling_code,+47
+Q20,NO,capital,Oslo
+Q20,NO,continent,Europe
+Q20,NO,coordinates,Point(10.683333333 59.933333333)
+Q20,NO,currency,NOK
+Q20,NO,demonym,Norwegian
+Q20,NO,driving_side,right
+Q20,NO,label,Norway
+Q20,NO,language,nb
+Q20,NO,language,nn
+Q20,NO,language,no
+Q20,NO,numeric,578
+Q20,NO,population,5627400.0
+Q20,NO,tld,.no
+Q837,NP,alpha3,NPL
+Q837,NP,calling_code,+977
+Q837,NP,capital,Kathmandu
+Q837,NP,continent,Asia
+Q837,NP,coordinates,Point(84.0 28.0)
+Q837,NP,currency,NPR
+Q837,NP,demonym,Nepalese
+Q837,NP,demonym,Nepali
+Q837,NP,driving_side,left
+Q837,NP,label,Nepal
+Q837,NP,language,ne
+Q837,NP,numeric,524
+Q837,NP,population,29164578.0
+Q837,NP,tld,.np
+Q697,NR,alpha3,NRU
+Q697,NR,calling_code,+674
+Q697,NR,capital,Yaren District
+Q697,NR,continent,Oceania
+Q697,NR,coordinates,Point(166.935 -0.5275)
+Q697,NR,currency,AUD
+Q697,NR,demonym,Nauruan
+Q697,NR,driving_side,left
+Q697,NR,label,Nauru
+Q697,NR,language,en
+Q697,NR,language,na
+Q697,NR,numeric,520
+Q697,NR,official_name,Republic of Naoero
+Q697,NR,population,13650.0
+Q697,NR,tld,.nr
+Q34020,NU,alpha3,NIU
+Q34020,NU,calling_code,+683
+Q34020,NU,capital,Alofi
+Q34020,NU,continent,Insular Oceania
+Q34020,NU,coordinates,Point(-169.916666666 -19.05)
+Q34020,NU,currency,NZD
+Q34020,NU,demonym,Niuean
+Q34020,NU,driving_side,left
+Q34020,NU,label,Niue
+Q34020,NU,language,en
+Q34020,NU,numeric,570
+Q34020,NU,official_name,Niue
+Q34020,NU,population,1821.0
+Q34020,NU,tld,.nu
+Q664,NZ,alpha3,NZL
+Q664,NZ,calling_code,+64
+Q664,NZ,capital,Wellington
+Q664,NZ,continent,Oceania
+Q664,NZ,coordinates,Point(174.0 -41.2)
+Q664,NZ,currency,NZD
+Q664,NZ,demonym,New Zealand
+Q664,NZ,demonym,New Zealander
+Q664,NZ,driving_side,left
+Q664,NZ,label,New Zealand
+Q664,NZ,language,en
+Q664,NZ,language,mi
+Q664,NZ,numeric,554
+Q664,NZ,official_name,New Zealand
+Q664,NZ,population,5307800.0
+Q664,NZ,tld,.nz
+Q842,OM,alpha3,OMN
+Q842,OM,calling_code,+968
+Q842,OM,capital,Muscat
+Q842,OM,continent,Asia
+Q842,OM,coordinates,Point(57.0 21.0)
+Q842,OM,currency,OMR
+Q842,OM,demonym,Omani
+Q842,OM,driving_side,right
+Q842,OM,label,Oman
+Q842,OM,language,ar
+Q842,OM,numeric,512
+Q842,OM,population,4829480.0
+Q842,OM,tld,.om
+Q804,PA,alpha3,PAN
+Q804,PA,calling_code,+507
+Q804,PA,capital,Panama City
+Q804,PA,continent,North America
+Q804,PA,coordinates,Point(-80.366667 8.616667)
+Q804,PA,currency,PAB
+Q804,PA,currency,USD
+Q804,PA,demonym,Panamanian
+Q804,PA,driving_side,right
+Q804,PA,label,Panama
+Q804,PA,language,es
+Q804,PA,numeric,591
+Q804,PA,population,4570133.0
+Q804,PA,tld,.pa
+Q419,PE,alpha3,PER
+Q419,PE,calling_code,+51
+Q419,PE,capital,Lima
+Q419,PE,continent,South America
+Q419,PE,coordinates,Point(-76.0 -9.4)
+Q419,PE,currency,PEN
+Q419,PE,demonym,Peruvian
+Q419,PE,driving_side,right
+Q419,PE,label,Peru
+Q419,PE,language,ay
+Q419,PE,language,es
+Q419,PE,language,qu
+Q419,PE,numeric,604
+Q419,PE,population,34157732.0
+Q419,PE,tld,.pe
+Q30971,PF,alpha3,PYF
+Q30971,PF,calling_code,+689
+Q30971,PF,capital,Papeete
+Q30971,PF,continent,Insular Oceania
+Q30971,PF,coordinates,Point(-149.4 -17.7)
+Q30971,PF,currency,XPF
+Q30971,PF,demonym,French Polynesian
+Q30971,PF,driving_side,right
+Q30971,PF,label,French Polynesia
+Q30971,PF,language,fr
+Q30971,PF,numeric,258
+Q30971,PF,population,278786.0
+Q30971,PF,tld,.pf
+Q691,PG,alpha3,PNG
+Q691,PG,calling_code,+675
+Q691,PG,capital,Port Moresby
+Q691,PG,continent,Oceania
+Q691,PG,coordinates,Point(147.0 -6.3)
+Q691,PG,currency,PGK
+Q691,PG,demonym,Papua New Guinean
+Q691,PG,driving_side,left
+Q691,PG,label,Papua New Guinea
+Q691,PG,language,en
+Q691,PG,language,ho
+Q691,PG,numeric,598
+Q691,PG,official_name,Papua New Guinea
+Q691,PG,population,8935000.0
+Q691,PG,tld,.pg
+Q928,PH,alpha3,PHL
+Q928,PH,calling_code,+63
+Q928,PH,capital,Manila
+Q928,PH,continent,Asia
+Q928,PH,coordinates,Point(123.0 12.0)
+Q928,PH,currency,PHP
+Q928,PH,demonym,Filipina
+Q928,PH,demonym,Filipino
+Q928,PH,demonym,Philippine
+Q928,PH,driving_side,right
+Q928,PH,label,Philippines
+Q928,PH,language,en
+Q928,PH,numeric,608
+Q928,PH,official_name,Republic of the Philippines
+Q928,PH,population,112729484.0
+Q928,PH,tld,.ph
+Q843,PK,alpha3,PAK
+Q843,PK,calling_code,+92
+Q843,PK,capital,Islamabad
+Q843,PK,continent,Asia
+Q843,PK,coordinates,Point(71.0 30.0)
+Q843,PK,currency,PKR
+Q843,PK,demonym,Pakistani
+Q843,PK,driving_side,left
+Q843,PK,label,Pakistan
+Q843,PK,language,en
+Q843,PK,language,ur
+Q843,PK,numeric,586
+Q843,PK,population,223773700.0
+Q843,PK,tld,.pk
+Q36,PL,alpha3,POL
+Q36,PL,calling_code,+48
+Q36,PL,capital,Warsaw
+Q36,PL,continent,Europe
+Q36,PL,coordinates,Point(19.0 52.0)
+Q36,PL,currency,PLN
+Q36,PL,currency,PLZ
+Q36,PL,demonym,Polish
+Q36,PL,driving_side,right
+Q36,PL,label,Poland
+Q36,PL,language,pl
+Q36,PL,numeric,616
+Q36,PL,population,37563071.0
+Q36,PL,tld,.pl
+Q34617,PM,alpha3,SPM
+Q34617,PM,calling_code,+508
+Q34617,PM,capital,Saint-Pierre
+Q34617,PM,continent,North America
+Q34617,PM,coordinates,Point(-56.3 46.85)
+Q34617,PM,currency,EUR
+Q34617,PM,driving_side,right
+Q34617,PM,label,Saint Pierre and Miquelon
+Q34617,PM,language,fr
+Q34617,PM,numeric,666
+Q34617,PM,population,5974.0
+Q34617,PM,tld,.fr
+Q34617,PM,tld,.pm
+Q35672,PN,alpha3,PCN
+Q35672,PN,calling_code,+64
+Q35672,PN,capital,Adamstown
+Q35672,PN,continent,Insular Oceania
+Q35672,PN,coordinates,Point(-130.1045778 -25.0677812)
+Q35672,PN,currency,NZD
+Q35672,PN,demonym,Pitcairn Islander
+Q35672,PN,driving_side,left
+Q35672,PN,label,Pitcairn Islands
+Q35672,PN,language,en
+Q35672,PN,numeric,612
+Q35672,PN,official_name,Pitcairn
+Q35672,PN,population,50.0
+Q35672,PN,tld,.pn
+Q1183,PR,alpha3,PRI
+Q1183,PR,calling_code,+1787
+Q1183,PR,calling_code,+1939
+Q1183,PR,capital,San Juan
+Q1183,PR,continent,North America
+Q1183,PR,coordinates,Point(-66.5 18.25)
+Q1183,PR,currency,USD
+Q1183,PR,demonym,Puerto Rican
+Q1183,PR,driving_side,right
+Q1183,PR,label,Puerto Rico
+Q1183,PR,language,en
+Q1183,PR,language,es
+Q1183,PR,numeric,630
+Q1183,PR,official_name,Commonwealth of Puerto Rico
+Q1183,PR,population,3285874.0
+Q1183,PR,tld,.pr
+Q219060,PS,alpha3,PSE
+Q219060,PS,calling_code,+970
+Q219060,PS,capital,East Jerusalem
+Q219060,PS,capital,Ramallah
+Q219060,PS,continent,Asia
+Q219060,PS,coordinates,Point(35.25 32.0)
+Q219060,PS,currency,ILS
+Q219060,PS,demonym,Palestinian
+Q219060,PS,driving_side,right
+Q219060,PS,label,Palestine
+Q219060,PS,language,ar
+Q219060,PS,numeric,275
+Q219060,PS,population,5227193.0
+Q219060,PS,tld,.ps
+Q45,PT,alpha3,PRT
+Q45,PT,calling_code,+351
+Q45,PT,capital,Lisbon
+Q45,PT,continent,Europe
+Q45,PT,coordinates,Point(-9.183333333 38.7)
+Q45,PT,currency,EUR
+Q45,PT,demonym,Portuguese
+Q45,PT,driving_side,right
+Q45,PT,label,Portugal
+Q45,PT,language,pt
+Q45,PT,numeric,620
+Q45,PT,population,10347892.0
+Q45,PT,tld,.pt
+Q695,PW,alpha3,PLW
+Q695,PW,calling_code,+680
+Q695,PW,capital,Ngerulmud
+Q695,PW,continent,Insular Oceania
+Q695,PW,continent,Oceania
+Q695,PW,coordinates,Point(134.55 7.466667)
+Q695,PW,currency,USD
+Q695,PW,demonym,Palauan
+Q695,PW,driving_side,right
+Q695,PW,label,Palau
+Q695,PW,language,en
+Q695,PW,language,ja
+Q695,PW,numeric,585
+Q695,PW,official_name,Palau
+Q695,PW,population,21729.0
+Q695,PW,tld,.pw
+Q733,PY,alpha3,PRY
+Q733,PY,calling_code,+595
+Q733,PY,capital,Asunción
+Q733,PY,continent,South America
+Q733,PY,coordinates,Point(-58.0 -23.5)
+Q733,PY,currency,PYG
+Q733,PY,demonym,Paraguayan
+Q733,PY,driving_side,right
+Q733,PY,label,Paraguay
+Q733,PY,language,es
+Q733,PY,language,gn
+Q733,PY,numeric,600
+Q733,PY,population,6811297.0
+Q733,PY,tld,.py
+Q846,QA,alpha3,QAT
+Q846,QA,calling_code,+974
+Q846,QA,capital,Doha
+Q846,QA,continent,Asia
+Q846,QA,coordinates,Point(51.212767 25.269535)
+Q846,QA,currency,QAR
+Q846,QA,demonym,Qatari
+Q846,QA,driving_side,right
+Q846,QA,label,Qatar
+Q846,QA,language,ar
+Q846,QA,numeric,634
+Q846,QA,population,2639211.0
+Q846,QA,tld,.qa
+Q17070,RE,alpha3,REU
+Q17070,RE,calling_code,+262
+Q17070,RE,capital,Saint-Denis
+Q17070,RE,continent,Africa
+Q17070,RE,coordinates,Point(55.5325 -21.114444444)
+Q17070,RE,currency,EUR
+Q17070,RE,driving_side,right
+Q17070,RE,label,Réunion
+Q17070,RE,language,fr
+Q17070,RE,numeric,638
+Q17070,RE,population,889679.0
+Q17070,RE,tld,.re
+Q218,RO,alpha3,ROU
+Q218,RO,calling_code,+40
+Q218,RO,capital,Bucharest
+Q218,RO,continent,Europe
+Q218,RO,coordinates,Point(25.0 46.0)
+Q218,RO,currency,RON
+Q218,RO,demonym,Romanian
+Q218,RO,driving_side,right
+Q218,RO,label,Romania
+Q218,RO,language,ro
+Q218,RO,numeric,642
+Q218,RO,population,19053815.0
+Q218,RO,tld,.ro
+Q403,RS,alpha3,SRB
+Q403,RS,calling_code,+381
+Q403,RS,capital,Belgrade
+Q403,RS,continent,Europe
+Q403,RS,coordinates,Point(20.933333333 43.95)
+Q403,RS,currency,RSD
+Q403,RS,demonym,Serbian
+Q403,RS,driving_side,right
+Q403,RS,label,Serbia
+Q403,RS,language,sr
+Q403,RS,numeric,688
+Q403,RS,population,6605168.0
+Q403,RS,tld,.rs
+Q403,RS,tld,.срб
+Q159,RU,alpha3,RUS
+Q159,RU,calling_code,+7
+Q159,RU,capital,Moscow
+Q159,RU,continent,Asia
+Q159,RU,continent,Eurasia
+Q159,RU,continent,Europe
+Q159,RU,coordinates,Point(94.25 66.416666666)
+Q159,RU,currency,RUB
+Q159,RU,demonym,Russian
+Q159,RU,driving_side,right
+Q159,RU,label,Russia
+Q159,RU,language,ru
+Q159,RU,numeric,643
+Q159,RU,population,146119928.0
+Q159,RU,tld,.ru
+Q159,RU,tld,.su
+Q159,RU,tld,.рус
+Q159,RU,tld,.рф
+Q1037,RW,alpha3,RWA
+Q1037,RW,calling_code,+250
+Q1037,RW,capital,Kigali
+Q1037,RW,continent,Africa
+Q1037,RW,coordinates,Point(30.0 -2.0)
+Q1037,RW,currency,RWF
+Q1037,RW,demonym,Rwandan
+Q1037,RW,demonym,Rwandese
+Q1037,RW,driving_side,right
+Q1037,RW,label,Rwanda
+Q1037,RW,language,en
+Q1037,RW,language,fr
+Q1037,RW,language,rw
+Q1037,RW,language,sw
+Q1037,RW,numeric,646
+Q1037,RW,official_name,Republic of Rwanda
+Q1037,RW,population,14569341.0
+Q1037,RW,tld,.rw
+Q851,SA,alpha3,SAU
+Q851,SA,calling_code,+966
+Q851,SA,capital,Riyadh
+Q851,SA,continent,Asia
+Q851,SA,coordinates,Point(44.116667 23.716667)
+Q851,SA,currency,SAR
+Q851,SA,driving_side,right
+Q851,SA,label,Saudi Arabia
+Q851,SA,language,ar
+Q851,SA,numeric,682
+Q851,SA,population,33000000.0
+Q851,SA,tld,.sa
+Q851,SA,tld,AlSaudiah
+Q685,SB,alpha3,SLB
+Q685,SB,calling_code,+677
+Q685,SB,capital,Honiara
+Q685,SB,continent,Insular Oceania
+Q685,SB,continent,Oceania
+Q685,SB,coordinates,Point(159.816666666 -9.466666666)
+Q685,SB,currency,SBD
+Q685,SB,demonym,Solomon Islander
+Q685,SB,demonym,Solomon Islands
+Q685,SB,driving_side,left
+Q685,SB,label,Solomon Islands
+Q685,SB,language,en
+Q685,SB,numeric,090
+Q685,SB,official_name,Solomon Islands
+Q685,SB,population,611343.0
+Q685,SB,tld,.sb
+Q1042,SC,alpha3,SYC
+Q1042,SC,calling_code,+248
+Q1042,SC,capital,Victoria
+Q1042,SC,continent,Africa
+Q1042,SC,coordinates,Point(52.766667 -7.1)
+Q1042,SC,currency,SCR
+Q1042,SC,demonym,Seychellois
+Q1042,SC,demonym,Seychelloise
+Q1042,SC,driving_side,left
+Q1042,SC,label,Seychelles
+Q1042,SC,language,en
+Q1042,SC,language,fr
+Q1042,SC,numeric,690
+Q1042,SC,official_name,Seychelles
+Q1042,SC,population,119773.0
+Q1042,SC,tld,.sc
+Q1049,SD,alpha3,SDN
+Q1049,SD,calling_code,+249
+Q1049,SD,capital,Khartoum
+Q1049,SD,continent,Africa
+Q1049,SD,coordinates,Point(32.0 15.0)
+Q1049,SD,currency,SDG
+Q1049,SD,demonym,Sudanese
+Q1049,SD,driving_side,right
+Q1049,SD,label,Sudan
+Q1049,SD,language,ar
+Q1049,SD,language,en
+Q1049,SD,numeric,729
+Q1049,SD,official_name,Sudan
+Q1049,SD,population,40533330.0
+Q1049,SD,tld,.sd
+Q34,SE,alpha3,SWE
+Q34,SE,calling_code,+46
+Q34,SE,capital,Stockholm
+Q34,SE,continent,Europe
+Q34,SE,coordinates,Point(15.0 61.0)
+Q34,SE,currency,SEK
+Q34,SE,demonym,Swedish
+Q34,SE,driving_side,right
+Q34,SE,label,Sweden
+Q34,SE,language,sv
+Q34,SE,numeric,752
+Q34,SE,population,10609460.0
+Q34,SE,tld,.se
+Q334,SG,alpha3,SGP
+Q334,SG,calling_code,+65
+Q334,SG,capital,Singapore
+Q334,SG,continent,Asia
+Q334,SG,coordinates,Point(103.8 1.3)
+Q334,SG,currency,SGD
+Q334,SG,demonym,Singaporean
+Q334,SG,driving_side,left
+Q334,SG,label,Singapore
+Q334,SG,language,en
+Q334,SG,language,ms
+Q334,SG,language,ta
+Q334,SG,numeric,702
+Q334,SG,official_name,Republic of Singapore
+Q334,SG,population,5866139.0
+Q334,SG,tld,.sg
+Q192184,SH,alpha3,SHN
+Q192184,SH,calling_code,+247
+Q192184,SH,calling_code,+27
+Q192184,SH,calling_code,+290
+Q192184,SH,capital,Jamestown
+Q192184,SH,continent,Africa
+Q192184,SH,coordinates,Point(-5.7181 -15.9245)
+Q192184,SH,currency,GBP
+Q192184,SH,currency,SHP
+Q192184,SH,driving_side,left
+Q192184,SH,label,"Saint Helena, Ascension and Tristan da Cunha"
+Q192184,SH,language,en
+Q192184,SH,numeric,654
+Q192184,SH,official_name,"St Helena, Ascension & Tristan da Cunha"
+Q192184,SH,population,5633.0
+Q215,SI,alpha3,SVN
+Q215,SI,calling_code,+386
+Q215,SI,capital,Ljubljana
+Q215,SI,continent,Europe
+Q215,SI,coordinates,Point(15.0 46.0)
+Q215,SI,currency,EUR
+Q215,SI,demonym,Slovene
+Q215,SI,demonym,Slovenian
+Q215,SI,driving_side,right
+Q215,SI,label,Slovenia
+Q215,SI,language,sl
+Q215,SI,numeric,705
+Q215,SI,population,2066880.0
+Q215,SI,tld,.si
+Q842829,SJ,alpha3,SJM
+Q842829,SJ,continent,Europe
+Q842829,SJ,coordinates,Point(21.9939078 78.6351661)
+Q842829,SJ,currency,NOK
+Q842829,SJ,driving_side,right
+Q842829,SJ,label,Svalbard and Jan Mayen
+Q842829,SJ,language,no
+Q842829,SJ,numeric,744
+Q842829,SJ,population,2905.0
+Q842829,SJ,tld,.sj
+Q214,SK,alpha3,SVK
+Q214,SK,calling_code,+421
+Q214,SK,capital,Bratislava
+Q214,SK,continent,Europe
+Q214,SK,coordinates,Point(19.7 48.7)
+Q214,SK,currency,EUR
+Q214,SK,demonym,Slovak
+Q214,SK,driving_side,right
+Q214,SK,label,Slovakia
+Q214,SK,language,sk
+Q214,SK,numeric,703
+Q214,SK,population,5409407.0
+Q214,SK,tld,.sk
+Q1044,SL,alpha3,SLE
+Q1044,SL,calling_code,+232
+Q1044,SL,capital,Freetown
+Q1044,SL,continent,Africa
+Q1044,SL,coordinates,Point(-12.1 8.5)
+Q1044,SL,currency,SLE
+Q1044,SL,demonym,Sierra Leonean
+Q1044,SL,driving_side,right
+Q1044,SL,label,Sierra Leone
+Q1044,SL,language,en
+Q1044,SL,numeric,694
+Q1044,SL,official_name,Sierra Leone
+Q1044,SL,population,7557212.0
+Q1044,SL,tld,.sl
+Q238,SM,alpha3,SMR
+Q238,SM,calling_code,+378
+Q238,SM,capital,San Marino
+Q238,SM,continent,Europe
+Q238,SM,coordinates,Point(12.466666666 43.933333333)
+Q238,SM,currency,EUR
+Q238,SM,demonym,Sammarinese
+Q238,SM,driving_side,right
+Q238,SM,label,San Marino
+Q238,SM,language,it
+Q238,SM,numeric,674
+Q238,SM,population,34167.0
+Q238,SM,tld,.sm
+Q1041,SN,alpha3,SEN
+Q1041,SN,calling_code,+221
+Q1041,SN,capital,Dakar
+Q1041,SN,continent,Africa
+Q1041,SN,coordinates,Point(-14.283333 14.366667)
+Q1041,SN,currency,XOF
+Q1041,SN,demonym,Senegalese
+Q1041,SN,driving_side,right
+Q1041,SN,label,Senegal
+Q1041,SN,language,fr
+Q1041,SN,language,wo
+Q1041,SN,numeric,686
+Q1041,SN,population,16876720.0
+Q1041,SN,tld,.sn
+Q1045,SO,alpha3,SOM
+Q1045,SO,calling_code,+252
+Q1045,SO,capital,Mogadishu
+Q1045,SO,continent,Africa
+Q1045,SO,coordinates,Point(47.0 6.0)
+Q1045,SO,currency,SOS
+Q1045,SO,demonym,Somali
+Q1045,SO,demonym,Somalian
+Q1045,SO,driving_side,right
+Q1045,SO,label,Somalia
+Q1045,SO,language,ar
+Q1045,SO,language,so
+Q1045,SO,numeric,706
+Q1045,SO,official_name,Federal Republic of Somalia
+Q1045,SO,population,11031386.0
+Q1045,SO,tld,.so
+Q730,SR,alpha3,SUR
+Q730,SR,calling_code,+597
+Q730,SR,capital,Paramaribo
+Q730,SR,continent,South America
+Q730,SR,coordinates,Point(-56.0 4.0)
+Q730,SR,currency,SRD
+Q730,SR,demonym,Surinamese
+Q730,SR,driving_side,left
+Q730,SR,label,Suriname
+Q730,SR,language,nl
+Q730,SR,numeric,740
+Q730,SR,population,563402.0
+Q730,SR,tld,.sr
+Q958,SS,alpha3,SSD
+Q958,SS,calling_code,+211
+Q958,SS,capital,Juba
+Q958,SS,continent,Africa
+Q958,SS,coordinates,Point(30.0 7.0)
+Q958,SS,currency,SSP
+Q958,SS,demonym,South Sudanese
+Q958,SS,driving_side,right
+Q958,SS,label,South Sudan
+Q958,SS,language,en
+Q958,SS,numeric,728
+Q958,SS,official_name,Republic of South Sudan
+Q958,SS,official_name,South Sudan
+Q958,SS,population,12575714.0
+Q958,SS,tld,.ss
+Q1039,ST,alpha3,STP
+Q1039,ST,calling_code,+239
+Q1039,ST,capital,São Tomé
+Q1039,ST,continent,Africa
+Q1039,ST,coordinates,Point(6.6 0.316667)
+Q1039,ST,currency,STN
+Q1039,ST,demonym,Santomean
+Q1039,ST,demonym,Sao Tomean
+Q1039,ST,demonym,Sao Tomeans
+Q1039,ST,demonym,São Toméan
+Q1039,ST,demonym,São Toméans
+Q1039,ST,driving_side,right
+Q1039,ST,label,São Tomé and Príncipe
+Q1039,ST,language,pt
+Q1039,ST,numeric,678
+Q1039,ST,population,204327.0
+Q1039,ST,tld,.st
+Q792,SV,alpha3,SLV
+Q792,SV,calling_code,+503
+Q792,SV,capital,San Salvador
+Q792,SV,continent,North America
+Q792,SV,coordinates,Point(-88.866111 13.668889)
+Q792,SV,currency,USD
+Q792,SV,demonym,Salvadoran
+Q792,SV,driving_side,right
+Q792,SV,label,El Salvador
+Q792,SV,language,es
+Q792,SV,numeric,222
+Q792,SV,population,6029976.0
+Q792,SV,tld,.sv
+Q26273,SX,alpha3,SXM
+Q26273,SX,calling_code,+1721
+Q26273,SX,capital,Philipsburg
+Q26273,SX,continent,North America
+Q26273,SX,coordinates,Point(-63.067777777 18.031944444)
+Q26273,SX,currency,XCG
+Q26273,SX,demonym,St. Maartener
+Q26273,SX,driving_side,right
+Q26273,SX,label,Sint Maarten
+Q26273,SX,language,en
+Q26273,SX,language,nl
+Q26273,SX,numeric,534
+Q26273,SX,official_name,Sint Maarten
+Q26273,SX,population,43847.0
+Q26273,SX,tld,.sx
+Q858,SY,alpha3,SYR
+Q858,SY,calling_code,+963
+Q858,SY,capital,Damascus
+Q858,SY,continent,Asia
+Q858,SY,coordinates,Point(38.583333 35.216667)
+Q858,SY,currency,SYP
+Q858,SY,demonym,Syrian
+Q858,SY,driving_side,right
+Q858,SY,label,Syria
+Q858,SY,language,ar
+Q858,SY,numeric,760
+Q858,SY,official_name,Syria
+Q858,SY,official_name,Syrian Arab Republic
+Q858,SY,population,23865423.0
+Q858,SY,tld,.sy
+Q1050,SZ,alpha3,SWZ
+Q1050,SZ,calling_code,+268
+Q1050,SZ,capital,Lobamba
+Q1050,SZ,capital,Mbabane
+Q1050,SZ,continent,Africa
+Q1050,SZ,coordinates,Point(31.433333 -26.483333)
+Q1050,SZ,currency,SZL
+Q1050,SZ,demonym,Swazi
+Q1050,SZ,demonym,Swazis
+Q1050,SZ,demonym,emaSwati
+Q1050,SZ,demonym,liSwati
+Q1050,SZ,driving_side,left
+Q1050,SZ,label,Eswatini
+Q1050,SZ,language,en
+Q1050,SZ,language,ss
+Q1050,SZ,numeric,748
+Q1050,SZ,official_name,Kingdom of Eswatini
+Q1050,SZ,population,1230506.0
+Q1050,SZ,tld,.sz
+Q18221,TC,alpha3,TCA
+Q18221,TC,calling_code,+1649
+Q18221,TC,capital,Cockburn Town
+Q18221,TC,continent,North America
+Q18221,TC,coordinates,Point(-71.8 21.78)
+Q18221,TC,currency,USD
+Q18221,TC,demonym,Turks and Caicos Islander
+Q18221,TC,driving_side,left
+Q18221,TC,label,Turks and Caicos Islands
+Q18221,TC,language,en
+Q18221,TC,numeric,796
+Q18221,TC,official_name,Turks and Caicos Islands
+Q18221,TC,population,44542.0
+Q18221,TC,tld,.tc
+Q657,TD,alpha3,TCD
+Q657,TD,calling_code,+235
+Q657,TD,capital,N'Djamena
+Q657,TD,continent,Africa
+Q657,TD,coordinates,Point(19.4 15.466667)
+Q657,TD,currency,XAF
+Q657,TD,demonym,Chadian
+Q657,TD,driving_side,right
+Q657,TD,label,Chad
+Q657,TD,language,ar
+Q657,TD,language,fr
+Q657,TD,numeric,148
+Q657,TD,official_name,Republic of Chad
+Q657,TD,population,19319064.0
+Q657,TD,tld,.td
+Q129003,TF,alpha3,ATF
+Q129003,TF,capital,Port-aux-Français
+Q129003,TF,continent,Africa
+Q129003,TF,continent,Antarctica
+Q129003,TF,coordinates,Point(67.0 -43.0)
+Q129003,TF,currency,EUR
+Q129003,TF,demonym,French
+Q129003,TF,driving_side,right
+Q129003,TF,label,French Southern and Antarctic Lands
+Q129003,TF,language,fr
+Q129003,TF,numeric,260
+Q129003,TF,population,196.0
+Q129003,TF,tld,.tf
+Q945,TG,alpha3,TGO
+Q945,TG,calling_code,+228
+Q945,TG,capital,Lomé
+Q945,TG,continent,Africa
+Q945,TG,coordinates,Point(1.183333 8.25)
+Q945,TG,currency,XOF
+Q945,TG,demonym,Togolese
+Q945,TG,driving_side,right
+Q945,TG,label,Togo
+Q945,TG,language,fr
+Q945,TG,numeric,768
+Q945,TG,population,7797694.0
+Q945,TG,tld,.tg
+Q869,TH,alpha3,THA
+Q869,TH,calling_code,+66
+Q869,TH,capital,Bangkok
+Q869,TH,continent,Asia
+Q869,TH,coordinates,Point(101.0 14.0)
+Q869,TH,currency,THB
+Q869,TH,demonym,Thai
+Q869,TH,driving_side,left
+Q869,TH,label,Thailand
+Q869,TH,language,th
+Q869,TH,numeric,764
+Q869,TH,official_name,Kingdom of Thailand
+Q869,TH,population,66188503.0
+Q869,TH,tld,.th
+Q863,TJ,alpha3,TJK
+Q863,TJ,calling_code,+992
+Q863,TJ,capital,Dushanbe
+Q863,TJ,continent,Asia
+Q863,TJ,coordinates,Point(71.366667 38.583333)
+Q863,TJ,currency,TJS
+Q863,TJ,demonym,Tajikistani
+Q863,TJ,driving_side,right
+Q863,TJ,label,Tajikistan
+Q863,TJ,language,tg
+Q863,TJ,numeric,762
+Q863,TJ,population,9504000.0
+Q863,TJ,tld,.tj
+Q36823,TK,alpha3,TKL
+Q36823,TK,calling_code,+690
+Q36823,TK,continent,Insular Oceania
+Q36823,TK,coordinates,Point(-171.833333333 -9.166666666)
+Q36823,TK,currency,NZD
+Q36823,TK,demonym,Tokelauan
+Q36823,TK,driving_side,left
+Q36823,TK,label,Tokelau
+Q36823,TK,language,en
+Q36823,TK,numeric,772
+Q36823,TK,official_name,Tokelau
+Q36823,TK,population,1030.0
+Q36823,TK,population,1180.0
+Q36823,TK,population,1383.0
+Q36823,TK,population,1390.0
+Q36823,TK,population,1411.0
+Q36823,TK,population,1466.0
+Q36823,TK,population,1499.0
+Q36823,TK,population,1507.0
+Q36823,TK,population,1537.0
+Q36823,TK,population,1575.0
+Q36823,TK,population,1577.0
+Q36823,TK,population,1580.0
+Q36823,TK,population,1590.0
+Q36823,TK,population,1610.0
+Q36823,TK,population,1630.0
+Q36823,TK,population,1690.0
+Q36823,TK,population,1890.0
+Q36823,TK,population,1910.0
+Q36823,TK,population,870.0
+Q36823,TK,population,880.0
+Q36823,TK,population,990.0
+Q36823,TK,tld,.tk
+Q574,TL,alpha3,TLS
+Q574,TL,calling_code,+670
+Q574,TL,capital,Dili
+Q574,TL,continent,Asia
+Q574,TL,coordinates,Point(125.75 -8.966667)
+Q574,TL,currency,USD
+Q574,TL,demonym,East Timorese
+Q574,TL,driving_side,left
+Q574,TL,label,Timor-Leste
+Q574,TL,language,pt
+Q574,TL,numeric,626
+Q574,TL,population,1400638.0
+Q574,TL,tld,.tl
+Q874,TM,alpha3,TKM
+Q874,TM,calling_code,+993
+Q874,TM,capital,Ashgabat
+Q874,TM,continent,Asia
+Q874,TM,coordinates,Point(60.0 39.0)
+Q874,TM,currency,TMT
+Q874,TM,demonym,Turkmen
+Q874,TM,demonym,Turkmenistani
+Q874,TM,driving_side,right
+Q874,TM,label,Turkmenistan
+Q874,TM,language,tk
+Q874,TM,numeric,795
+Q874,TM,population,6117933.0
+Q874,TM,tld,.tm
+Q948,TN,alpha3,TUN
+Q948,TN,calling_code,+216
+Q948,TN,capital,Tunis
+Q948,TN,continent,Africa
+Q948,TN,coordinates,Point(10.0 34.0)
+Q948,TN,currency,TND
+Q948,TN,demonym,Tunisian
+Q948,TN,driving_side,right
+Q948,TN,label,Tunisia
+Q948,TN,language,ar
+Q948,TN,numeric,788
+Q948,TN,official_name,Republic of Tunisia
+Q948,TN,official_name,Tunisia
+Q948,TN,population,11565204.0
+Q948,TN,tld,.tn
+Q678,TO,alpha3,TON
+Q678,TO,calling_code,+676
+Q678,TO,capital,Nukuʻalofa
+Q678,TO,continent,Oceania
+Q678,TO,coordinates,Point(-174.810278 -20.587778)
+Q678,TO,currency,TOP
+Q678,TO,demonym,Tongan
+Q678,TO,driving_side,left
+Q678,TO,label,Tonga
+Q678,TO,language,en
+Q678,TO,language,to
+Q678,TO,numeric,776
+Q678,TO,official_name,Tonga
+Q678,TO,population,108020.0
+Q678,TO,tld,.to
+Q43,TR,alpha3,TUR
+Q43,TR,calling_code,+36
+Q43,TR,calling_code,+90
+Q43,TR,capital,Ankara
+Q43,TR,continent,Asia
+Q43,TR,continent,Europe
+Q43,TR,coordinates,Point(36.0 39.0)
+Q43,TR,currency,TRY
+Q43,TR,demonym,Turkish
+Q43,TR,driving_side,right
+Q43,TR,label,Turkey
+Q43,TR,language,tr
+Q43,TR,numeric,792
+Q43,TR,population,85372377.0
+Q43,TR,tld,.tr
+Q754,TT,alpha3,TTO
+Q754,TT,calling_code,+1868
+Q754,TT,capital,Port of Spain
+Q754,TT,continent,North America
+Q754,TT,coordinates,Point(-61.516666666 10.666666666)
+Q754,TT,currency,TTD
+Q754,TT,demonym,Trinidadian
+Q754,TT,driving_side,left
+Q754,TT,label,Trinidad and Tobago
+Q754,TT,language,en
+Q754,TT,numeric,780
+Q754,TT,official_name,Trinidad and Tobago
+Q754,TT,population,1369125.0
+Q754,TT,tld,.tt
+Q672,TV,alpha3,TUV
+Q672,TV,calling_code,+688
+Q672,TV,capital,Funafuti
+Q672,TV,continent,Insular Oceania
+Q672,TV,continent,Oceania
+Q672,TV,coordinates,Point(178.005556 -7.475)
+Q672,TV,currency,AUD
+Q672,TV,demonym,Tuvaluan
+Q672,TV,driving_side,left
+Q672,TV,label,Tuvalu
+Q672,TV,language,en
+Q672,TV,numeric,798
+Q672,TV,official_name,Tuvalu
+Q672,TV,population,10643.0
+Q672,TV,tld,.tv
+Q865,TW,alpha3,TWN
+Q865,TW,calling_code,+886
+Q865,TW,capital,Taipei
+Q865,TW,continent,Asia
+Q865,TW,coordinates,Point(121.0 24.0)
+Q865,TW,currency,TWD
+Q865,TW,demonym,Taiwan
+Q865,TW,demonym,Taiwanese
+Q865,TW,demonym,taiwanese
+Q865,TW,driving_side,right
+Q865,TW,label,Taiwan
+Q865,TW,numeric,158
+Q865,TW,population,23262544.0
+Q865,TW,tld,.tw
+Q924,TZ,alpha3,TZA
+Q924,TZ,calling_code,+255
+Q924,TZ,capital,Dodoma
+Q924,TZ,continent,Africa
+Q924,TZ,coordinates,Point(34.853888888 -6.306944444)
+Q924,TZ,currency,TZS
+Q924,TZ,demonym,Tanzanian
+Q924,TZ,driving_side,left
+Q924,TZ,label,Tanzania
+Q924,TZ,language,en
+Q924,TZ,language,sw
+Q924,TZ,numeric,834
+Q924,TZ,population,57310019.0
+Q924,TZ,tld,.tz
+Q212,UA,alpha3,UKR
+Q212,UA,calling_code,+380
+Q212,UA,capital,Kyiv
+Q212,UA,continent,Europe
+Q212,UA,coordinates,Point(32.0 49.0)
+Q212,UA,currency,UAH
+Q212,UA,driving_side,right
+Q212,UA,label,Ukraine
+Q212,UA,language,uk
+Q212,UA,numeric,804
+Q212,UA,population,41167335.0
+Q212,UA,tld,.ua
+Q1036,UG,alpha3,UGA
+Q1036,UG,calling_code,+256
+Q1036,UG,capital,Kampala
+Q1036,UG,continent,Africa
+Q1036,UG,coordinates,Point(32.39 1.28)
+Q1036,UG,currency,UGX
+Q1036,UG,demonym,Ugandan
+Q1036,UG,driving_side,left
+Q1036,UG,label,Uganda
+Q1036,UG,language,en
+Q1036,UG,language,sw
+Q1036,UG,numeric,800
+Q1036,UG,official_name,Uganda
+Q1036,UG,population,47123531.0
+Q1036,UG,tld,.ug
+Q16645,UM,alpha3,UMI
+Q16645,UM,continent,Insular Oceania
+Q16645,UM,continent,North America
+Q16645,UM,coordinates,Point(166.633333 19.3)
+Q16645,UM,currency,USD
+Q16645,UM,driving_side,right
+Q16645,UM,label,United States Minor Outlying Islands
+Q16645,UM,language,en
+Q16645,UM,numeric,581
+Q16645,UM,population,190.0
+Q16645,UM,tld,.um
+Q30,US,alpha3,USA
+Q30,US,calling_code,+1
+Q30,US,capital,"Washington, D.C."
+Q30,US,continent,North America
+Q30,US,coordinates,Point(-98.5795 39.828175)
+Q30,US,currency,USD
+Q30,US,demonym,American
+Q30,US,demonym,Americans
+Q30,US,driving_side,right
+Q30,US,label,United States
+Q30,US,language,ch
+Q30,US,language,es
+Q30,US,language,sm
+Q30,US,numeric,840
+Q30,US,official_name,the United States of America
+Q30,US,population,340110988.0
+Q30,US,tld,.us
+Q77,UY,alpha3,URY
+Q77,UY,calling_code,+598
+Q77,UY,capital,Montevideo
+Q77,UY,continent,South America
+Q77,UY,coordinates,Point(-56.0 -33.0)
+Q77,UY,currency,UYU
+Q77,UY,demonym,Uruguayan
+Q77,UY,driving_side,right
+Q77,UY,label,Uruguay
+Q77,UY,numeric,858
+Q77,UY,population,3444263.0
+Q77,UY,tld,.uy
+Q265,UZ,alpha3,UZB
+Q265,UZ,calling_code,+998
+Q265,UZ,capital,Tashkent
+Q265,UZ,continent,Asia
+Q265,UZ,coordinates,Point(66.0 41.0)
+Q265,UZ,currency,UZS
+Q265,UZ,demonym,Uzbek
+Q265,UZ,demonym,Uzbekistani
+Q265,UZ,driving_side,right
+Q265,UZ,label,Uzbekistan
+Q265,UZ,language,uz
+Q265,UZ,numeric,860
+Q265,UZ,population,34915100.0
+Q265,UZ,tld,.uz
+Q237,VA,alpha3,VAT
+Q237,VA,calling_code,+379
+Q237,VA,capital,Vatican City
+Q237,VA,continent,Europe
+Q237,VA,coordinates,Point(12.453 41.904)
+Q237,VA,currency,EUR
+Q237,VA,demonym,Vatican
+Q237,VA,driving_side,right
+Q237,VA,label,Vatican City
+Q237,VA,language,it
+Q237,VA,language,la
+Q237,VA,numeric,336
+Q237,VA,population,466.0
+Q237,VA,population,572.0
+Q237,VA,population,594.0
+Q237,VA,population,605.0
+Q237,VA,population,618.0
+Q237,VA,population,711.0
+Q237,VA,population,746.0
+Q237,VA,population,764.0
+Q237,VA,population,949.0
+Q237,VA,tld,.va
+Q757,VC,alpha3,VCT
+Q757,VC,calling_code,+1784
+Q757,VC,capital,Kingstown
+Q757,VC,continent,North America
+Q757,VC,coordinates,Point(-61.2 13.25)
+Q757,VC,currency,XCD
+Q757,VC,demonym,Saint Vincentian
+Q757,VC,demonym,Saint Vincentians
+Q757,VC,demonym,Vincentian
+Q757,VC,demonym,Vincentians
+Q757,VC,demonym,Vincy
+Q757,VC,driving_side,left
+Q757,VC,label,Saint Vincent and the Grenadines
+Q757,VC,language,en
+Q757,VC,numeric,670
+Q757,VC,official_name,Saint Vincent and the Grenadines
+Q757,VC,population,109296.0
+Q757,VC,tld,.vc
+Q717,VE,alpha3,VEN
+Q717,VE,calling_code,+58
+Q717,VE,capital,Caracas
+Q717,VE,continent,South America
+Q717,VE,coordinates,Point(-67.0 8.0)
+Q717,VE,currency,VES
+Q717,VE,demonym,Venezuelan
+Q717,VE,demonym,Venezuelans
+Q717,VE,driving_side,right
+Q717,VE,label,Venezuela
+Q717,VE,language,es
+Q717,VE,numeric,862
+Q717,VE,official_name,Bolivarian Republic of Venezuela
+Q717,VE,population,31250306.0
+Q717,VE,tld,.ve
+Q25305,VG,alpha3,VGB
+Q25305,VG,calling_code,+1284
+Q25305,VG,capital,Road Town
+Q25305,VG,continent,North America
+Q25305,VG,coordinates,Point(-64.54 18.445)
+Q25305,VG,currency,USD
+Q25305,VG,driving_side,left
+Q25305,VG,label,British Virgin Islands
+Q25305,VG,language,en
+Q25305,VG,numeric,092
+Q25305,VG,official_name,British Virgin Islands
+Q25305,VG,population,39369.0
+Q25305,VG,tld,.vg
+Q11703,VI,alpha3,VIR
+Q11703,VI,calling_code,+1340
+Q11703,VI,capital,Charlotte Amalie
+Q11703,VI,continent,North America
+Q11703,VI,coordinates,Point(-64.833333 18.333333)
+Q11703,VI,currency,USD
+Q11703,VI,driving_side,left
+Q11703,VI,label,United States Virgin Islands
+Q11703,VI,language,en
+Q11703,VI,numeric,850
+Q11703,VI,official_name,U.S. Virgin Islands
+Q11703,VI,population,87146.0
+Q11703,VI,tld,.vi
+Q881,VN,alpha3,VNM
+Q881,VN,calling_code,+84
+Q881,VN,capital,Hanoi
+Q881,VN,continent,Asia
+Q881,VN,coordinates,Point(108.0 16.0)
+Q881,VN,currency,VND
+Q881,VN,demonym,Vietnamese
+Q881,VN,driving_side,right
+Q881,VN,label,Vietnam
+Q881,VN,language,vi
+Q881,VN,numeric,704
+Q881,VN,official_name,Socialist Republic of Vietnam
+Q881,VN,population,96208984.0
+Q881,VN,tld,.vn
+Q686,VU,alpha3,VUT
+Q686,VU,calling_code,+678
+Q686,VU,capital,Port Vila
+Q686,VU,continent,Insular Oceania
+Q686,VU,coordinates,Point(168.016669444 -16.633330555)
+Q686,VU,currency,VUV
+Q686,VU,demonym,Ni-Vanuatu
+Q686,VU,demonym,Vanuatuan
+Q686,VU,demonym,Vanuatuans
+Q686,VU,driving_side,right
+Q686,VU,label,Vanuatu
+Q686,VU,language,bi
+Q686,VU,language,en
+Q686,VU,language,fr
+Q686,VU,numeric,548
+Q686,VU,official_name,Republic of Vanuatu
+Q686,VU,official_name,Vanuatu
+Q686,VU,population,300019.0
+Q686,VU,tld,.vu
+Q35555,WF,alpha3,WLF
+Q35555,WF,calling_code,+681
+Q35555,WF,capital,Mata-Utu
+Q35555,WF,continent,Insular Oceania
+Q35555,WF,coordinates,Point(-178.10932 -14.30181)
+Q35555,WF,currency,XPF
+Q35555,WF,demonym,Futunan
+Q35555,WF,demonym,Wallisian
+Q35555,WF,driving_side,right
+Q35555,WF,label,Wallis and Futuna
+Q35555,WF,language,fr
+Q35555,WF,numeric,876
+Q35555,WF,population,11558.0
+Q35555,WF,tld,.wf
+Q683,WS,alpha3,WSM
+Q683,WS,calling_code,+685
+Q683,WS,capital,Apia
+Q683,WS,continent,Oceania
+Q683,WS,coordinates,Point(-172.2175 -13.745)
+Q683,WS,currency,WST
+Q683,WS,demonym,Samoan
+Q683,WS,driving_side,left
+Q683,WS,label,Samoa
+Q683,WS,language,en
+Q683,WS,language,sm
+Q683,WS,numeric,882
+Q683,WS,official_name,Samoa
+Q683,WS,official_name,Western Samoa
+Q683,WS,population,200010.0
+Q683,WS,tld,.ws
+Q805,YE,alpha3,YEM
+Q805,YE,calling_code,+967
+Q805,YE,capital,Aden
+Q805,YE,capital,Sanaa
+Q805,YE,continent,Asia
+Q805,YE,coordinates,Point(48.0 15.5)
+Q805,YE,currency,YER
+Q805,YE,demonym,Yemeni
+Q805,YE,driving_side,right
+Q805,YE,label,Yemen
+Q805,YE,language,ar
+Q805,YE,numeric,887
+Q805,YE,population,28250420.0
+Q805,YE,tld,.ye
+Q17063,YT,alpha3,MYT
+Q17063,YT,calling_code,+262
+Q17063,YT,capital,Dzaoudzi
+Q17063,YT,capital,Mamoudzou
+Q17063,YT,continent,Africa
+Q17063,YT,coordinates,Point(45.138333333 -12.843055555)
+Q17063,YT,currency,EUR
+Q17063,YT,driving_side,right
+Q17063,YT,label,Mayotte
+Q17063,YT,language,fr
+Q17063,YT,numeric,175
+Q17063,YT,population,320901.0
+Q17063,YT,tld,.yt
+Q258,ZA,alpha3,ZAF
+Q258,ZA,calling_code,+27
+Q258,ZA,capital,Bloemfontein
+Q258,ZA,capital,Cape Town
+Q258,ZA,capital,Pretoria
+Q258,ZA,continent,Africa
+Q258,ZA,coordinates,Point(24.0 -29.0)
+Q258,ZA,currency,ZAR
+Q258,ZA,demonym,South African
+Q258,ZA,driving_side,left
+Q258,ZA,label,South Africa
+Q258,ZA,language,af
+Q258,ZA,language,en
+Q258,ZA,language,nr
+Q258,ZA,language,ss
+Q258,ZA,language,st
+Q258,ZA,language,tn
+Q258,ZA,language,ts
+Q258,ZA,language,ve
+Q258,ZA,language,xh
+Q258,ZA,language,zu
+Q258,ZA,numeric,710
+Q258,ZA,official_name,Republic of South Africa
+Q258,ZA,population,62027503.0
+Q258,ZA,tld,.za
+Q953,ZM,alpha3,ZMB
+Q953,ZM,calling_code,+260
+Q953,ZM,capital,Lusaka
+Q953,ZM,continent,Africa
+Q953,ZM,coordinates,Point(28.0 -14.0)
+Q953,ZM,currency,ZMW
+Q953,ZM,demonym,Zambian
+Q953,ZM,demonym,Zambians
+Q953,ZM,driving_side,left
+Q953,ZM,label,Zambia
+Q953,ZM,language,en
+Q953,ZM,numeric,894
+Q953,ZM,official_name,Zambia
+Q953,ZM,population,19610769.0
+Q953,ZM,tld,.zm
+Q954,ZW,alpha3,ZWE
+Q954,ZW,calling_code,+263
+Q954,ZW,capital,Harare
+Q954,ZW,continent,Africa
+Q954,ZW,coordinates,Point(30.0 -19.0)
+Q954,ZW,currency,AUD
+Q954,ZW,currency,CNY
+Q954,ZW,currency,EUR
+Q954,ZW,currency,GBP
+Q954,ZW,currency,INR
+Q954,ZW,currency,JPY
+Q954,ZW,currency,USD
+Q954,ZW,currency,ZAR
+Q954,ZW,currency,ZWD
+Q954,ZW,currency,ZWG
+Q954,ZW,currency,ZWL
+Q954,ZW,currency,ZWN
+Q954,ZW,currency,ZWR
+Q954,ZW,demonym,Zimbabwean
+Q954,ZW,demonym,Zimbabweans
+Q954,ZW,driving_side,left
+Q954,ZW,label,Zimbabwe
+Q954,ZW,language,en
+Q954,ZW,language,nd
+Q954,ZW,language,ny
+Q954,ZW,language,sn
+Q954,ZW,language,st
+Q954,ZW,language,tn
+Q954,ZW,language,ts
+Q954,ZW,language,ve
+Q954,ZW,language,xh
+Q954,ZW,numeric,716
+Q954,ZW,official_name,Rhodesia
+Q954,ZW,official_name,Zimbabwe
+Q954,ZW,population,15178979.0
+Q954,ZW,tld,.zw

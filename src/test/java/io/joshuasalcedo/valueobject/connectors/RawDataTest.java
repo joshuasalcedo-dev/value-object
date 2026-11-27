@@ -1,6 +1,6 @@
 package io.joshuasalcedo.valueobject.connectors;
 
-import io.joshuasalcedo.valueobject.ValueObject;
+import io.joshuasalcedo.valueobject.core.ValueObject;
 import io.joshuasalcedo.valueobject.financial.BillingDocument;
 import io.joshuasalcedo.valueobject.financial.LineItem;
 import io.joshuasalcedo.valueobject.format.Json;

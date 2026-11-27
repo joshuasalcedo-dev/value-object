@@ -2,10 +2,10 @@ package io.joshuasalcedo.valueobject.financial;
 
 import org.jspecify.annotations.Nullable;
 import java.util.Optional;
-import io.joshuasalcedo.valueobject.ValueObject;
+import io.joshuasalcedo.valueobject.core.ValueObject;
 
-import io.joshuasalcedo.valueobject.Count;
-import io.joshuasalcedo.valueobject.exception.ValueObjectException;
+import io.joshuasalcedo.valueobject.core.Count;
+import io.joshuasalcedo.valueobject.core.ValueObjectException;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

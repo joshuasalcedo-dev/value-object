@@ -14,4 +14,8 @@ jobs:
         with: { distribution: temurin, java-version: '25', cache: maven }
       - name: ValueObject.java is generated from the current value objects
         run: java codegen/GenerateValueObject.java --check
+      - name: tzdata.json is what the pinned IANA release gives
+        run: java data/Tzdata.java --check
+      - name: countries.json is what the Wikidata snapshot gives
+        run: java data/Countries.java --check
       - run: mvn -B verify

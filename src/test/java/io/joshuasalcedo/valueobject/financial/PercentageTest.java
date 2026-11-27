@@ -1,7 +1,7 @@
 package io.joshuasalcedo.valueobject.financial;
 
-import io.joshuasalcedo.valueobject.Count;
-import io.joshuasalcedo.valueobject.exception.ValueObjectException;
+import io.joshuasalcedo.valueobject.core.Count;
+import io.joshuasalcedo.valueobject.core.ValueObjectException;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

@@ -1,7 +1,7 @@
 package io.joshuasalcedo.valueobject.table;
 
-import io.joshuasalcedo.valueobject.ValueObject;
-import io.joshuasalcedo.valueobject.ValueObject.Type;
+import io.joshuasalcedo.valueobject.core.ValueObject;
+import io.joshuasalcedo.valueobject.core.ValueObject.Type;
 import io.joshuasalcedo.valueobject.contact.Email;
 import io.joshuasalcedo.valueobject.financial.FiatCurrency;
 import io.joshuasalcedo.valueobject.financial.Money;

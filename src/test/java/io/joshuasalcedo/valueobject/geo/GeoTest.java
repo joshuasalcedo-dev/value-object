@@ -1,6 +1,6 @@
 package io.joshuasalcedo.valueobject.geo;
 
-import io.joshuasalcedo.valueobject.exception.ValueObjectException;
+import io.joshuasalcedo.valueobject.core.ValueObjectException;
 import io.joshuasalcedo.valueobject.measurement.Distance;
 import io.joshuasalcedo.valueobject.measurement.DistanceUnit;
 import org.junit.jupiter.api.Test;

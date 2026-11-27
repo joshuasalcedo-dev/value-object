@@ -1,6 +1,6 @@
 package io.joshuasalcedo.valueobject.validation;
 
-import io.joshuasalcedo.valueobject.ValueObject;
+import io.joshuasalcedo.valueobject.core.ValueObject;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 

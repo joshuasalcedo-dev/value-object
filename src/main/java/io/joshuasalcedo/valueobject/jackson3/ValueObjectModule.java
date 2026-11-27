@@ -1,8 +1,8 @@
 package io.joshuasalcedo.valueobject.jackson3;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import io.joshuasalcedo.valueobject.ValueObject;
-import io.joshuasalcedo.valueobject.exception.ValueObjectException;
+import io.joshuasalcedo.valueobject.core.ValueObject;
+import io.joshuasalcedo.valueobject.core.ValueObjectException;
 import io.joshuasalcedo.valueobject.format.Json;
 import org.jspecify.annotations.Nullable;
 import tools.jackson.core.JacksonException;

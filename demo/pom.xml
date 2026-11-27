@@ -12,7 +12,7 @@
            demo/screenshots.sh               (runs it on the sample documents and saves screenshots to image/) -->
     <groupId>io.joshuasalcedo</groupId>
     <artifactId>value-object-demo</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.2.0-SNAPSHOT</version>
     <name>value-object demo</name>
 
     <properties>
@@ -26,7 +26,7 @@
         <dependency>
             <groupId>io.joshuasalcedo</groupId>
             <artifactId>value-object</artifactId>
-            <version>0.1.0-SNAPSHOT</version>
+            <version>0.2.0-SNAPSHOT</version>
         </dependency>
         <!-- OCR for image files: optional in the library, so the demo adds it -->
         <dependency>

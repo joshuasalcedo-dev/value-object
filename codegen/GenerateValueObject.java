@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * Generates {@code src/main/java/io/joshuasalcedo/valueobject/ValueObject.java}: the marker interface, with
+ * Generates {@code src/main/java/io/joshuasalcedo/valueobject/core/ValueObject.java}: the marker interface, with
  * <ul>
  *   <li>{@code ValueObject.Type}: an enum of every value object in the library,</li>
  *   <li>{@code ValueObject.Parse}: one {@code Parse.Money(Object)} per type, built from the type's own
@@ -38,9 +38,9 @@ import java.util.stream.Stream;
  */
 public class GenerateValueObject {
 
-    static final String PACKAGE = "io.joshuasalcedo.valueobject";
+    static final String PACKAGE = "io.joshuasalcedo.valueobject.core";
     static final Path SOURCES = Path.of("src/main/java/io/joshuasalcedo/valueobject");
-    static final Path OUTPUT = SOURCES.resolve("ValueObject.java");
+    static final Path OUTPUT = SOURCES.resolve("core/ValueObject.java");
     static final Path DETECTION = Path.of("codegen/detection.txt");
 
     /** Factory names that turn one argument into the value, most preferred first. */
@@ -524,7 +524,7 @@ public class GenerateValueObject {
                          *
                          * @param value the value object itself, or anything one of its factories takes
                          * @return it as this value object
-                         * @throws io.joshuasalcedo.valueobject.exception.ValueObjectException if it is not one
+                         * @throws io.joshuasalcedo.valueobject.core.ValueObjectException if it is not one
                          */
                         public ValueObject parse(@Nullable Object value) {
                             return switch (this) {
@@ -582,7 +582,7 @@ public class GenerateValueObject {
                     /**
                      * Makes a value object from anything its own factories take: {@code Parse.Money("149.99 USD")},
                      * {@code Parse.Port(8080)}, {@code Parse.UniqueId(uuid)}. A value that already is one is returned as is.
-                     * Every method throws {@link io.joshuasalcedo.valueobject.exception.ValueObjectException} when the input
+                     * Every method throws {@link io.joshuasalcedo.valueobject.core.ValueObjectException} when the input
                      * is not one.
                      */
                     final class Parse {

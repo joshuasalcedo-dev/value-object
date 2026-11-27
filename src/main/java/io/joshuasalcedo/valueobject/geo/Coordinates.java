@@ -2,9 +2,9 @@ package io.joshuasalcedo.valueobject.geo;
 
 import org.jspecify.annotations.Nullable;
 import java.util.Optional;
-import io.joshuasalcedo.valueobject.ValueObject;
+import io.joshuasalcedo.valueobject.core.ValueObject;
 
-import io.joshuasalcedo.valueobject.exception.ValueObjectException;
+import io.joshuasalcedo.valueobject.core.ValueObjectException;
 import io.joshuasalcedo.valueobject.measurement.Distance;
 import io.joshuasalcedo.valueobject.measurement.DistanceUnit;
 

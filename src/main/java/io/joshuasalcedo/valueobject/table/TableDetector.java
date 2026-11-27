@@ -1,6 +1,6 @@
 package io.joshuasalcedo.valueobject.table;
 
-import io.joshuasalcedo.valueobject.ValueObject;
+import io.joshuasalcedo.valueobject.core.ValueObject;
 import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;

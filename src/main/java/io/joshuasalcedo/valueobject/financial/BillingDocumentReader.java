@@ -1,6 +1,6 @@
 package io.joshuasalcedo.valueobject.financial;
 
-import io.joshuasalcedo.valueobject.ValueObject;
+import io.joshuasalcedo.valueobject.core.ValueObject;
 import io.joshuasalcedo.valueobject.contact.Address;
 import io.joshuasalcedo.valueobject.contact.Email;
 import io.joshuasalcedo.valueobject.contact.Link;
@@ -258,7 +258,7 @@ final class BillingDocumentReader {
         final @Nullable Currency currency;
         final List<Table> tables;
         final Map<ValueObject.Type, List<ValueObject>> detected;
-        final List<io.joshuasalcedo.valueobject.Found> found;
+        final List<io.joshuasalcedo.valueobject.core.Found> found;
         final Map<String, BillingDocument.Source> sources = new LinkedHashMap<>();
         @Nullable String currencyHow;
         final List<Address> addresses = new ArrayList<>();
@@ -1050,7 +1050,7 @@ final class BillingDocumentReader {
     private static Optional<io.joshuasalcedo.valueobject.identifier.TaxId> taxId(String text) {
         try {
             return Optional.of(io.joshuasalcedo.valueobject.identifier.TaxId.parse(text));
-        } catch (io.joshuasalcedo.valueobject.exception.ValueObjectException e) {
+        } catch (io.joshuasalcedo.valueobject.core.ValueObjectException e) {
             return Optional.empty();
         }
     }
@@ -1131,7 +1131,7 @@ final class BillingDocumentReader {
         try {
             BigDecimal amount = new BigDecimal(n);
             return Optional.of(Money.of(negative ? amount.negate() : amount, currency));
-        } catch (NumberFormatException | io.joshuasalcedo.valueobject.exception.ValueObjectException e) {
+        } catch (NumberFormatException | io.joshuasalcedo.valueobject.core.ValueObjectException e) {
             return Optional.empty();
         }
     }

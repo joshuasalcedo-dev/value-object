@@ -1,6 +1,6 @@
 package io.joshuasalcedo.valueobject.identifier;
 
-import io.joshuasalcedo.valueobject.exception.ValueObjectException;
+import io.joshuasalcedo.valueobject.core.ValueObjectException;
 
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;

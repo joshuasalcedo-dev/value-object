@@ -1,6 +1,6 @@
 package io.joshuasalcedo.valueobject.measurement;
 
-import io.joshuasalcedo.valueobject.ValueObject;
+import io.joshuasalcedo.valueobject.core.ValueObject;
 
 
 import java.math.BigDecimal;
@@ -52,15 +52,15 @@ public interface MeasurementUnit<U extends MeasurementUnit<U>> extends ValueObje
      * @param value the value in this unit
      * @param targetUnit the target unit
      * @return the value converted to the target unit
-     * @throws io.joshuasalcedo.valueobject.exception.ValueObjectException if either is {@code null}, or the
+     * @throws io.joshuasalcedo.valueobject.core.ValueObjectException if either is {@code null}, or the
      *         target unit's factor is zero
      */
     default BigDecimal convertTo(BigDecimal value, U targetUnit) {
         if (value == null || targetUnit == null)
-            throw new io.joshuasalcedo.valueobject.exception.ValueObjectException("Value and target unit are required");
+            throw new io.joshuasalcedo.valueobject.core.ValueObjectException("Value and target unit are required");
         BigDecimal divisor = targetUnit.toBaseUnitFactor();
         if (divisor.signum() == 0)
-            throw new io.joshuasalcedo.valueobject.exception.ValueObjectException("Cannot convert to " + targetUnit.unitName());
+            throw new io.joshuasalcedo.valueobject.core.ValueObjectException("Cannot convert to " + targetUnit.unitName());
         BigDecimal inBase = value.multiply(toBaseUnitFactor());
         BigDecimal out;
         try {

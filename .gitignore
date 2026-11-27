@@ -10,3 +10,6 @@ target-*/
 # GeoNames gazetteer: too big for git (download it, see the extraction pipeline)
 allCountries.zip
 allCountries.txt
+
+# data/ downloads (re-downloaded and checked against data/sources.properties)
+data/cache/

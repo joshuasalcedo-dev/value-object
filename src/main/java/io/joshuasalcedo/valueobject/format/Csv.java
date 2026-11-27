@@ -1,6 +1,6 @@
 package io.joshuasalcedo.valueobject.format;
 
-import io.joshuasalcedo.valueobject.ValueObject;
+import io.joshuasalcedo.valueobject.core.ValueObject;
 import io.joshuasalcedo.valueobject.financial.Currency;
 import io.joshuasalcedo.valueobject.financial.Money;
 import io.joshuasalcedo.valueobject.table.Table;
@@ -115,7 +115,7 @@ public final class Csv {
      *
      * @param csv the CSV, its first row the column names
      * @return one map per row, column name to cell text, in column order; an empty cell is {@code ""}
-     * @throws io.joshuasalcedo.valueobject.exception.ValueObjectException if a quoted cell is not closed
+     * @throws io.joshuasalcedo.valueobject.core.ValueObjectException if a quoted cell is not closed
      */
     public static List<Map<String, String>> read(String csv) {
         List<List<String>> lines = cells(csv);
@@ -139,7 +139,7 @@ public final class Csv {
      * @param recordType the record each row is, e.g. {@code LineItem.class}
      * @param <R>        that record
      * @return the records, in order
-     * @throws io.joshuasalcedo.valueobject.exception.ValueObjectException if a cell is not what its part holds
+     * @throws io.joshuasalcedo.valueobject.core.ValueObjectException if a cell is not what its part holds
      */
     public static <R extends Record> List<R> read(String csv, Class<R> recordType) {
         List<R> out = new ArrayList<>();
@@ -157,11 +157,11 @@ public final class Csv {
      *
      * @param csv the CSV
      * @return the table
-     * @throws io.joshuasalcedo.valueobject.exception.ValueObjectException if it has no header row
+     * @throws io.joshuasalcedo.valueobject.core.ValueObjectException if it has no header row
      */
     public static Table readTable(String csv) {
         List<List<String>> lines = cells(csv);
-        if (lines.isEmpty()) throw new io.joshuasalcedo.valueobject.exception.ValueObjectException("CSV with no rows");
+        if (lines.isEmpty()) throw new io.joshuasalcedo.valueobject.core.ValueObjectException("CSV with no rows");
         List<String> header = lines.getFirst();
         List<List<String>> rows = new ArrayList<>();
         for (List<String> line : lines.subList(1, lines.size())) {
@@ -186,7 +186,7 @@ public final class Csv {
 
     /** The cells of every line, quotes resolved. */
     private static List<List<String>> cells(String csv) {
-        if (csv == null) throw new io.joshuasalcedo.valueobject.exception.ValueObjectException("CSV is required");
+        if (csv == null) throw new io.joshuasalcedo.valueobject.core.ValueObjectException("CSV is required");
         List<List<String>> lines = new ArrayList<>();
         List<String> line = new ArrayList<>();
         StringBuilder cell = new StringBuilder();
@@ -224,7 +224,7 @@ public final class Csv {
                 any = true;
             }
         }
-        if (quoted) throw new io.joshuasalcedo.valueobject.exception.ValueObjectException("A quoted CSV cell is not closed");
+        if (quoted) throw new io.joshuasalcedo.valueobject.core.ValueObjectException("A quoted CSV cell is not closed");
         if (any || !cell.isEmpty()) {
             line.add(cell.toString());
             lines.add(line);

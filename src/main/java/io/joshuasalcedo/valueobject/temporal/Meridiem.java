@@ -1,9 +1,9 @@
 package io.joshuasalcedo.valueobject.temporal;
 
-import io.joshuasalcedo.valueobject.exception.ValueObjectException;
+import io.joshuasalcedo.valueobject.core.ValueObjectException;
 import org.jspecify.annotations.Nullable;
 import java.util.Optional;
-import io.joshuasalcedo.valueobject.ValueObject;
+import io.joshuasalcedo.valueobject.core.ValueObject;
 
 /**
  * Which half of the day a 12-hour clock time is in: {@code AM} for hours 0-11, {@code PM} for hours 12-23

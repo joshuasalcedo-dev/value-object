@@ -1,6 +1,7 @@
 package io.joshuasalcedo.valueobject;
 
-import io.joshuasalcedo.valueobject.exception.ValueObjectException;
+import io.joshuasalcedo.valueobject.core.ValueObject;
+import io.joshuasalcedo.valueobject.core.ValueObjectException;
 import io.joshuasalcedo.valueobject.financial.FiatCurrency;
 import io.joshuasalcedo.valueobject.financial.Invoice;
 import io.joshuasalcedo.valueobject.financial.Money;

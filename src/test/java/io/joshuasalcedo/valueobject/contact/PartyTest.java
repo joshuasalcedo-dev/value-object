@@ -1,6 +1,6 @@
 package io.joshuasalcedo.valueobject.contact;
 
-import io.joshuasalcedo.valueobject.exception.ValueObjectException;
+import io.joshuasalcedo.valueobject.core.ValueObjectException;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
